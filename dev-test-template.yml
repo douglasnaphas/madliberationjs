@@ -22,7 +22,7 @@ Resources:
   GetHelloWorld:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.get
+      Handler: hello-world.get
       Runtime: nodejs8.10
       CodeUri: ./
       Role:
