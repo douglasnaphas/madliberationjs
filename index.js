@@ -5,7 +5,7 @@ exports.get = function(event, context, callback) {
   let contents = { contents: "hello, world" };
   var result = {
     statusCode: 200,
-    body: contents.toString(),
+    body: JSON.stringify(contents),
     headers: { "content-type": "application/json" }
   };
 
