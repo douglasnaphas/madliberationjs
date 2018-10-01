@@ -16,6 +16,12 @@ phases:
     commands:
       - npm run-script build
       - aws s3 cp --recursive build/ s3://$WEBSITE_S3_BUCKET/build/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+      - aws s3 sync --content-type "text/html" --exclude "*" --include "*.html" --delete build/ s3://haggadlibs.com/
+      - aws s3 sync --content-type "text/css" --exclude "*" --include "*.css" --include "*.css.map" --delete build/ s3://haggadlibs.com/
+      - aws s3 sync --content-type "text/javascript" --exclude "*" --include "*.js" --include "*.js.map" --delete build/ s3://haggadlibs.com/
+      - aws s3 sync --content-type "application/json" --exclude "*" --include "*.json" --delete build/ s3://haggadlibs.com/
+      - aws s3 sync --content-type "image/x-icon" --exclude "*" --include "*.ico" --delete build/ s3://haggadlibs.com/
+      - aws s3 sync --content-type "image/svg+xml" --exclude "*" --include "*.svg" --delete build/ s3://haggadlibs.com/
       # Use AWS SAM to package the application by using AWS CloudFormation
       - aws s3 cp --recursive public/ s3://$WEBSITE_S3_BUCKET/public/ --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
       - sed -i -e "s|assets/|$WEBSITE_S3_PREFIX/public/assets/|g" public/index.html
