@@ -16,6 +16,14 @@ class ButtonRow extends Component {
           </div>
           <div className="col" />
         </div>
+        <div className="row">
+          {
+            /*if(boolProp in this.props) {
+                    "s";
+                }*/
+            "xyz"
+          }
+        </div>
       </div>
     );
   }
