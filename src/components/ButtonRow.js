@@ -1,37 +1,20 @@
 import React, { Component } from "react";
+import Button from "./Button.js";
+import MiddleThird from "./MiddleThird.js";
 
 class ButtonRow extends Component {
   render() {
-    return (
-      <div>
-        <div className="row">
-          <div className="col" />
-          <div className="col">
-            <button
-              type="button"
-              className="btn btn-secondary btn-lg btn-block"
-            >
-              {this.props.text}
-            </button>
-          </div>
-          <div className="col" />
-        </div>
-        <div className="row">
-          {
-            /*if(boolProp in this.props) {
-                    "s";
-                }*/
-            "xyz"
-          }
-        </div>
-      </div>
-    );
+    // make a Button bearing the text in the props and put it in a MiddleThird
+    let button = <Button text={this.props.text} />;
+    let middleThird = <MiddleThird comp={button} />;
+    return <div>{middleThird}</div>;
   }
 }
 
 export default ButtonRow;
 
 // TODO: make the buttons only take up the center third of the screen
+// TODO: see if I can override render() in making different types of buttons
 // TODO: make the buttons take a prop that says whether they're primary. test creating primary and non-primary buttons
 // TODO: make the login button (visuals only)
 // TODO: make the buttons take props that say whether they're disabled

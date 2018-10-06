@@ -22,8 +22,11 @@ class App extends Component {
         </p>
         <LoginButtonRow text="Log in" boolProp />
         {loginButtonRow}
+        <ButtonRow text="Start a seder" />
       </div>
     );
+
+    // buttonRow
   }
 }
 
