@@ -4,7 +4,11 @@ class Button extends Component {
   render() {
     return (
       <div>
-        <button type="button" className="btn btn-secondary btn-lg btn-block">
+        <button
+          type="button"
+          className="btn btn-secondary btn-lg btn-block"
+          disabled={this.props.disabled}
+        >
           {this.props.text}
         </button>
       </div>

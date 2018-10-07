@@ -10,8 +10,8 @@ class App extends Component {
       <div className="App">
         <Header />
         <ButtonRow text="Log in" />
-        <ButtonRow text="Start a seder" />
-        <ButtonRow text="Join a seder" />
+        <ButtonRow text="Start a seder" disabled />
+        <ButtonRow text="Join a seder" disabled />
       </div>
     );
 

@@ -5,8 +5,16 @@ import MiddleThird from "./MiddleThird.js";
 class ButtonRow extends Component {
   render() {
     // make a Button bearing the text in the props and put it in a MiddleThird
-    let button = <Button text={this.props.text} />;
+    let button = (
+      <Button text={this.props.text} disabled={this.props.disabled} />
+    );
     let middleThird = <MiddleThird comp={button} />;
+    console.log(
+      "the component with value: " +
+        this.props.text +
+        " is " +
+        (this.props.disabled ? "DISabled" : "ENabled")
+    );
     return (
       <div>
         <br />
