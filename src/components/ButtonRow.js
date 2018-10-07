@@ -10,6 +10,7 @@ class ButtonRow extends Component {
         text={this.props.text}
         disabled={this.props.disabled}
         primary={this.props.primary}
+        href={this.props.href}
       />
     );
     let middleThird = <MiddleThird comp={button} />;

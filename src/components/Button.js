@@ -6,15 +6,18 @@ class Button extends Component {
       "btn" +
       (this.props.primary ? " btn-primary" : " btn-secondary") +
       " btn-lg btn-block";
+    let href = "href" in this.props ? this.props.href : "#";
     return (
       <div>
-        <button
-          type="button"
-          className={className}
-          disabled={this.props.disabled}
-        >
-          {this.props.text}
-        </button>
+        <a href={href}>
+          <button
+            type="button"
+            className={className}
+            disabled={this.props.disabled}
+          >
+            {this.props.text}
+          </button>
+        </a>
       </div>
     );
   }
