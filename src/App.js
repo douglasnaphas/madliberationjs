@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <ButtonRow text="Log in" />
+        <ButtonRow text="Log in" primary />
         <ButtonRow text="Start a seder" disabled />
         <ButtonRow text="Join a seder" disabled />
       </div>

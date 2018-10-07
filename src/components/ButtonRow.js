@@ -6,7 +6,11 @@ class ButtonRow extends Component {
   render() {
     // make a Button bearing the text in the props and put it in a MiddleThird
     let button = (
-      <Button text={this.props.text} disabled={this.props.disabled} />
+      <Button
+        text={this.props.text}
+        disabled={this.props.disabled}
+        primary={this.props.primary}
+      />
     );
     let middleThird = <MiddleThird comp={button} />;
     console.log(
