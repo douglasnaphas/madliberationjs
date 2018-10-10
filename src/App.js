@@ -17,7 +17,7 @@ class App extends Component {
       ClientId: "6ktt0mtpks03r8sfticc3h1o6",
       AppWebDomain: "madliberationfederated.auth.us-east-1.amazoncognito.com",
       TokenScopesArray: ["email"],
-      RedirectUriSignIn: "https://madliberationgame.com/pick-script.html",
+      RedirectUriSignIn: "https://madliberationgame.com/index.html",
       RedirectUriSignOut: "https://madliberationgame.com/logout.html",
       UserPoolId: "us-east-1_Yn89yKizn"
     };
