@@ -23,7 +23,7 @@ class App extends Component {
     };
     var auth = new window.AmazonCognitoIdentity.CognitoAuth(authData);
     var curUrl = window.location.href;
-    var parsedResponse = auth.parseCognitoWebResponse(curUrl);
+    // var parsedResponse = auth.parseCognitoWebResponse(curUrl);
     var myIdToken = new window.AmazonCognitoIdentity.CognitoIdToken(
       auth.signInUserSession.idToken.jwtToken
     );
