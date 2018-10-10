@@ -5,11 +5,15 @@ import ButtonRow from "./components/ButtonRow";
 import Header from "./components/Header";
 import { BrowserRouter as Router } from "react-router-dom";
 import Route from "react-router-dom/Route";
-import AmazonCognitoIdentity from "amazon-cognito-auth-js";
+// import AmazonCognitoIdentity from "amazon-cognito-auth-js";
+// import 'amazon-cognito-auth-js';
+// import { AmazonCognitoIdentity } from "amazon-cognito-auth-js";
+
+// const AmazonCognitoIdentity = window.AmazonCognitoIdentity || {};
 
 class App extends Component {
   isLoggedIn() {
-    let authData = {
+    var authData = {
       ClientId: "6ktt0mtpks03r8sfticc3h1o6",
       AppWebDomain: "madliberationfederated.auth.us-east-1.amazoncognito.com",
       TokenScopesArray: ["email"],
@@ -17,8 +21,13 @@ class App extends Component {
       RedirectUriSignOut: "https://madliberationgame.com/logout.html",
       UserPoolId: "us-east-1_Yn89yKizn"
     };
-    let auth = new AmazonCognitoIdentity.CognitoAuth(authData);
-
+    var auth = new window.AmazonCognitoIdentity.CognitoAuth(authData);
+    var curUrl = window.location.href;
+    var parsedResponse = auth.parseCognitoWebResponse(curUrl);
+    var myIdToken = new window.AmazonCognitoIdentity.CognitoIdToken(
+      auth.signInUserSession.idToken.jwtToken
+    );
+    console.log(myIdToken.payload.email);
     return "not";
   }
 
