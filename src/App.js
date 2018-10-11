@@ -8,6 +8,7 @@ import Route from "react-router-dom/Route";
 // import AmazonCognitoIdentity from "amazon-cognito-auth-js";
 // import 'amazon-cognito-auth-js';
 // import { AmazonCognitoIdentity } from "amazon-cognito-auth-js";
+import { CognitoAuth, CognitoIdToken } from "amazon-cognito-auth-js";
 
 // const AmazonCognitoIdentity = window.AmazonCognitoIdentity || {};
 
@@ -21,12 +22,10 @@ class App extends Component {
       RedirectUriSignOut: "https://madliberationgame.com/logout.html",
       UserPoolId: "us-east-1_Yn89yKizn"
     };
-    var auth = new window.AmazonCognitoIdentity.CognitoAuth(authData);
+    var auth = new CognitoAuth(authData);
     var curUrl = window.location.href;
     // var parsedResponse = auth.parseCognitoWebResponse(curUrl);
-    var myIdToken = new window.AmazonCognitoIdentity.CognitoIdToken(
-      auth.signInUserSession.idToken.jwtToken
-    );
+    var myIdToken = new CognitoIdToken(auth.signInUserSession.idToken.jwtToken);
     console.log(myIdToken.payload.email);
     return "not";
   }
@@ -37,7 +36,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Route
-            path="/"
+            path="(/|/index.html)"
             exact
             render={() => {
               return (
