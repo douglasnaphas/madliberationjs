@@ -19,6 +19,7 @@ class App extends Component {
   // }
   // setLoginState(user) {}
   render() {
+    console.log("App.render() called at " + Date.now());
     return (
       <Router>
         <div className="App">

@@ -12,6 +12,7 @@ class LoggedInHomePage extends Component {
     // if (auth.getCurrentUser() == null) {
     //   return <PublicHomePage />;
     // }
+    console.log("LoggedInHomePage.render() called at " + Date.now());
     return (
       <div>
         <Header />

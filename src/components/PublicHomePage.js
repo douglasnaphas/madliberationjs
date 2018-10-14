@@ -6,6 +6,7 @@ import { CognitoAuth, CognitoIdToken } from "amazon-cognito-auth-js";
 
 class PublicHomePage extends Component {
   render() {
+    console.log("PublicHomePage.render() called at " + Date.now());
     return (
       <div>
         <Header />
