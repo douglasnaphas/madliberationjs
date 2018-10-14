@@ -20,6 +20,15 @@ class App extends Component {
   // setLoginState(user) {}
   render() {
     console.log("App.render() called at " + Date.now());
+    let authData = Configs.authData();
+    let auth = new CognitoAuth(authData);
+    if(auth.getCurrentUser == null) {
+      console.log(Date.now() + " App: the current user is no one");
+    } else { auth.
+      let myIdToken = new CognitoIdToken(auth.signInUserSession.idToken.jwtToken);
+      console.log(Date.now() + " App: myIdToken: " + myIdToken);
+      console.log(Date.now() + " App: myIdToken.decodePayload()" + myIdToken.decodePayload());
+    }
     return (
       <Router>
         <div className="App">
