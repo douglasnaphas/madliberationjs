@@ -22,12 +22,22 @@ class App extends Component {
     console.log("App.render() called at " + Date.now());
     let authData = Configs.authData();
     let auth = new CognitoAuth(authData);
-    if(auth.getCurrentUser == null) {
+    if (
+      auth.getCurrentUser == null ||
+      auth.getCurrentUser == undefined ||
+      auth.getCurrentUser() == null
+    ) {
       console.log(Date.now() + " App: the current user is no one");
-    } else { auth.
-      let myIdToken = new CognitoIdToken(auth.signInUserSession.idToken.jwtToken);
+    } else {
+      let myIdToken = new CognitoIdToken(
+        auth.signInUserSession.idToken.jwtToken
+      );
       console.log(Date.now() + " App: myIdToken: " + myIdToken);
-      console.log(Date.now() + " App: myIdToken.decodePayload()" + myIdToken.decodePayload());
+      console.log(
+        Date.now() +
+          " App: myIdToken.decodePayload()" +
+          myIdToken.decodePayload()
+      );
     }
     return (
       <Router>
