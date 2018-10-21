@@ -7,11 +7,6 @@ import PublicHomePage from "./PublicHomePage";
 
 class LoggedInHomePage extends Component {
   render() {
-    // let authData = Configs.authData();
-    // let auth = new CognitoAuth(authData);
-    // if (auth.getCurrentUser() == null) {
-    //   return <PublicHomePage />;
-    // }
     console.log("LoggedInHomePage.render() called at " + Date.now());
     return (
       <div>

@@ -6,6 +6,7 @@
   "homepage": ".",
   "devDependencies": {
     "mocha": "5.0.0",
+    "react-test-renderer": "^16.5.2",
     "unit.js": "2.0.0"
   },
   "scripts": {

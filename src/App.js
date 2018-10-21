@@ -11,13 +11,9 @@ import LoggedInHomePage from "./components/LoggedInHomePage";
 import PublicHomePage from "./components/PublicHomePage";
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     loggedIn: false
-  //   };
-  // }
-  // setLoginState(user) {}
+  userOrFalse() {
+    return false;
+  }
   render() {
     console.log("App.render() called at " + Date.now());
     let authData = Configs.authData();
@@ -43,7 +39,6 @@ class App extends Component {
       <Router>
         <div className="App">
           <Route path="(/|/index.html)" exact component={PublicHomePage} />
-          <Route path="/logged-in.html" exact component={LoggedInHomePage} />
           <Route
             path="/r2"
             exact
