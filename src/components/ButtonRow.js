@@ -14,12 +14,6 @@ class ButtonRow extends Component {
       />
     );
     let middleThird = <MiddleThird comp={button} />;
-    console.log(
-      "the component with value: " +
-        this.props.text +
-        " is " +
-        (this.props.disabled ? "DISabled" : "ENabled")
-    );
     return (
       <div>
         <br />

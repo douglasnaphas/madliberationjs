@@ -11,11 +11,40 @@ import LoggedInHomePage from "./components/LoggedInHomePage";
 import PublicHomePage from "./components/PublicHomePage";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { loggedIn: false };
+  }
+
   userOrFalse() {
+    let auth = new CognitoAuth(Configs.authData());
     return false;
   }
+
+  /**
+   * post: this.state.loggedIn == true iff (either there is a logged-in user
+   * in local storage, or in the URL)
+   * // TODO: this should validate the token as well
+   */
+  checkLoginStatus() {
+    let auth = new CognitoAuth(Configs.authData());
+    // TODO: check based on #abc=xyz, to see if onSuccess/onFailure callbacks work for setting state
+  }
+
+  setLogin(loggedIn) {
+    if (loggedIn === true) {
+      this.setState({ loggedIn: true });
+    } else {
+      this.setState({ loggedIn: false });
+    }
+  }
+
+  static getAuth() {
+    return new CognitoAuth(Configs.authData());
+  }
+
   render() {
-    console.log("App.render() called at " + Date.now());
+    // console.log("App.render() called at " + Date.now());
     let authData = Configs.authData();
     let auth = new CognitoAuth(authData);
     if (
@@ -23,17 +52,17 @@ class App extends Component {
       auth.getCurrentUser == undefined ||
       auth.getCurrentUser() == null
     ) {
-      console.log(Date.now() + " App: the current user is no one");
+      // console.log(Date.now() + " App: the current user is no one");
     } else {
       let myIdToken = new CognitoIdToken(
         auth.signInUserSession.idToken.jwtToken
       );
-      console.log(Date.now() + " App: myIdToken: " + myIdToken);
-      console.log(
-        Date.now() +
-          " App: myIdToken.decodePayload()" +
-          myIdToken.decodePayload()
-      );
+      // console.log(Date.now() + " App: myIdToken: " + myIdToken);
+      // console.log(
+      //   Date.now() +
+      //     " App: myIdToken.decodePayload()" +
+      //     myIdToken.decodePayload()
+      // );
     }
     return (
       <Router>

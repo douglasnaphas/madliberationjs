@@ -2,9 +2,6 @@ import React, { Component } from "react";
 
 class Button extends Component {
   render() {
-    console.log(
-      "Button.render() called at " + Date.now() + ", text: " + this.props.text
-    );
     let className =
       "btn" +
       (this.props.primary ? " btn-primary" : " btn-secondary") +

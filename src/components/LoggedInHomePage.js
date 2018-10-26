@@ -7,7 +7,6 @@ import PublicHomePage from "./PublicHomePage";
 
 class LoggedInHomePage extends Component {
   render() {
-    console.log("LoggedInHomePage.render() called at " + Date.now());
     return (
       <div>
         <Header />
