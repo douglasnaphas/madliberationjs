@@ -11,9 +11,21 @@ import LoggedInHomePage from "./components/LoggedInHomePage";
 import PublicHomePage from "./components/PublicHomePage";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { loggedIn: false };
+
+  state = { user: undefined, isSigningIn: true };
+
+  componentDidMount() {
+    const authData = Configs.authData();
+    const auth = new CognitoAuth(authData);
+    auth.userhandler = {
+      onSuccess: result => {
+        this.setState({user: result})
+      },
+      onFailure: error => {
+        this.setState({user: null})
+      }
+    };
+    auth.parseCognitoWebResponse(window.location.href);
   }
 
   userOrFalse() {
@@ -44,26 +56,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log("App.render() called at " + Date.now());
-    let authData = Configs.authData();
-    let auth = new CognitoAuth(authData);
-    if (
-      auth.getCurrentUser == null ||
-      auth.getCurrentUser == undefined ||
-      auth.getCurrentUser() == null
-    ) {
-      // console.log(Date.now() + " App: the current user is no one");
-    } else {
-      let myIdToken = new CognitoIdToken(
-        auth.signInUserSession.idToken.jwtToken
-      );
-      // console.log(Date.now() + " App: myIdToken: " + myIdToken);
-      // console.log(
-      //   Date.now() +
-      //     " App: myIdToken.decodePayload()" +
-      //     myIdToken.decodePayload()
-      // );
-    }
     return (
       <Router>
         <div className="App">
@@ -82,8 +74,6 @@ class App extends Component {
         </div>
       </Router>
     );
-
-    // buttonRow
   }
 }
 
