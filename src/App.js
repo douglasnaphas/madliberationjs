@@ -11,7 +11,6 @@ import LoggedInHomePage from "./components/LoggedInHomePage";
 import PublicHomePage from "./components/PublicHomePage";
 
 class App extends Component {
-
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
@@ -19,10 +18,10 @@ class App extends Component {
     const auth = new CognitoAuth(authData);
     auth.userhandler = {
       onSuccess: result => {
-        this.setState({user: result})
+        this.setState({ user: result });
       },
       onFailure: error => {
-        this.setState({user: null})
+        this.setState({ user: null });
       }
     };
     auth.parseCognitoWebResponse(window.location.href);
