@@ -55,10 +55,16 @@ class App extends Component {
   }
 
   render() {
+    let home;
+    if (this.state.user) {
+      home = LoggedInHomePage;
+    } else {
+      home = PublicHomePage;
+    }
     return (
       <Router>
         <div className="App">
-          <Route path="(/|/index.html)" exact component={PublicHomePage} />
+          <Route path="(/|/index.html)" exact component={home} />
           <Route
             path="/r2"
             exact
