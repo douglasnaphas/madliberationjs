@@ -1,53 +1,56 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { MadUtils } from "./MadUtils";
-import { CognitoAuth } from "amazon-cognito-auth-js";
+import { CognitoAuth } from 'amazon-cognito-auth-js';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { MadUtils } from './MadUtils';
 import renderer from 'react-test-renderer';
 
-jest.mock("amazon-cognito-auth-js");
+jest.mock('amazon-cognito-auth-js');
 
-test("adds 1 + 2 to equal 3", () => {
+test('adds 1 + 2 to equal 3', () => {
   expect(MadUtils.addNums(1, 2)).toBe(3);
 });
 
-it("renders without crashing", () => {
-  const div = document.createElement("div");
+it('renders without crashing', () => {
+  const div = document.createElement('div');
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 
-test("userOrFalse() can be called", () => {
-  let app = new App();
-//  app.userOrFalse();
-});
+function findLoginButton(component) {
+  return component.findAll(
+    e => e.props.text && e.props.text.match(/log in/i)
+  )[0];
+}
 
-test("when there's no logged in user, userOrFalse() should return false", () => {
-  // mock so that AmazonCognitoIdentity.CognitoIdToken returns an object with
-  // payload == {}
-  // let auth = new CognitoAuth("hi");
-  // console.log(auth);
-  const resp = { myResp: "response" };
-  let x = App.getAuth();
-  // console.log(CognitoAuth);
-  // I want to test:
-  // when that function was called
-});
+function createComponent() {
+  return renderer.create(<App />).root;
+}
 
-test("when the user sign in fails it shows a sign in button", () => {
+function getDisabledTexts(component) {
+  return component.findAllByProps({ disabled: true }).map(e => e.props.text);
+}
+
+test('when the user sign in fails it shows a sign in button', () => {
   // mock out cognito so signinFailed is called when sign in is attempted
-  // start and join are disabled
-  const component = renderer.create(<App />).root;
-  expect(component.find(e => e.props.text && e.props.text.match(/log in/i))).toBeTruthy();
-  const disabledButtonTexts = component.findAllByProps({disabled: true}).map(e => e.props.text);
-  expect(disabledButtonTexts).toEqual(expect.arrayContaining(['Start a seder', 'Join a seder']));
+  const component = createComponent();
+  expect(findLoginButton(component)).toBeTruthy();
+  expect(getDisabledTexts(component)).toEqual(
+    expect.arrayContaining(['Start a seder', 'Join a seder'])
+  );
 });
 
-test("when the user sign in succeeds it shows the user name", () => {
-// does not have a log in button
-// start and join are enabled
+test('when the user sign in succeeds it hides the sign in button', () => {
+  const user = { id: '123', email: 'sader@example.com', nickname: 'the dude' };
+  CognitoAuth.mockImplementation(() => ({
+    parseCognitoWebResponse: function() {
+      this.userhandler.onSuccess({ idToken: { decodePayload: () => user } });
+    },
+  }));
 
-  const component = renderer.create(<App />);
-  // would raise if nothing is found
-  // component.root.findByProps({className: "App"}).find(e => e.props.text && e.props.text.match(/Doug/) );
+  const component = createComponent();
+  expect(findLoginButton(component)).toBeFalsy();
+  expect(getDisabledTexts(component)).not.toEqual(
+    expect.arrayContaining(['Start a seder', 'Join a seder'])
+  );
 });
