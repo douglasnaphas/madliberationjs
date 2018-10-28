@@ -56,36 +56,19 @@ test("when the user sign in fails it shows a sign in button and disabled start/j
 });
 
 test("when user signin succeeds there is no login button", () => {
-  // console.log(CognitoAuth);
-
   CognitoAuth.mockImplementation(() => {
-    // console.log("mock imp called...");
     return {
       parseCognitoWebResponse: function(s) {
-        // console.log("parse called");
-        // console.log(this);
-        this.userhandler.onFailure({});
-      },
-      parseCognitoWebResponse1: s => {
-        console.log("parse1 called");
-        console.log(this);
+        this.userhandler.onSuccess({});
       }
     };
   });
 
-  // CognitoAuth.parseCognitoWebResponse.mockImplementation(() => {
-  //   console.log("mock imp called 2...");
-  // });
-
   const component = renderer.create(<App />).root;
 
-  // we want new CognitoAuth(Configs.authData()) to return an object that will
-  // call its onSuccess() method when parseCognitoWebResponse(window.location.href)
-  // is called on it.
-
-  // expect(
-  //   component.find(e => e.props.text && e.props.text.match(/log in/i))
-  // ).toBeFalsy();
+  expect(
+    component.findAll(e => e.props.text && e.props.text.match(/log in/i))
+  ).toHaveLength(0);
 });
 
 test("when the user sign in succeeds it shows the user name", () => {
