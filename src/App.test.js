@@ -35,8 +35,14 @@ test("when there's no logged in user, userOrFalse() should return false", () => 
 });
 
 test("when the user sign in fails it shows a sign in button and disabled start/join buttons", () => {
-  // mock out cognito so signinFailed is called when sign in is attempted
-  // start and join are disabled
+  CognitoAuth.mockImplementation(() => {
+    return {
+      parseCognitoWebResponse: function(s) {
+        this.userhandler.onFailure({});
+      }
+    };
+  });
+
   const component = renderer.create(<App />).root;
   expect(
     component.find(e => e.props.text && e.props.text.match(/log in/i))
@@ -50,7 +56,33 @@ test("when the user sign in fails it shows a sign in button and disabled start/j
 });
 
 test("when user signin succeeds there is no login button", () => {
+  // console.log(CognitoAuth);
+
+  CognitoAuth.mockImplementation(() => {
+    // console.log("mock imp called...");
+    return {
+      parseCognitoWebResponse: function(s) {
+        // console.log("parse called");
+        // console.log(this);
+        this.userhandler.onFailure({});
+      },
+      parseCognitoWebResponse1: s => {
+        console.log("parse1 called");
+        console.log(this);
+      }
+    };
+  });
+
+  // CognitoAuth.parseCognitoWebResponse.mockImplementation(() => {
+  //   console.log("mock imp called 2...");
+  // });
+
   const component = renderer.create(<App />).root;
+
+  // we want new CognitoAuth(Configs.authData()) to return an object that will
+  // call its onSuccess() method when parseCognitoWebResponse(window.location.href)
+  // is called on it.
+
   // expect(
   //   component.find(e => e.props.text && e.props.text.match(/log in/i))
   // ).toBeFalsy();
