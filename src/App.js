@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import ButtonRow from "./components/ButtonRow";
-import Header from "./components/Header";
-import { BrowserRouter as Router } from "react-router-dom";
-import Route from "react-router-dom/Route";
-import { CognitoAuth, CognitoIdToken } from "amazon-cognito-auth-js";
-import { Configs } from "./Configs";
-import LoggedInHomePage from "./components/LoggedInHomePage";
-import PublicHomePage from "./components/PublicHomePage";
+import React, { Component } from 'react';
+import logo from './logo.svg';
+import './App.css';
+import ButtonRow from './components/ButtonRow';
+import Header from './components/Header';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Route from 'react-router-dom/Route';
+import { CognitoAuth, CognitoIdToken } from 'amazon-cognito-auth-js';
+import { Configs } from './Configs';
+import LoggedInHomePage from './components/LoggedInHomePage';
+import PublicHomePage from './components/PublicHomePage';
 
 class App extends Component {
   state = { user: undefined, isSigningIn: true };
