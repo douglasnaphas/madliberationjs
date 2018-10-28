@@ -63,12 +63,31 @@ test("when user signin succeeds there is no login button", () => {
       }
     };
   });
-
   const component = renderer.create(<App />).root;
-
   expect(
     component.findAll(e => e.props.text && e.props.text.match(/log in/i))
   ).toHaveLength(0);
+});
+
+test("when user signin succeeds, join/start buttons are enabled", () => {
+  CognitoAuth.mockImplementation(() => {
+    return {
+      parseCognitoWebResponse: function(s) {
+        this.userhandler.onSuccess({});
+      }
+    };
+  });
+  const component = renderer.create(<App />).root;
+  const disabledButtonTexts = component
+    .findAllByProps({ disabled: true })
+    .map(e => e.props.text);
+  expect(disabledButtonTexts).toHaveLength(0);
+  expect(
+    component.find(e => e.props.text && e.props.text.match(/start a seder/i))
+  ).toBeTruthy();
+  expect(
+    component.find(e => e.props.text && e.props.text.match(/join a seder/i))
+  ).toBeTruthy();
 });
 
 test("when the user sign in succeeds it shows the user name", () => {
