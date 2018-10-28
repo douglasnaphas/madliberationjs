@@ -5,7 +5,7 @@ import ButtonRow from './components/ButtonRow';
 import Header from './components/Header';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Route from 'react-router-dom/Route';
-import { CognitoAuth, CognitoIdToken } from 'amazon-cognito-auth-js';
+import { CognitoAuth } from 'amazon-cognito-auth-js';
 import { Configs } from './Configs';
 import LoggedInHomePage from './components/LoggedInHomePage';
 import PublicHomePage from './components/PublicHomePage';
@@ -17,47 +17,30 @@ class App extends Component {
     const authData = Configs.authData();
     const auth = new CognitoAuth(authData);
     auth.userhandler = {
-      onSuccess: result => {
-        this.setState({ user: result });
+      onSuccess: ({ idToken }) => {
+        const {
+          ['cognito:username']: id,
+          email,
+          nickname,
+        } = idToken.decodePayload();
+        this.setState({ user: { id, email, nickname }, isSigningIn: false });
       },
       onFailure: error => {
-        this.setState({ user: null });
-      }
+        this.setState({ user: null, isSigningIn: false });
+      },
     };
     auth.parseCognitoWebResponse(window.location.href);
   }
 
-  userOrFalse() {
-    let auth = new CognitoAuth(Configs.authData());
-    return false;
-  }
-
-  static getAuth() {
-    return new CognitoAuth(Configs.authData());
+  get homePage() {
+    return this.state.user ? LoggedInHomePage : PublicHomePage;
   }
 
   render() {
     return (
       <Router>
         <div className="App">
-          <Route
-            path="(/|/index.html)"
-            exact
-            render={() =>
-              this.state.user ? <LoggedInHomePage /> : <PublicHomePage />
-            }
-          />
-          <Route
-            path="/r2"
-            exact
-            render={() => {
-              return (
-                <div>
-                  <h1>This is R2</h1>
-                </div>
-              );
-            }}
-          />
+          <Route path="(/|/index.html)" exact component={this.homePage} />
         </div>
       </Router>
     );

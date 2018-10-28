@@ -1,8 +1,8 @@
+import { CognitoAuth } from 'amazon-cognito-auth-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { MadUtils } from './MadUtils';
-import { CognitoAuth } from 'amazon-cognito-auth-js';
 import renderer from 'react-test-renderer';
 
 jest.mock('amazon-cognito-auth-js');
@@ -17,84 +17,40 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-test('userOrFalse() can be called', () => {
-  let app = new App();
-  //  app.userOrFalse();
-});
+function findLoginButton(component) {
+  return component.findAll(
+    e => e.props.text && e.props.text.match(/log in/i)
+  )[0];
+}
 
-test("when there's no logged in user, userOrFalse() should return false", () => {
-  // mock so that AmazonCognitoIdentity.CognitoIdToken returns an object with
-  // payload == {}
-  // let auth = new CognitoAuth("hi");
-  // console.log(auth);
-  const resp = { myResp: 'response' };
-  let x = App.getAuth();
-  // console.log(CognitoAuth);
-  // I want to test:
-  // when that function was called
-});
+function createComponent() {
+  return renderer.create(<App />).root;
+}
 
-test('when the user sign in fails it shows a sign in button and disabled start/join buttons', () => {
-  CognitoAuth.mockImplementation(() => {
-    return {
-      parseCognitoWebResponse: function(s) {
-        this.userhandler.onFailure({});
-      }
-    };
-  });
+function getDisabledTexts(component) {
+  return component.findAllByProps({ disabled: true }).map(e => e.props.text);
+}
 
-  const component = renderer.create(<App />).root;
-  expect(
-    component.find(e => e.props.text && e.props.text.match(/log in/i))
-  ).toBeTruthy();
-  const disabledButtonTexts = component
-    .findAllByProps({ disabled: true })
-    .map(e => e.props.text);
-  expect(disabledButtonTexts).toEqual(
+test('when the user sign in fails it shows a sign in button', () => {
+  // mock out cognito so signinFailed is called when sign in is attempted
+  const component = createComponent();
+  expect(findLoginButton(component)).toBeTruthy();
+  expect(getDisabledTexts(component)).toEqual(
     expect.arrayContaining(['Start a seder', 'Join a seder'])
   );
 });
 
-test('when user signin succeeds there is no login button', () => {
-  CognitoAuth.mockImplementation(() => {
-    return {
-      parseCognitoWebResponse: function(s) {
-        this.userhandler.onSuccess({});
-      }
-    };
-  });
-  const component = renderer.create(<App />).root;
-  expect(
-    component.findAll(e => e.props.text && e.props.text.match(/log in/i))
-  ).toHaveLength(0);
-});
+test('when the user sign in succeeds it hides the sign in button', () => {
+  const user = { id: '123', email: 'sader@example.com', nickname: 'the dude' };
+  CognitoAuth.mockImplementation(() => ({
+    parseCognitoWebResponse: function() {
+      this.userhandler.onSuccess({ idToken: { decodePayload: () => user } });
+    },
+  }));
 
-test('when user signin succeeds, join/start buttons are enabled', () => {
-  CognitoAuth.mockImplementation(() => {
-    return {
-      parseCognitoWebResponse: function(s) {
-        this.userhandler.onSuccess({});
-      }
-    };
-  });
-  const component = renderer.create(<App />).root;
-  const disabledButtonTexts = component
-    .findAllByProps({ disabled: true })
-    .map(e => e.props.text);
-  expect(disabledButtonTexts).toHaveLength(0);
-  expect(
-    component.find(e => e.props.text && e.props.text.match(/start a seder/i))
-  ).toBeTruthy();
-  expect(
-    component.find(e => e.props.text && e.props.text.match(/join a seder/i))
-  ).toBeTruthy();
-});
-
-test('when the user sign in succeeds it shows the user name', () => {
-  // does not have a log in button
-  // start and join are enabled
-
-  const component = renderer.create(<App />);
-  // would raise if nothing is found
-  // component.root.findByProps({className: "App"}).find(e => e.props.text && e.props.text.match(/Doug/) );
+  const component = createComponent();
+  expect(findLoginButton(component)).toBeFalsy();
+  expect(getDisabledTexts(component)).not.toEqual(
+    expect.arrayContaining(['Start a seder', 'Join a seder'])
+  );
 });
