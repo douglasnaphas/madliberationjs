@@ -1,0 +1,14 @@
+{
+    "scripts": [
+        {
+            "id": 1,
+            "title": "the best script",
+            "description": "out of all the scripts, this is the very best one."
+        },
+        {
+            "id": 2,
+            "title": "lesser script",
+            "description": "this one is just so so."
+        }
+    ]
+}
