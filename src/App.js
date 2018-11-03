@@ -5,8 +5,7 @@ import ButtonRow from './components/ButtonRow';
 import Header from './components/Header';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Route from 'react-router-dom/Route';
-import { CognitoAuth } from 'amazon-cognito-auth-js';
-import { Configs } from './Configs';
+import { signInViaURL } from './lib/cognito';
 import LoggedInHomePage from './components/LoggedInHomePage';
 import PublicHomePage from './components/PublicHomePage';
 
@@ -14,22 +13,14 @@ class App extends Component {
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
-    const authData = Configs.authData();
-    const auth = new CognitoAuth(authData);
-    auth.userhandler = {
-      onSuccess: ({ idToken }) => {
-        const {
-          ['cognito:username']: id,
-          email,
-          nickname,
-        } = idToken.decodePayload();
-        this.setState({ user: { id, email, nickname }, isSigningIn: false });
+    signInViaURL(window.location.href, {
+      onSuccess: user => {
+        this.setState({ user, isSigningIn: false });
       },
       onFailure: error => {
         this.setState({ user: null, isSigningIn: false });
       },
-    };
-    auth.parseCognitoWebResponse(window.location.href);
+    });
   }
 
   get homePage() {
