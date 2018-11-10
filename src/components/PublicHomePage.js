@@ -24,7 +24,7 @@ class PublicHomePage extends Component {
     return (
       <div>
         <MenuAppBar />
-        <div data-x="x">
+        <div>
           <Button
             title="Log in"
             variant="contained"
@@ -55,7 +55,6 @@ class PublicHomePage extends Component {
             Join a seder
           </Button>
         </div>
-        <div>xyz</div>
       </div>
     );
   }
