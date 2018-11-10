@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Configs } from '../Configs';
-import { CognitoAuth, CognitoIdToken } from 'amazon-cognito-auth-js';
 import MenuAppBar from './MenuAppBar';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
