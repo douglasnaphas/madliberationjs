@@ -19,7 +19,6 @@ const styles = theme => ({
 
 class PublicHomePage extends Component {
   render() {
-    console.log('PublicHomePage render called....');
     const { classes } = this.props;
 
     return (
