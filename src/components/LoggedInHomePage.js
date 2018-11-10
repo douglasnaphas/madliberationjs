@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import Header from './Header';
-import ButtonRow from './ButtonRow';
 import { Configs } from '../Configs';
 import { CognitoAuth, CognitoIdToken } from 'amazon-cognito-auth-js';
-import NavBar from './NavBar';
 import MenuAppBar from './MenuAppBar';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';

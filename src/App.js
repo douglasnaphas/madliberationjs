@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Header from './components/Header';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Route from 'react-router-dom/Route';
 import { CognitoAuth } from 'amazon-cognito-auth-js';
