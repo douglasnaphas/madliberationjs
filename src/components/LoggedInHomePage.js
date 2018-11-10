@@ -25,6 +25,7 @@ class LoggedInHomePage extends Component {
       <div>
         <MenuAppBar />
         <div>
+          <br />
           <Button
             title="Start a seder"
             variant="contained"

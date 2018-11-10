@@ -63,7 +63,7 @@ class MenuAppBar extends React.Component {
             label={auth ? 'Logout' : 'Login'}
           />
         </FormGroup>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton
               className={classes.menuButton}

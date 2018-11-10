@@ -25,6 +25,7 @@ class PublicHomePage extends Component {
       <div>
         <MenuAppBar />
         <div>
+          <br />
           <Button
             title="Log in"
             variant="contained"
