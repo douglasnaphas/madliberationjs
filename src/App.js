@@ -11,14 +11,21 @@ class App extends Component {
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
+    this._isMounted = true;
     signIn({ url: window.location, storage: window.localStorage })
       .then(user => {
-        history.replace(window.location.pathname);
-        this.setState({ user, isSigningIn: false });
+        if (this._isMounted) {
+          history.replace(window.location.pathname);
+          this.setState({ user, isSigningIn: false });
+        }
       })
       .catch(_error => {
-        this.setState({ user: null, isSigningIn: false });
+        if (this._isMounted) this.setState({ user: null, isSigningIn: false });
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   get homePage() {
