@@ -1,25 +1,60 @@
-import React, { Component } from "react";
-import Header from "./Header";
-import ButtonRow from "./ButtonRow";
-import { Configs } from "../Configs";
-import { CognitoAuth, CognitoIdToken } from "amazon-cognito-auth-js";
-import PublicHomePage from "./PublicHomePage";
+import React, { Component } from 'react';
+import { Configs } from '../Configs';
+import MenuAppBar from './MenuAppBar';
+import { Button } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
-class LoggedInHomePage extends Component {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: 'none'
+  }
+});
+
+class HomePage extends Component {
   render() {
-    let authData = Configs.authData();
-    let auth = new CognitoAuth(authData);
-    if (auth.getCurrentUser() == null) {
-      return <PublicHomePage />;
-    }
+    const { classes } = this.props;
+
     return (
       <div>
-        <Header />
-        <ButtonRow text="Start a seder" disabled />
-        <ButtonRow text="Join a seder" disabled />
+        <MenuAppBar />
+        <div>
+          <br />
+          <Button
+            title="Log in"
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            href={Configs.loginUrl()}
+          >
+            Log in
+          </Button>
+        </div>
+        <div>
+          <Button
+            title="Start a seder"
+            variant="contained"
+            className={classes.button}
+            disabled
+          >
+            Start a seder
+          </Button>
+        </div>
+        <div>
+          <Button
+            title="Join a seder"
+            variant="contained"
+            className={classes.button}
+            disabled
+          >
+            Join a seder
+          </Button>
+        </div>
       </div>
     );
   }
 }
 
-export default LoggedInHomePage;
+export default withStyles(styles)(HomePage);
