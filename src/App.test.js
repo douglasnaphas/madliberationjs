@@ -1,11 +1,12 @@
-import { CognitoAuth } from 'amazon-cognito-auth-js';
+import { signIn } from './lib/cognito';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { MadUtils } from './MadUtils';
 import renderer from 'react-test-renderer';
 
-jest.mock('amazon-cognito-auth-js');
+jest.mock('./lib/cognito');
+signIn.mockReturnValue(Promise.reject(null));
 
 test('adds 1 + 2 to equal 3', () => {
   expect(MadUtils.addNums(1, 2)).toBe(3);
@@ -41,16 +42,23 @@ test('when the user sign in fails it shows a sign in button', () => {
 });
 
 test('when the user sign in succeeds it hides the sign in button', () => {
-  const user = { id: '123', email: 'sader@example.com', nickname: 'the dude' };
-  CognitoAuth.mockImplementation(() => ({
-    parseCognitoWebResponse: function() {
-      this.userhandler.onSuccess({ idToken: { decodePayload: () => user } });
-    },
-  }));
+  return new Promise(resolveTest => {
+    const user = {
+      id: '123',
+      email: 'sader@example.com',
+      nickname: 'the dude',
+    };
+    signIn.mockReturnValue(
+      new Promise(resolve => {
+        resolve(user);
+        resolveTest();
+      })
+    );
+    const component = createComponent();
 
-  const component = createComponent();
-  expect(findLoginButton(component)).toBeFalsy();
-  expect(getDisabledTexts(component)).not.toEqual(
-    expect.arrayContaining(['Start a seder', 'Join a seder'])
-  );
+    expect(findLoginButton(component)).toBeFalsy();
+    expect(getDisabledTexts(component)).not.toEqual(
+      expect.arrayContaining(['Start a seder', 'Join a seder'])
+    );
+  });
 });

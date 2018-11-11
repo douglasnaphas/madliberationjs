@@ -1,8 +1,7 @@
-import React, { Component } from "react";
-import Header from "./Header";
-import ButtonRow from "./ButtonRow";
-import { Configs } from "../Configs";
-import { CognitoAuth, CognitoIdToken } from "amazon-cognito-auth-js";
+import React, { Component } from 'react';
+import Header from './Header';
+import ButtonRow from './ButtonRow';
+import { Configs } from '../Configs';
 
 class PublicHomePage extends Component {
   render() {

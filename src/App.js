@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import ButtonRow from './components/ButtonRow';
-import Header from './components/Header';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Route from 'react-router-dom/Route';
-import { signInViaURL } from './lib/cognito';
 import LoggedInHomePage from './components/LoggedInHomePage';
 import PublicHomePage from './components/PublicHomePage';
+import React, { Component } from 'react';
+import Route from 'react-router-dom/Route';
+import { Router } from 'react-router-dom';
+import { signIn } from './lib/cognito';
+import history from './history';
 
 class App extends Component {
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
-    signInViaURL(window.location.href, {
-      onSuccess: user => {
+    signIn({ url: window.location, storage: window.localStorage })
+      .then(user => {
+        history.replace(window.location.pathname);
         this.setState({ user, isSigningIn: false });
-      },
-      onFailure: error => {
+      })
+      .catch(_error => {
         this.setState({ user: null, isSigningIn: false });
-      },
-    });
+      });
   }
 
   get homePage() {
@@ -29,10 +27,13 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Route path="(/|/index.html)" exact component={this.homePage} />
-        </div>
+      <Router {...{ history }}>
+        <React.Fragment>
+          {this.state.user ? <div>you're signed in</div> : null}
+          <div className="App">
+            <Route path="(/|/index.html)" exact component={this.homePage} />
+          </div>
+        </React.Fragment>
       </Router>
     );
   }
