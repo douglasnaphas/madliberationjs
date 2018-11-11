@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Configs } from '../Configs';
-import MenuAppBar from './MenuAppBar';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
+import MenuAppBar from './MenuAppBar';
+
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
   input: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
 class LoggedInHomePage extends Component {

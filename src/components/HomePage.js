@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import { Configs } from '../Configs';
+import ButtonRow from './ButtonRow';
+import Header from './Header';
 import MenuAppBar from './MenuAppBar';
+import React, { Component } from 'react';
 import { Button } from '@material-ui/core';
+import { Configs } from '../Configs';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
   },
   input: {
-    display: 'none'
-  }
+    display: 'none',
+  },
 });
 
 class HomePage extends Component {

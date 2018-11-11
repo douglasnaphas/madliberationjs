@@ -1,19 +1,15 @@
-
+import './App.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Component } from 'react';
 import Route from 'react-router-dom/Route';
 import { Router } from 'react-router-dom';
 
-import './App.css';
 import LoggedInHomePage from './components/LoggedInHomePage';
-import MenuAppBar from './components/MenuAppBar';
 import PublicHomePage from './components/PublicHomePage';
 import history from './history';
-import { Configs } from './Configs';
 import { signIn } from './lib/cognito';
 
 class App extends Component {
-
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
@@ -48,7 +44,6 @@ class App extends Component {
           </div>
         </Router>
       </React.Fragment>
-
     );
   }
 }
