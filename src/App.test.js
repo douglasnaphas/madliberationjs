@@ -32,6 +32,12 @@ function getDisabledTexts(component) {
   return component.findAllByProps({ disabled: true }).map(e => e.props.text);
 }
 
+function findOneComponentByText(rootComponent, regex) {
+  return rootComponent.findAll(
+    e => e.props.text && e.props.text.match(regex)
+  )[0];
+}
+
 test('when the user sign in fails it shows a sign in button', () => {
   // mock out cognito so signinFailed is called when sign in is attempted
   const component = createComponent();
@@ -41,24 +47,26 @@ test('when the user sign in fails it shows a sign in button', () => {
   );
 });
 
-test('when the user sign in succeeds it hides the sign in button', () => {
+test('when user sign-in succeeds it hides the sign in button, enables others', () => {
+  expect.assertions(3);
   return new Promise(resolveTest => {
     const user = {
       id: '123',
-      email: 'sader@example.com',
-      nickname: 'the dude',
+      email: 'sederer@example.com',
+      nickname: 'the dude'
     };
     signIn.mockReturnValue(
-      new Promise(resolve => {
-        resolve(user);
-        resolveTest();
+      new Promise(resolveMock => {
+        resolveMock(user);
       })
     );
     const component = createComponent();
-
-    expect(findLoginButton(component)).toBeFalsy();
+    resolveTest(component);
+  }).then(component => {
+    expect(findOneComponentByText(component, /log in/i)).toBeFalsy();
     expect(getDisabledTexts(component)).not.toEqual(
       expect.arrayContaining(['Start a seder', 'Join a seder'])
     );
+    expect(findOneComponentByText(component, /Start a seder/i)).toBeTruthy();
   });
 });
