@@ -48,25 +48,23 @@ test('when the user sign in fails it shows a sign in button', () => {
 });
 
 test('when user sign-in succeeds it hides the sign in button, enables others', () => {
-  expect.assertions(3);
-  return new Promise(resolveTest => {
-    const user = {
-      id: '123',
-      email: 'sederer@example.com',
-      nickname: 'the dude'
-    };
-    signIn.mockReturnValue(
-      new Promise(resolveMock => {
-        resolveMock(user);
-      })
-    );
-    const component = createComponent();
-    resolveTest(component);
-  }).then(component => {
-    expect(findOneComponentByText(component, /log in/i)).toBeFalsy();
-    expect(getDisabledTexts(component)).not.toEqual(
-      expect.arrayContaining(['Start a seder', 'Join a seder'])
-    );
-    expect(findOneComponentByText(component, /Start a seder/i)).toBeTruthy();
+  const user = {
+    id: '123',
+    email: 'sederer@example.com',
+    nickname: 'the dude',
+  };
+
+  signIn.mockReturnValue({
+    then: cb => {
+      cb(user);
+      return { catch: () => undefined };
+    },
   });
+
+  const component = createComponent();
+  expect(findOneComponentByText(component, /log in/i)).toBeFalsy();
+  expect(getDisabledTexts(component)).not.toEqual(
+    expect.arrayContaining(['Start a seder', 'Join a seder'])
+  );
+  expect(findOneComponentByText(component, /Start a seder/i)).toBeTruthy();
 });
