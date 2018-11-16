@@ -1,4 +1,4 @@
-import { CognitoAuth } from 'amazon-cognito-auth-js';
+import { signIn } from './lib/cognito';
 import React from 'react';
 import App from './App';
 import { createMount } from '@material-ui/core/test-utils';
@@ -9,7 +9,9 @@ import LoggedInHomePage from './components/LoggedInHomePage';
 import { wrap } from 'module';
 
 configure({ adapter: new Adapter() });
-jest.mock('amazon-cognito-auth-js');
+
+jest.mock('./lib/cognito');
+signIn.mockReturnValue(Promise.reject(null));
 
 describe('testing <App />', () => {
   let mount;
@@ -29,18 +31,22 @@ describe('testing <App />', () => {
   });
 
   test('when the user sign in succeeds it hides the sign in button', () => {
+    expect.assertions(2);
     const user = {
       id: '123',
       email: 'sederer@example.com',
       nickname: 'the dude'
     };
-    CognitoAuth.mockImplementation(() => ({
-      parseCognitoWebResponse: function() {
-        this.userhandler.onSuccess({ idToken: { decodePayload: () => user } });
-      }
-    }));
-    const wrapper = mount(<App />);
-    expect(wrapper.containsMatchingElement(<PublicHomePage />)).toBeFalsy();
-    expect(wrapper.containsMatchingElement(<LoggedInHomePage />)).toBeTruthy();
+
+    signIn.mockReturnValue(Promise.resolve(user));
+
+    return new Promise(resolveTest => {
+      wrapper = mount(<App />);
+    }).then(component => {
+      expect(wrapper.containsMatchingElement(<PublicHomePage />)).toBeFalsy();
+      expect(
+        wrapper.containsMatchingElement(<LoggedInHomePage />)
+      ).toBeTruthy();
+    });
   });
 });

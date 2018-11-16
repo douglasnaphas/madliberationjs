@@ -1,35 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { BrowserRouter as Router } from 'react-router-dom';
+import React, { Component } from 'react';
 import Route from 'react-router-dom/Route';
-import { CognitoAuth } from 'amazon-cognito-auth-js';
-import { Configs } from './Configs';
+import { Router } from 'react-router-dom';
+
+import './App.css';
 import LoggedInHomePage from './components/LoggedInHomePage';
-import PublicHomePage from './components/PublicHomePage';
 import MenuAppBar from './components/MenuAppBar';
+import PublicHomePage from './components/PublicHomePage';
+import history from './history';
+import { Configs } from './Configs';
+import { signIn } from './lib/cognito';
 
 class App extends Component {
+
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
-    const authData = Configs.authData();
-    const auth = new CognitoAuth(authData);
-    auth.userhandler = {
-      onSuccess: ({ idToken }) => {
-        const {
-          ['cognito:username']: id,
-          email,
-          nickname
-        } = idToken.decodePayload();
-        this.setState({ user: { id, email, nickname }, isSigningIn: false });
-      },
-      onFailure: error => {
-        this.setState({ user: null, isSigningIn: false });
-      }
-    };
-    auth.parseCognitoWebResponse(window.location.href);
+    this._isMounted = true;
+    signIn({ url: window.location, storage: window.localStorage })
+      .then(user => {
+        if (this._isMounted) {
+          history.replace(window.location.pathname);
+          this.setState({ user, isSigningIn: false });
+        }
+      })
+      .catch(_error => {
+        if (this._isMounted) this.setState({ user: null, isSigningIn: false });
+      });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   get homePage() {
@@ -40,12 +42,13 @@ class App extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Router>
+        <Router {...{ history }}>
           <div className="App">
             <Route path="(/|/index.html)" exact component={this.homePage} />
           </div>
         </Router>
       </React.Fragment>
+
     );
   }
 }
