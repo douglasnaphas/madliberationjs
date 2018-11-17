@@ -38,7 +38,6 @@ describe('testing <App />', () => {
     };
     signIn.mockReturnValue(Promise.resolve(user));
     const wrapper = await mount(<App />);
-    await wrapper.instance().componentDidMount();
     wrapper.update();
     expect(wrapper.containsMatchingElement(<LoggedInHomePage />)).toBeTruthy();
     expect(wrapper.containsMatchingElement(<PublicHomePage />)).toBeFalsy();
