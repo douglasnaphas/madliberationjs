@@ -32,17 +32,17 @@ describe('testing <App />', () => {
 
   test('when the user sign in succeeds it hides the sign in button', () => {
     expect.assertions(2);
-    const user = {
-      id: '123',
-      email: 'sederer@example.com',
-      nickname: 'the dude'
-    };
-
-    signIn.mockReturnValue(Promise.resolve(user));
-
     return new Promise(resolveTest => {
-      wrapper = mount(<App />);
-    }).then(component => {
+      const user = {
+        id: '123',
+        email: 'sederer@example.com',
+        nickname: 'the dude'
+      };
+      signIn.mockReturnValue(Promise.resolve(user));
+
+      const wrapper = mount(<App />);
+      resolveTest(wrapper);
+    }).then(wrapper => {
       expect(wrapper.containsMatchingElement(<PublicHomePage />)).toBeFalsy();
       expect(
         wrapper.containsMatchingElement(<LoggedInHomePage />)
