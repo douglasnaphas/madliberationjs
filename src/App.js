@@ -1,13 +1,19 @@
-import './App.css';
-import LoggedInHomePage from './components/LoggedInHomePage';
-import PublicHomePage from './components/PublicHomePage';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Component } from 'react';
 import Route from 'react-router-dom/Route';
 import { Router } from 'react-router-dom';
-import { signIn } from './lib/cognito';
+
+import './App.css';
+import LoggedInHomePage from './components/LoggedInHomePage';
+import MenuAppBar from './components/MenuAppBar';
+import PublicHomePage from './components/PublicHomePage';
 import history from './history';
+import { Configs } from './Configs';
+import { signIn } from './lib/cognito';
 
 class App extends Component {
+
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
@@ -34,14 +40,15 @@ class App extends Component {
 
   render() {
     return (
-      <Router {...{ history }}>
-        <React.Fragment>
-          {this.state.user ? <div>you're signed in</div> : null}
+      <React.Fragment>
+        <CssBaseline />
+        <Router {...{ history }}>
           <div className="App">
             <Route path="(/|/index.html)" exact component={this.homePage} />
           </div>
-        </React.Fragment>
-      </Router>
+        </Router>
+      </React.Fragment>
+
     );
   }
 }
