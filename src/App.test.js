@@ -30,23 +30,17 @@ describe('testing <App />', () => {
     expect(wrapper.containsMatchingElement(<LoggedInHomePage />)).toBeFalsy();
   });
 
-  test('when the user sign in succeeds it hides the sign in button', () => {
-    expect.assertions(2);
-    return new Promise(resolveTest => {
-      const user = {
-        id: '123',
-        email: 'sederer@example.com',
-        nickname: 'the dude'
-      };
-      signIn.mockReturnValue(Promise.resolve(user));
-
-      const wrapper = mount(<App />);
-      resolveTest(wrapper);
-    }).then(wrapper => {
-      expect(wrapper.containsMatchingElement(<PublicHomePage />)).toBeFalsy();
-      expect(
-        wrapper.containsMatchingElement(<LoggedInHomePage />)
-      ).toBeTruthy();
-    });
+  test('when the user sign in succeeds it shows the logged-in home page', async () => {
+    const user = {
+      id: '123',
+      email: 'sederer@example.com',
+      nickname: 'the dude'
+    };
+    signIn.mockReturnValue(Promise.resolve(user));
+    const wrapper = await mount(<App />);
+    await wrapper.instance().componentDidMount();
+    wrapper.update();
+    expect(wrapper.containsMatchingElement(<LoggedInHomePage />)).toBeTruthy();
+    expect(wrapper.containsMatchingElement(<PublicHomePage />)).toBeFalsy();
   });
 });
