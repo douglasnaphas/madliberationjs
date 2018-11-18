@@ -1,4 +1,3 @@
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Component } from 'react';
 import Route from 'react-router-dom/Route';
@@ -13,7 +12,6 @@ import { Configs } from './Configs';
 import { signIn } from './lib/cognito';
 
 class App extends Component {
-
   state = { user: undefined, isSigningIn: true };
 
   componentDidMount() {
@@ -44,11 +42,20 @@ class App extends Component {
         <CssBaseline />
         <Router {...{ history }}>
           <div className="App">
-            <Route path="(/|/index.html)" exact component={this.homePage} />
+            <Route
+              path="(/|/index.html)"
+              exact
+              render={props =>
+                this.state.user ? (
+                  <LoggedInHomePage {...props} user={this.state.user} />
+                ) : (
+                  <PublicHomePage {...props} />
+                )
+              }
+            />
           </div>
         </Router>
       </React.Fragment>
-
     );
   }
 }
