@@ -94,18 +94,8 @@ class MenuAppBar extends React.Component {
             )}
           </Toolbar>
         </AppBar>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={auth}
-                onChange={this.handleChange}
-                aria-label="LoginSwitch"
-              />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup>
+        <br />
+        <br />
       </div>
     );
   }
