@@ -31,10 +31,6 @@ class MenuAppBar extends React.Component {
     anchorEl: null
   };
 
-  handleChange = event => {
-    this.setState({ auth: event.target.checked });
-  };
-
   handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -72,6 +68,7 @@ class MenuAppBar extends React.Component {
                 >
                   <AccountCircle />
                 </IconButton>
+                {user.nickname}
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
