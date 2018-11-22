@@ -9,22 +9,16 @@ import {
   getAccessToken
 } from './cognito';
 
-class MyStorage {
+class MockStorage {
   constructor() {}
   setItem = (k, v) => {
-    // Object.defineProperty(this, k, { value: v, writable: true });
     this[k] = v;
-    console.log(`this.${k} set to ${this[k]}`);
   };
-  getItem = k => this[k];
+  getItem = k => this[k] || null;
+  removeItem = k => {
+    delete this[k];
+  };
 }
-
-test('...', () => {
-  const myStorage = new MyStorage();
-  myStorage.setItem('abc', 'def');
-  console.log(myStorage.abc);
-  console.log(myStorage.getItem('abc'));
-});
 
 const idTokenInHash =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9' +
@@ -114,10 +108,20 @@ const urlWithSearchAndHashWithTokens = {
 };
 
 describe('signIn', () => {
-  test('a url with tokens should resolve to a signed-in user', () => {
-    const storage = {};
-    const expectedUser = {};
+  test('tokens in url, empty storage', () => {
+    expect.assertions(3);
+    const storage = new MockStorage();
+    signIn({ url: urlWithSearchWithTokens, storage: storage }).then(u => {
+      expect(u).toEqual(userInSearch);
+      expect(storage.getItem(`${COGNITO}.${ID_TOKEN}`)).toEqual(
+        idTokenInSearch
+      );
+      expect(storage.getItem(`${COGNITO}.${ACCESS_TOKEN}`)).toEqual(
+        accessTokenInSearch
+      );
+    });
   });
+  test('no tokens in url, tokens in storage', () => {});
 });
 
 describe('parseURL', () => {
