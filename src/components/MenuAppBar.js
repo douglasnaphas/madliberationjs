@@ -28,12 +28,7 @@ const styles = {
 
 class MenuAppBar extends React.Component {
   state = {
-    auth: true,
     anchorEl: null
-  };
-
-  handleChange = event => {
-    this.setState({ auth: event.target.checked });
   };
 
   handleMenu = event => {
@@ -45,8 +40,8 @@ class MenuAppBar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { auth, anchorEl } = this.state;
+    const { user, classes } = this.props;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     return (
@@ -63,7 +58,7 @@ class MenuAppBar extends React.Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Mad Liberation
             </Typography>
-            {auth && (
+            {user && (
               <div>
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : undefined}
@@ -73,6 +68,7 @@ class MenuAppBar extends React.Component {
                 >
                   <AccountCircle />
                 </IconButton>
+                {user.nickname}
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
@@ -87,25 +83,14 @@ class MenuAppBar extends React.Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
                 </Menu>
               </div>
             )}
           </Toolbar>
         </AppBar>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={auth}
-                onChange={this.handleChange}
-                aria-label="LoginSwitch"
-              />
-            }
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup>
+        <br />
+        <br />
       </div>
     );
   }

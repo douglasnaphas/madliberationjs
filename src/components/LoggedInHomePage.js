@@ -15,11 +15,11 @@ const styles = theme => ({
 
 class LoggedInHomePage extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
 
     return (
       <div>
-        <MenuAppBar />
+        <MenuAppBar user={user} />
         <div>
           <br />
           <Button
