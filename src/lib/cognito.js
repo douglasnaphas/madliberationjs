@@ -1,3 +1,5 @@
+import { exec } from 'child_process';
+
 const ID_TOKEN = 'id_token';
 const ACCESS_TOKEN = 'access_token';
 const COGNITO = 'cognito';
@@ -44,10 +46,17 @@ function signIn({ url, storage }) {
 
 /**
  * @param {String} idToken A Base64-encoded JSON Web Token.
- * @return {Object} The claims in the body of idToken.
+ * @return {Object} The claims in the body of idToken, or undefined if
+ * idToken cannot be parsed to a user.
  */
 function toUser(idToken) {
-  return JSON.parse(atob(idToken.split('.')[1]));
+  if (!idToken.split) return undefined;
+  const splitToken = idToken.split('.');
+  if (splitToken.length < 2) return undefined;
+  const body = splitToken[1];
+  if (body == '') return undefined;
+  if (/[^-_a-zA-Z0-9+=/]/.exec(body)) return undefined; // bad Base64
+  return JSON.parse(atob(body));
 }
 
 /**
