@@ -32,10 +32,6 @@ class App extends Component {
     this._isMounted = false;
   }
 
-  get homePage() {
-    return this.state.user ? LoggedInHomePage : PublicHomePage;
-  }
-
   render() {
     return (
       <React.Fragment>
