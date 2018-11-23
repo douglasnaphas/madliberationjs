@@ -73,6 +73,11 @@ const searchWithTokens =
   accessTokenInSearch +
   '&expires_in=3600' +
   '&token_type=Bearer';
+const searchWithAccessToken =
+  '#access_token=' +
+  accessTokenInSearch +
+  '&expires_in=3600' +
+  '&token_type=Bearer';
 const parsedSearchWithTokens = {
   id_token: idTokenInSearch,
   access_token: accessTokenInSearch,
@@ -97,18 +102,28 @@ const userInSearch = {
 };
 
 const urlWithHashWithTokens = {
-  hash: hashWithTokens
+  hash: hashWithTokens,
+  search: ''
 };
 const urlWithSearchWithTokens = {
+  hash: '',
   search: searchWithTokens
+};
+const urlWithSearchWithAccessToken = {
+  hash: '',
+  search: searchWithAccessToken
 };
 const urlWithSearchAndHashWithTokens = {
   hash: hashWithTokens,
   search: searchWithTokens
 };
+const urlWithNoSearchNoHash = {
+  hash: '',
+  search: ''
+};
 
 describe('signIn', () => {
-  test('tokens in url, empty storage', () => {
+  test('tokens in url, empty storage, should succeed', () => {
     expect.assertions(3);
     const storage = new MockStorage();
     return signIn({ url: urlWithSearchWithTokens, storage: storage }).then(
@@ -123,7 +138,22 @@ describe('signIn', () => {
       }
     );
   });
-  test('no tokens in url, tokens in storage', () => {});
+  test('no tokens in url, tokens in storage, should succeed', () => {
+    expect.assertions(3);
+    const storage = new MockStorage();
+    storage.setItem(`${COGNITO}.${ID_TOKEN}`, idTokenInHash);
+    storage.setItem(`${COGNITO}.${ACCESS_TOKEN}`, accessTokenInHash);
+    return signIn({ url: urlWithNoSearchNoHash, storage: storage }).then(u => {
+      expect(u).toEqual(userInHash);
+      expect(storage.getItem(`${COGNITO}.${ID_TOKEN}`)).toEqual(idTokenInHash);
+      expect(storage.getItem(`${COGNITO}.${ACCESS_TOKEN}`)).toEqual(
+        accessTokenInHash
+      );
+    });
+  });
+  test('tokens in url and storage, should succeed with url tokens', () => {});
+  test('no tokens in url or storage, should reject', () => {});
+  test('access token in url & storage, should reject, clear storage', () => {});
 });
 
 describe('parseURL', () => {
@@ -139,9 +169,9 @@ describe('parseURL', () => {
     );
   });
   test('parseURL no search no hash', () => {
-    expect(
-      parseURL({ notSearch: 'no search', hashNot: 'no hash' })
-    ).toBeUndefined();
+    expect(parseURL({ notSearch: 'no search', hashNot: 'no hash' })).toEqual(
+      {}
+    );
   });
 });
 

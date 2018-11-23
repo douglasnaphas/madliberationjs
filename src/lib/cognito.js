@@ -65,10 +65,10 @@ function toUser(idToken) {
  * @param {String} search A URL search or query string, like "?q=123&r=4"
  * @param {String} hash A URL hash string, like "#h=123&i=4"
  * @return {Object} A map from keys to values found in the search or hash, or
- * undefined if no search or hash is present
+ * an empty object if no search or hash is present
  */
 function parseURL({ search, hash }) {
-  if (!(search || hash)) return undefined;
+  if (!(search || hash)) return {};
   return (search || hash)
     .slice(1)
     .split('&')
