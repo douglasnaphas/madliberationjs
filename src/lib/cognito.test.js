@@ -151,9 +151,41 @@ describe('signIn', () => {
       );
     });
   });
-  test('tokens in url and storage, should succeed with url tokens', () => {});
-  test('no tokens in url or storage, should reject', () => {});
-  test('access token in url & storage, should reject, clear storage', () => {});
+  test('tokens in url and storage, should succeed with url tokens', () => {
+    expect.assertions(3);
+    const storage = new MockStorage();
+    storage.setItem(`${COGNITO}.${ID_TOKEN}`, idTokenInSearch);
+    storage.setItem(`${COGNITO}.${ACCESS_TOKEN}`, accessTokenInSearch);
+    return signIn({ url: urlWithHashWithTokens, storage: storage }).then(u => {
+      expect(u).toEqual(userInHash);
+      expect(storage.getItem(`${COGNITO}.${ID_TOKEN}`)).toEqual(idTokenInHash);
+      expect(storage.getItem(`${COGNITO}.${ACCESS_TOKEN}`)).toEqual(
+        accessTokenInHash
+      );
+    });
+  });
+  test('no tokens in url or storage, should reject', () => {
+    expect.assertions(3);
+    const storage = new MockStorage();
+    return signIn({ url: urlWithNoSearchNoHash, storage: storage }).catch(e => {
+      expect(e).toBeNull();
+      expect(storage.getItem(`${COGNITO}.${ID_TOKEN}`)).toBeNull();
+      expect(storage.getItem(`${COGNITO}.${ACCESS_TOKEN}`)).toBeNull();
+    });
+  });
+  test('access token in url & storage, should reject, clear storage', () => {
+    expect.assertions(3);
+    const storage = new MockStorage();
+    storage.setItem(`${COGNITO}.${ACCESS_TOKEN}`, accessTokenInSearch);
+    return signIn({
+      url: urlWithSearchWithAccessToken,
+      storage: storage
+    }).catch(e => {
+      expect(e).toBeNull();
+      expect(storage.getItem(`${COGNITO}.${ID_TOKEN}`)).toBeNull();
+      expect(storage.getItem(`${COGNITO}.${ACCESS_TOKEN}`)).toBeNull();
+    });
+  });
 });
 
 describe('parseURL', () => {
