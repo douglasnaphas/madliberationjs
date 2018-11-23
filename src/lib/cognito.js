@@ -50,6 +50,7 @@ function signIn({ url, storage }) {
  * idToken cannot be parsed to a user.
  */
 function toUser(idToken) {
+  if (!idToken) return undefined;
   if (!idToken.split) return undefined;
   const splitToken = idToken.split('.');
   if (splitToken.length < 2) return undefined;

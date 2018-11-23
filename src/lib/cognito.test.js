@@ -194,4 +194,7 @@ describe('toUser', () => {
   test('toUser on a token with invalid Base64, should be undefined', () => {
     expect(toUser('abcdef.HnM8*#@.45h')).toBeUndefined();
   });
+  test('toUser on undefined, should be undefined', () => {
+    expect(toUser(undefined)).toBeUndefined();
+  });
 });
