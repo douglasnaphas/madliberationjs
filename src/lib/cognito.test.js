@@ -111,15 +111,17 @@ describe('signIn', () => {
   test('tokens in url, empty storage', () => {
     expect.assertions(3);
     const storage = new MockStorage();
-    signIn({ url: urlWithSearchWithTokens, storage: storage }).then(u => {
-      expect(u).toEqual(userInSearch);
-      expect(storage.getItem(`${COGNITO}.${ID_TOKEN}`)).toEqual(
-        idTokenInSearch
-      );
-      expect(storage.getItem(`${COGNITO}.${ACCESS_TOKEN}`)).toEqual(
-        accessTokenInSearch
-      );
-    });
+    return signIn({ url: urlWithSearchWithTokens, storage: storage }).then(
+      u => {
+        expect(u).toEqual(userInSearch);
+        expect(storage.getItem(`${COGNITO}.${ID_TOKEN}`)).toEqual(
+          idTokenInSearch
+        );
+        expect(storage.getItem(`${COGNITO}.${ACCESS_TOKEN}`)).toEqual(
+          accessTokenInSearch
+        );
+      }
+    );
   });
   test('no tokens in url, tokens in storage', () => {});
 });
