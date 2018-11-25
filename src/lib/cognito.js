@@ -77,7 +77,12 @@ function parseURL({ search, hash }) {
     .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {});
 }
 
-function signOut() {}
+/**
+ * Clear the access and id tokens from storage, and return a promise that
+ * resolves to an empty object when this is complete.
+ * @param {Storage} storage The place to clear tokens from
+ */
+function signOut(storage) {}
 
 /**
  * @return {String} COGNITO.ACCESS_TOKEN from local storage
