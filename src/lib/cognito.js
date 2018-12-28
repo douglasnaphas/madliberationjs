@@ -45,6 +45,12 @@ function signIn({ url, storage }) {
 }
 
 /**
+ *
+ * @param {*} url
+ */
+function signInGetCookies(url) {}
+
+/**
  * @param {String} idToken A Base64-encoded JSON Web Token.
  * @return {Object} The claims in the body of idToken, or undefined if
  * idToken cannot be parsed to a user.
