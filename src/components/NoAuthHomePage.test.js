@@ -6,7 +6,6 @@ import { MemoryRouter } from 'react-router';
 import React from 'react';
 import { wrap } from 'module';
 
-import App from '../App';
 import NoAuthHomePage from './NoAuthHomePage';
 
 configure({ adapter: new Adapter() });
