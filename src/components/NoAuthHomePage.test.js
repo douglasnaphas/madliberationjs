@@ -52,4 +52,7 @@ describe('testing <App />', () => {
       )
     ).toBeTruthy();
   });
+  test('Menu should link to Home, About, and How to Play', () => {});
+  test('Start a seder button should link to /pick-script', () => {});
+  test('Join a seder button should link to /enter-room-code', () => {});
 });
