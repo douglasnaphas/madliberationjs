@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import Route from 'react-router-dom/Route';
 import { Router } from 'react-router-dom';
 
+import About from './components/About';
 import './App.css';
+import HowToPlay from './components/HowToPlay';
 import LoggedInHomePage from './components/LoggedInHomePage';
 import MenuAppBar from './components/MenuAppBar';
 import NoAuthHomePage from './components/NoAuthHomePage';
@@ -12,6 +14,7 @@ import history from './history';
 import { Configs } from './Configs';
 import { signIn } from './lib/cognito';
 import PickScriptPage from './components/PickScriptPage';
+import EnterRoomCodePage from './components/EnterRoomCodePage';
 
 class App extends Component {
   state = { user: undefined, isSigningIn: true };
@@ -39,6 +42,17 @@ class App extends Component {
               path="/pick-script"
               exact
               render={props => <PickScriptPage {...props} />}
+            />
+            <Route path="/about" exact render={props => <About {...props} />} />
+            <Route
+              path="/how-to-play"
+              exact
+              render={props => <HowToPlay {...props} />}
+            />
+            <Route
+              path="/enter-room-code"
+              exact
+              render={props => <EnterRoomCodePage {...props} />}
             />
           </div>
         </Router>

@@ -39,6 +39,8 @@ class NoAuthHomePage extends Component {
             title="Join a seder"
             variant="contained"
             className={classes.button}
+            component={Link}
+            to="/enter-room-code"
           >
             Join a seder
           </Button>

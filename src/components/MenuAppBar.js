@@ -64,8 +64,12 @@ class MenuAppBar extends React.Component {
         <MenuItem onClick={this.handleLeftClose}>
           <Link to="/">Home</Link>
         </MenuItem>
-        <MenuItem onClick={this.handleLeftClose}>About</MenuItem>
-        <MenuItem onClick={this.handleLeftClose}>How to play</MenuItem>
+        <MenuItem onClick={this.handleLeftClose}>
+          <Link to="/about">About</Link>
+        </MenuItem>
+        <MenuItem onClick={this.handleLeftClose}>
+          <Link to="/how-to-play">How to play</Link>
+        </MenuItem>
       </Menu>
     );
 
