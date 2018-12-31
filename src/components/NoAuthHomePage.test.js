@@ -2,6 +2,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Button } from '@material-ui/core';
 import { configure } from 'enzyme';
 import { createMount } from '@material-ui/core/test-utils';
+import { MemoryRouter } from 'react-router';
 import React from 'react';
 import { wrap } from 'module';
 
@@ -22,7 +23,11 @@ describe('testing <App />', () => {
   });
 
   test('/ should show the NoAuthHomePage', async () => {
-    const wrapper = await mount(<App />);
+    const wrapper = await mount(
+      <MemoryRouter>
+        <NoAuthHomePage />
+      </MemoryRouter>
+    );
     wrapper.update();
     expect(wrapper.containsMatchingElement(<NoAuthHomePage />)).toBeTruthy();
     expect(
