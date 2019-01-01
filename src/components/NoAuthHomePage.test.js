@@ -2,7 +2,9 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Button } from '@material-ui/core';
 import { configure } from 'enzyme';
 import { createMount } from '@material-ui/core/test-utils';
+import { Link } from 'react-router-dom';
 import { MemoryRouter } from 'react-router';
+import PickScriptPage from './PickScriptPage';
 import React from 'react';
 import { wrap } from 'module';
 
@@ -10,8 +12,30 @@ import NoAuthHomePage from './NoAuthHomePage';
 
 configure({ adapter: new Adapter() });
 
-describe('testing <App />', () => {
+describe('<NoAuthHomePage />', () => {
   let mount;
+  const startSederButton = (
+    <Button
+      title="Start a seder"
+      variant="contained"
+      // className={classes.button}
+      component={Link}
+      to="/pick-script"
+    >
+      Start a seder
+    </Button>
+  );
+  const joinSederButton = (
+    <Button
+      title="Join a seder"
+      variant="contained"
+      // className={classes.button}
+      component={Link}
+      to="/enter-room-code"
+    >
+      Join a seder
+    </Button>
+  );
 
   beforeEach(() => {
     mount = createMount();
@@ -21,7 +45,7 @@ describe('testing <App />', () => {
     mount.cleanUp();
   });
 
-  test('/ should show the NoAuthHomePage', async () => {
+  test('Should render buttons with the right links', async () => {
     const wrapper = await mount(
       <MemoryRouter>
         <NoAuthHomePage />
@@ -29,30 +53,19 @@ describe('testing <App />', () => {
     );
     wrapper.update();
     expect(wrapper.containsMatchingElement(<NoAuthHomePage />)).toBeTruthy();
+    expect(wrapper.containsMatchingElement(startSederButton)).toBeTruthy();
+    expect(wrapper.containsMatchingElement(joinSederButton)).toBeTruthy();
     expect(
-      wrapper.containsMatchingElement(
-        <Button
-          title="Start a seder"
-          variant="contained"
-          // className={classes.button}
-        >
-          Start a seder
-        </Button>
-      )
+      wrapper.find('[title="Join a seder"]')
+      // .simulate('click')
+      // .containsMatchingElement(<PickScriptPage />)
     ).toBeTruthy();
-    expect(
-      wrapper.containsMatchingElement(
-        <Button
-          title="Join a seder"
-          variant="contained"
-          // className={classes.button}
-        >
-          Join a seder
-        </Button>
-      )
-    ).toBeTruthy();
+    // console.log(wrapper.find('Button[title="Join a seder"]').debug());
+    // console.log(
+    //   wrapper
+    //     .find('Button[title="Join a seder"]')
+    //     .simulate('click')
+    //     .debug()
+    // );
   });
-  test('Menu should link to Home, About, and How to Play', () => {});
-  test('Start a seder button should link to /pick-script', () => {});
-  test('Join a seder button should link to /enter-room-code', () => {});
 });

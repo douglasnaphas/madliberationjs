@@ -15,7 +15,7 @@ configure({ adapter: new Adapter() });
 jest.mock('./lib/cognito');
 // signIn.mockReturnValue(Promise.reject(null));
 
-describe('testing <App />', () => {
+describe('<App />', () => {
   let mount;
 
   beforeEach(() => {
@@ -52,4 +52,13 @@ describe('testing <App />', () => {
     wrapper.update();
     expect(wrapper.containsMatchingElement(<NoAuthHomePage />)).toBeTruthy();
   });
+
+  // integration tests
+  // test('Join a seder flow', async () => {
+  //   const wrapper = await mount(<App />);
+  //   wrapper.update();
+  //   wrapper.find('Button[title="Join a seder"]').simulate('click');
+  //   wrapper.update();
+  //   console.log(wrapper.debug());
+  // });
 });
