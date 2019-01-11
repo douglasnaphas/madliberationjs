@@ -4,6 +4,7 @@ phases:
   install:
     commands:
       - echo "****** I can echo ******"
+      - which apt-get
       # Install dependencies needed for running tests
       - npm install
 
