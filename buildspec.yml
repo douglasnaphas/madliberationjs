@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - echo "****** I can echo ******"
       # Install dependencies needed for running tests
       - npm install
 
