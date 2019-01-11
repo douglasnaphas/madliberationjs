@@ -5,7 +5,8 @@ phases:
     commands:
       - echo "****** I can echo ******"
       - which apt-get
-      - apt-get install libX11-xcb
+      - apt-get update
+      - apt-get install libx11-xcb
       # Install dependencies needed for running tests
       - npm install
 
