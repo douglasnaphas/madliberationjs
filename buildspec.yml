@@ -15,7 +15,9 @@ phases:
   build:
     commands:
       - npm run-script build
-      # Deploy
+      # Deploy to staging
+      - aws s3 sync --content-type "text/html" --exclude "*" --include "*.html" --delete build/ s3://staging.madliberationgame.com/
+      # Deploy to prod
       - aws s3 sync --content-type "text/html" --exclude "*" --include "*.html" --delete build/ s3://madliberationgame.com/
       - aws s3 sync --content-type "text/css" --exclude "*" --include "*.css" --include "*.css.map" --delete build/ s3://madliberationgame.com/
       - aws s3 sync --content-type "text/javascript" --exclude "*" --include "*.js" --include "*.js.map" --delete build/ s3://madliberationgame.com/
@@ -23,4 +25,4 @@ phases:
       - aws s3 sync --content-type "image/x-icon" --exclude "*" --include "*.ico" --delete build/ s3://madliberationgame.com/
       - aws s3 sync --content-type "image/svg+xml" --exclude "*" --include "*.svg" --delete build/ s3://madliberationgame.com/
       # integration test
-      - node src/App.itest.js https://madliberationgame.com
+      - node src/App.itest.js --site https://madliberationgame.com
