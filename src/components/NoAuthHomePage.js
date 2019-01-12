@@ -31,7 +31,7 @@ class NoAuthHomePage extends Component {
             component={Link}
             to="/pick-script"
           >
-            Start a game
+            Start a seder
           </Button>
         </div>
         <div>
