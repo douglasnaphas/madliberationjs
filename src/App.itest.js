@@ -6,14 +6,14 @@ const site = process.argv[2];
 (async () => {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox']
+    args:['--no-sandbox']
   });
   const page = await browser.newPage();
   const waitForXPathOptions = { timeout: 40 };
   await page.goto(site);
 
   await page
-    .waitForXPath('//*[text()="Start a sefder"]', waitForXPathOptions)
+    .waitForXPath('//*[text()="Start a seder"]', waitForXPathOptions)
     .catch(async e => {
       console.log('button not found');
       await browser.close();
