@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Configs } from '../Configs';
 import MenuAppBar from './MenuAppBar';
 import { withStyles } from '@material-ui/core/styles';
 

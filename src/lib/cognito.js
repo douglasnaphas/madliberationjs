@@ -1,5 +1,3 @@
-import { exec } from 'child_process';
-
 const ID_TOKEN = 'id_token';
 const ACCESS_TOKEN = 'access_token';
 const COGNITO = 'cognito';
@@ -61,7 +59,7 @@ function toUser(idToken) {
   const splitToken = idToken.split('.');
   if (splitToken.length < 2) return undefined;
   const body = splitToken[1];
-  if (body == '') return undefined;
+  if (body === '') return undefined;
   if (/[^-_a-zA-Z0-9+=/]/.exec(body)) return undefined; // bad Base64
   return JSON.parse(atob(body));
 }
