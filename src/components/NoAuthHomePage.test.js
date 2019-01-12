@@ -22,7 +22,7 @@ describe('<NoAuthHomePage />', () => {
       component={Link}
       to="/pick-script"
     >
-      Start a seder
+      Start a game
     </Button>
   );
   const joinSederButton = (
