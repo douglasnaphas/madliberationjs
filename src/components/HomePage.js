@@ -34,12 +34,12 @@ class HomePage extends Component {
         </div>
         <div>
           <Button
-            title="Start a game"
+            title="Start a seder"
             variant="contained"
             className={classes.button}
             disabled
           >
-            Start a game
+            Start a seder
           </Button>
         </div>
         <div>
