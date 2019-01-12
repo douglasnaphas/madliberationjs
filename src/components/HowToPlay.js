@@ -21,8 +21,12 @@ class HowToPlay extends Component {
         <MenuAppBar user={user} />
         <div>
           <br />
-          <h1>How to Play Mad Liberation</h1>
-          <h2>A game of seeking freedom through imagination and creativity</h2>
+          <h1>How to Play</h1>
+          <p>
+            Mad Liberation is a game of seeking freedom through imagination and
+            creativity
+          </p>
+          <br />
           <p>Do as you're told on each screen.</p>
         </div>
       </div>
