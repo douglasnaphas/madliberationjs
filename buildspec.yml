@@ -24,8 +24,3 @@ phases:
       - aws s3 sync --content-type "image/svg+xml" --exclude "*" --include "*.svg" --delete build/ s3://madliberationgame.com/
       # integration test
       - node src/App.itest.js https://madliberationgame.com
-
-artifacts:
-  type: zip
-  files:
-    - template-export.yml
