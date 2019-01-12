@@ -78,10 +78,11 @@ class MenuAppBar extends React.Component {
               className={classes.menuButton}
               color="inherit"
               aria-label="Menu"
+              onClick={this.handleLeftMenu}
             >
-              <MenuIcon onClick={this.handleLeftMenu} />
-              {leftMenu}
+              <MenuIcon />
             </IconButton>
+            {leftMenu}
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Mad Liberation
             </Typography>
