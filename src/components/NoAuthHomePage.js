@@ -25,6 +25,7 @@ class NoAuthHomePage extends Component {
         <div>
           <br />
           <Button
+            madliberationid="start-a-seder-button"
             title="Start a seder"
             variant="contained"
             className={classes.button}
@@ -36,6 +37,7 @@ class NoAuthHomePage extends Component {
         </div>
         <div>
           <Button
+            madliberationid="join-a-seder-button"
             title="Join a seder"
             variant="contained"
             className={classes.button}

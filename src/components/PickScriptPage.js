@@ -16,7 +16,7 @@ class PickScriptPage extends Component {
     const { classes, user } = this.props;
 
     return (
-      <div>
+      <div madliberationid="pick-your-script-page">
         <MenuAppBar user={user} />
         <div>
           <br />

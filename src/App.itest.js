@@ -27,26 +27,180 @@ const failTest = async (err, msg, browser) => {
   await browser.close();
   process.exit(1);
 };
+const waitForXPathOrFail = async ({
+  page,
+  xpath,
+  waitOptions,
+  elementDescription,
+  browser
+}) => {
+  await page.waitForXPath(xpath, waitOptions).catch(async e => {
+    failTest(e, 'Failed to find: ' + elementDescription, browser);
+  });
+};
+const waitForSelectorOrFail = async ({
+  page,
+  selector,
+  waitOptions,
+  elementDescription,
+  browser
+}) => {
+  await page.waitForSelector(selector, waitOptions).catch(async e => {
+    failTest(e, 'Failed to find: ' + elementDescription, browser);
+  });
+};
 
 (async () => {
   const browser = await puppeteer.launch(browserOptions);
   const page = await browser.newPage();
-  const waitForXPathOptions = { timeout: timeoutMs };
+  const waitOptions = { timeout: timeoutMs, visible: true };
   await page.goto(site);
 
   // Home Page
   await page
-    .waitForXPath('//*[text()="Start a seder"]', waitForXPathOptions)
+    .waitForXPath('//*[text()="Start a seder"]', waitOptions)
     .catch(async e => {
       failTest(e, 'Start a seder button not found', browser);
     });
   await page
-    .waitForXPath('//*[text()="Join a seder"]', waitForXPathOptions)
+    .waitForXPath('//*[text()="Join a seder"]', waitOptions)
     .catch(async e => {
       failTest(e, 'Join a seder button not found', browser);
     });
 
-  // Start a Seder Page
+  // Pick Your Script Page
+  await Promise.all([
+    page.click('[madliberationid="start-a-seder-button"]'),
+    page.waitForNavigation()
+  ]).catch(async e => {
+    failTest(e, 'Failed to click Start a seder button', browser);
+  });
+  await page
+    .waitForSelector('[madliberationid="pick-your-script-page"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Pick Your Script Page not loaded', browser);
+    });
 
+  // About Page from menu button
+  // Wait for the menu icon
+  await page
+    .waitForSelector(
+      '[madliberationid="app-bar-menu-icon-button"]',
+      waitOptions
+    )
+    .catch(async e => {
+      failTest(e, 'Did not find menu button at top', browser);
+    });
+  // Click menu icon
+  await Promise.all([
+    page.click('[madliberationid="app-bar-menu-icon-button"]')
+  ]).catch(async e => {
+    failTest(e, 'Failed to click app bar menu icon', browser);
+  });
+  // Wait for menu item for About Page to be visible
+  await page
+    .waitForSelector('[madliberationid="menu-about-link"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Did not find About link in menu', browser);
+    });
+  // Click menu item for About Page
+  await Promise.all([
+    page.click('[madliberationid="menu-about-link"]'),
+    page.waitForNavigation()
+  ]).catch(async e => {
+    failTest(e, 'Failed to click About link from menu', browser);
+  });
+  // Confirm the About page is displayed
+  await page
+    .waitForSelector('[madliberationid="about-page"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'About Page not displayed', browser);
+    });
+
+  // How to Play Page from menu button
+  // Wait for the menu icon
+  await page
+    .waitForSelector(
+      '[madliberationid="app-bar-menu-icon-button"]',
+      waitOptions
+    )
+    .catch(async e => {
+      failTest(e, 'Did not find menu button at top', browser);
+    });
+  // Click menu icon
+  await Promise.all([
+    page.click('[madliberationid="app-bar-menu-icon-button"]')
+  ]).catch(async e => {
+    failTest(e, 'Failed to click app bar menu icon', browser);
+  });
+  // Wait for menu item for How to Play Page to be visible
+  await page
+    .waitForSelector('[madliberationid="menu-how-to-play-link"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Did not find How to Play link in menu', browser);
+    });
+  // Click menu item for How to Play Page
+  await Promise.all([
+    page.click('[madliberationid="menu-how-to-play-link"]'),
+    page.waitForNavigation()
+  ]).catch(async e => {
+    failTest(e, 'Failed to click How to Play link from menu', browser);
+  });
+  // Confirm the About page is displayed
+  await page
+    .waitForSelector('[madliberationid="how-to-play-page"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'How to Play Page not displayed', browser);
+    });
+
+  // Back to Home Page with menu button
+  // Wait for the menu icon
+  await page
+    .waitForSelector(
+      '[madliberationid="app-bar-menu-icon-button"]',
+      waitOptions
+    )
+    .catch(async e => {
+      failTest(e, 'Did not find menu button at top', browser);
+    });
+  // Click menu icon
+  await Promise.all([
+    page.click('[madliberationid="app-bar-menu-icon-button"]')
+  ]).catch(async e => {
+    failTest(e, 'Failed to click app bar menu icon', browser);
+  });
+  // Wait for menu item for Home Page to be visible
+  await page
+    .waitForSelector('[madliberationid="menu-home-link"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Did not find Home link in menu', browser);
+    });
+  // Click menu item for Home Page
+  await Promise.all([
+    page.click('[madliberationid="menu-home-link"]'),
+    page.waitForNavigation()
+  ]).catch(async e => {
+    failTest(e, 'Failed to click Home link from menu', browser);
+  });
+
+  // Click Join a Seder button
+  await page
+    .waitForSelector('[madliberationid="join-a-seder-button"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Join a seder button not found', browser);
+    });
+  await Promise.all([
+    page.click('[madliberationid="join-a-seder-button"]'),
+    page.waitForNavigation()
+  ]).catch(async e => {
+    failTest(e, 'Failed to click Join a seder button', browser);
+  });
+  await page
+    .waitForSelector('[madliberationid="enter-room-code-page"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Enter Room Code Page not displayed', browser);
+    });
+
+  //menu-about-link
   await browser.close();
 })();

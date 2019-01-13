@@ -18,7 +18,7 @@ class HowToPlay extends Component {
     return (
       <div>
         <MenuAppBar user={user} />
-        <div>
+        <div madliberationid="how-to-play-page">
           <br />
           <h1>How to Play</h1>
           <p>

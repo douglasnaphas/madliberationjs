@@ -16,7 +16,7 @@ class EnterRoomCodePage extends Component {
     const { classes, user } = this.props;
 
     return (
-      <div>
+      <div madliberationid="enter-room-code-page">
         <MenuAppBar user={user} />
         <div>
           <br />

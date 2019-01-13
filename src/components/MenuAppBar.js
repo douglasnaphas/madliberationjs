@@ -59,13 +59,19 @@ class MenuAppBar extends React.Component {
         onClose={this.handleLeftClose}
       >
         <MenuItem onClick={this.handleLeftClose}>
-          <Link to="/">Home</Link>
+          <Link madliberationid="menu-home-link" to="/">
+            Home
+          </Link>
         </MenuItem>
         <MenuItem onClick={this.handleLeftClose}>
-          <Link to="/about">About</Link>
+          <Link madliberationid="menu-about-link" to="/about">
+            About
+          </Link>
         </MenuItem>
         <MenuItem onClick={this.handleLeftClose}>
-          <Link to="/how-to-play">How to play</Link>
+          <Link madliberationid="menu-how-to-play-link" to="/how-to-play">
+            How to play
+          </Link>
         </MenuItem>
       </Menu>
     );
@@ -75,6 +81,7 @@ class MenuAppBar extends React.Component {
         <AppBar position="fixed">
           <Toolbar>
             <IconButton
+              madliberationid="app-bar-menu-icon-button"
               className={classes.menuButton}
               color="inherit"
               aria-label="Menu"

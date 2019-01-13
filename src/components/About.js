@@ -18,7 +18,7 @@ class About extends Component {
     return (
       <div>
         <MenuAppBar user={user} />
-        <div>
+        <div madliberationid="about-page">
           <br />
           <h1>About</h1>
           <p>Mad Liberation is a game of mad lib haggadahs.</p>
