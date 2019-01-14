@@ -44,7 +44,7 @@ class PickScriptPage extends Component {
     if (this.state.isMounting) {
       spinnerOrScriptMenu = <CircularProgress />;
     } else {
-      spinnerOrScriptMenu = <p>table of scripts</p>;
+      spinnerOrScriptMenu = <ScriptTable scripts={this.state.scripts} />;
     }
 
     return (
@@ -54,7 +54,6 @@ class PickScriptPage extends Component {
           <br />
           <h2>Which script would you like to use?</h2>
         </div>
-        <ScriptTable />
         <div>{spinnerOrScriptMenu}</div>
       </div>
     );

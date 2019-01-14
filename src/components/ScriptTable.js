@@ -29,7 +29,12 @@ const createFourThings = () => {
 
 class ScriptTable extends React.Component {
   render() {
-    return createFourThings();
+    const { scripts } = this.props;
+    const scriptRows = [];
+    for (let i = 0; i < scripts.length; i++) {
+      scriptRows[i] = <div>{scripts[i].haggadah_short_desc.S}</div>;
+    }
+    return scriptRows;
   }
 }
 
