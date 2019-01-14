@@ -18,11 +18,22 @@ class PickScriptPage extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    const scriptsUrl = new URL('/scripts', Configs.apiUrl());
+    fetch(scriptsUrl)
+      .then(r => {
+        this.setState({ isMounting: false });
+        console.log(r);
+        return r.json();
+      })
+      .then(j => {
+        console.log(j);
+      });
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
+
   render() {
     const { classes, user } = this.props;
     var spinnerOrScriptMenu;
@@ -39,10 +50,7 @@ class PickScriptPage extends Component {
           <br />
           <h2>Which script would you like to use?</h2>
         </div>
-        <div>
-          {spinnerOrScriptMenu}
-          {/* <CircularProgress /> */}
-        </div>
+        <div>{spinnerOrScriptMenu}</div>
       </div>
     );
   }
