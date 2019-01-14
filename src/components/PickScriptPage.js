@@ -2,6 +2,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
+import { scripts2table } from '../lib/scripts2table';
+import ScriptTable from './ScriptTable';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -21,12 +23,14 @@ class PickScriptPage extends Component {
     const scriptsUrl = new URL('/scripts', Configs.apiUrl());
     fetch(scriptsUrl)
       .then(r => {
-        this.setState({ isMounting: false });
         console.log(r);
         return r.json();
       })
       .then(j => {
         console.log(j);
+        this.setState({ scripts: j.scripts.Items });
+        this.setState({ isMounting: false });
+        scripts2table();
       });
   }
 
@@ -50,6 +54,7 @@ class PickScriptPage extends Component {
           <br />
           <h2>Which script would you like to use?</h2>
         </div>
+        <ScriptTable />
         <div>{spinnerOrScriptMenu}</div>
       </div>
     );
