@@ -20,7 +20,7 @@ class Configs {
     if (process && process.env && process.env.REACT_APP_MLJSAPI_URL) {
       return process.env.REACT_APP_MLJSAPI_URL;
     }
-    return 'https://n27ceryjxk.execute-api.us-east-1.amazonaws.com/Prod/';
+    return 'https://api.madliberationgame.com/';
   }
 }
 
