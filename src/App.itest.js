@@ -10,7 +10,7 @@ program
   .option('-L, --slow', 'Run headfully in slow mode')
   .parse(process.argv);
 const slowDown = 200;
-const timeoutMs = 18000 + (program.slow ? slowDown + 2000 : 0);
+const timeoutMs = 45000 + (program.slow ? slowDown + 2000 : 0);
 const defaultUrl = 'https://madliberationgame.com';
 const site = program.site || defaultUrl;
 const browserOptions = {
