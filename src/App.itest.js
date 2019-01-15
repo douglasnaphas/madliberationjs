@@ -17,9 +17,9 @@ const browserOptions = {
   headless: program.slow ? false : true,
   args: ['--no-sandbox']
 };
-if (program.slow) {
-  browserOptions.slowMo = slowDown;
-}
+// if (program.slow) {
+browserOptions.slowMo = slowDown;
+// }
 
 const failTest = async (err, msg, browser) => {
   console.log('test failed: ' + msg);
@@ -53,7 +53,9 @@ const waitForSelectorOrFail = async ({
 (async () => {
   const browser = await puppeteer.launch(browserOptions);
   const page = await browser.newPage();
-  const waitOptions = { timeout: timeoutMs, visible: true };
+  const waitOptions = { timeout: timeoutMs /*, visible: true*/ };
+  const waitForNavigationOptions = { timeout: timeoutMs };
+  const clickOptions = { delay: 200 };
   await page.goto(site);
 
   // Home Page
@@ -71,7 +73,7 @@ const waitForSelectorOrFail = async ({
   // Pick Your Script Page
   await Promise.all([
     page.click('[madliberationid="start-a-seder-button"]'),
-    page.waitForNavigation()
+    page.waitForNavigation(waitForNavigationOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click Start a seder button', browser);
   });
@@ -93,7 +95,7 @@ const waitForSelectorOrFail = async ({
     });
   // Click menu icon
   await Promise.all([
-    page.click('[madliberationid="app-bar-menu-icon-button"]')
+    page.click('[madliberationid="app-bar-menu-icon-button"]', clickOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click app bar menu icon', browser);
   });
@@ -105,8 +107,8 @@ const waitForSelectorOrFail = async ({
     });
   // Click menu item for About Page
   await Promise.all([
-    page.click('[madliberationid="menu-about-link"]'),
-    page.waitForNavigation()
+    page.click('[madliberationid="menu-about-link"]', clickOptions),
+    page.waitForNavigation(waitForNavigationOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click About link from menu', browser);
   });
@@ -129,7 +131,7 @@ const waitForSelectorOrFail = async ({
     });
   // Click menu icon
   await Promise.all([
-    page.click('[madliberationid="app-bar-menu-icon-button"]')
+    page.click('[madliberationid="app-bar-menu-icon-button"]', clickOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click app bar menu icon', browser);
   });
@@ -141,8 +143,8 @@ const waitForSelectorOrFail = async ({
     });
   // Click menu item for How to Play Page
   await Promise.all([
-    page.click('[madliberationid="menu-how-to-play-link"]'),
-    page.waitForNavigation()
+    page.waitForNavigation(waitForNavigationOptions),
+    page.click('[madliberationid="menu-how-to-play-link"]', clickOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click How to Play link from menu', browser);
   });
@@ -165,7 +167,7 @@ const waitForSelectorOrFail = async ({
     });
   // Click menu icon
   await Promise.all([
-    page.click('[madliberationid="app-bar-menu-icon-button"]')
+    page.click('[madliberationid="app-bar-menu-icon-button"]', clickOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click app bar menu icon', browser);
   });
@@ -177,8 +179,8 @@ const waitForSelectorOrFail = async ({
     });
   // Click menu item for Home Page
   await Promise.all([
-    page.click('[madliberationid="menu-home-link"]'),
-    page.waitForNavigation()
+    page.click('[madliberationid="menu-home-link"]', clickOptions),
+    page.waitForNavigation(waitForNavigationOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click Home link from menu', browser);
   });
@@ -190,8 +192,8 @@ const waitForSelectorOrFail = async ({
       failTest(e, 'Join a seder button not found', browser);
     });
   await Promise.all([
-    page.click('[madliberationid="join-a-seder-button"]'),
-    page.waitForNavigation()
+    page.click('[madliberationid="join-a-seder-button"]', clickOptions),
+    page.waitForNavigation(waitForNavigationOptions)
   ]).catch(async e => {
     failTest(e, 'Failed to click Join a seder button', browser);
   });
