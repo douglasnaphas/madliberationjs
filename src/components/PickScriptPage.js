@@ -2,7 +2,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
-import { scripts2table } from '../lib/scripts2table';
 import ScriptTable from './ScriptTable';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -30,7 +29,6 @@ class PickScriptPage extends Component {
         console.log(j);
         this.setState({ scripts: j.scripts.Items });
         this.setState({ isMounting: false });
-        scripts2table();
       });
   }
 
