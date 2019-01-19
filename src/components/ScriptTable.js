@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -52,6 +53,21 @@ class ScriptTable extends React.Component {
         </TableRow>
       );
     }
+    const pickButton =
+      scripts.length > 0 ? (
+        <div>
+          <br />
+          <Button
+            madliberationid="pick-this-script-button"
+            title="Use this one"
+            variant="contained"
+          >
+            Use this one
+          </Button>
+        </div>
+      ) : (
+        ''
+      );
     return (
       <div>
         <div>
@@ -59,6 +75,7 @@ class ScriptTable extends React.Component {
             <TableBody>{scriptRows}</TableBody>
           </Table>
         </div>
+        {pickButton}
       </div>
     );
   }
