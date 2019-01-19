@@ -1,43 +1,48 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import Typography from '@material-ui/core/Typography';
 
 // takes in JSON collection of scripts, and a function it will call to set
 // its parent's state when a selection is made
 
-const styles = {
+const styles = theme => ({
   root: {
-    flexGrow: 1
+    display: 'flex'
   },
-  grow: {
-    flexGrow: 1
+  formControl: {
+    margin: theme.spacing.unit * 3
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
+  group: {
+    margin: `${theme.spacing.unit}px 0`
   }
-};
+});
 
 class ScriptTable extends React.Component {
+  state = {
+    selectedValue: '0'
+  };
+  handleChange = event => {
+    this.setState({ selectedValue: event.target.value });
+  };
   render() {
-    const { scripts } = this.props;
+    const { classes, scripts } = this.props;
     const scriptRows = [];
     for (let i = 0; i < scripts.length; i++) {
       scriptRows[i] = (
         <TableRow key={`row${i}`}>
+          <TableCell key={`row${i}-select`}>
+            <Radio
+              key={`row${i}-radio`}
+              checked={this.state.selectedValue === `${i}`}
+              onChange={this.handleChange}
+              value={`${i}`}
+            />
+          </TableCell>
           <TableCell key={`row${i}-short_desc`}>
             {scripts[i].haggadah_short_desc.S}
           </TableCell>
@@ -49,11 +54,11 @@ class ScriptTable extends React.Component {
     }
     return (
       <div>
-        <FormControl>
+        <div>
           <Table>
             <TableBody>{scriptRows}</TableBody>
           </Table>
-        </FormControl>
+        </div>
       </div>
     );
   }
