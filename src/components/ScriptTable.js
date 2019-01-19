@@ -25,10 +25,17 @@ const styles = theme => ({
 
 class ScriptTable extends React.Component {
   state = {
-    selectedValue: '0'
+    selectedValue: '0',
+    selectedScript:
+      (this.props.scripts && this.props.scripts.length) > 0
+        ? this.props.scripts[0]
+        : {}
   };
   handleChange = event => {
-    this.setState({ selectedValue: event.target.value });
+    this.setState({
+      selectedValue: event.target.value,
+      selectedScript: this.props.scripts[event.target.value]
+    });
   };
   render() {
     const { classes, scripts } = this.props;
