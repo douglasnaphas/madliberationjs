@@ -71,7 +71,10 @@ class ScriptTable extends React.Component {
             variant="contained"
             className={classes.button}
             component={Link}
-            to={{ pathname: '/your-room-code', state: { abc: 'xyz' } }}
+            to={{
+              pathname: '/your-room-code',
+              state: { selectedScript: this.state.selectedScript }
+            }}
           >
             Use this one
           </Button>
