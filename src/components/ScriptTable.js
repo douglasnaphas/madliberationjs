@@ -1,4 +1,5 @@
 import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -68,6 +69,9 @@ class ScriptTable extends React.Component {
             madliberationid="pick-this-script-button"
             title="Use this one"
             variant="contained"
+            className={classes.button}
+            component={Link}
+            to={{ pathname: '/your-room-code', state: { abc: 'xyz' } }}
           >
             Use this one
           </Button>

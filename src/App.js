@@ -15,6 +15,7 @@ import { Configs } from './Configs';
 import { signIn } from './lib/cognito';
 import PickScriptPage from './components/PickScriptPage';
 import EnterRoomCodePage from './components/EnterRoomCodePage';
+import YourRoomCodePage from './components/YourRoomCodePage';
 
 class App extends Component {
   state = { user: undefined, isSigningIn: true };
@@ -53,6 +54,11 @@ class App extends Component {
               path="/enter-room-code"
               exact
               render={props => <EnterRoomCodePage {...props} />}
+            />
+            <Route
+              path="/your-room-code"
+              exact
+              render={props => <YourRoomCodePage {...props} />}
             />
           </div>
         </Router>
