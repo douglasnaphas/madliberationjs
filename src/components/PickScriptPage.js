@@ -22,11 +22,9 @@ class PickScriptPage extends Component {
     const scriptsUrl = new URL('/scripts', Configs.apiUrl());
     fetch(scriptsUrl)
       .then(r => {
-        console.log(r);
         return r.json();
       })
       .then(j => {
-        console.log(j);
         this.setState({ scripts: j.scripts.Items });
         this.setState({ isMounting: false });
       });
