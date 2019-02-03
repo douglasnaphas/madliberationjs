@@ -50,6 +50,15 @@ class YourRoomCodePage extends Component {
           <h2>Your Room Code is:</h2>
           <br />
           <h2>{this.state.roomCode}</h2>
+          <br />
+          <p>
+            Tell everyone at your seder physically to go to{' '}
+            <a target="_blank" href="https://madliberationgame.com">
+              madliberationgame.com
+            </a>{' '}
+            (opens in a new tab) on their computer or mini-computer, click "Join
+            a Seder", and enter that Room Code to join you virtually.
+          </p>
         </div>
       );
     }
