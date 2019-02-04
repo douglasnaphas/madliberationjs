@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
 import { Configs } from '../Configs';
+import { ENETDOWN } from 'constants';
 
 const styles = theme => ({
   button: {
@@ -16,7 +17,7 @@ const styles = theme => ({
 });
 
 class EnterRoomCodePage extends Component {
-  state = { tentativeRoomCode: false };
+  state = { tentativeRoomCode: false, tentativeGameName: false };
 
   render() {
     const { classes, user } = this.props;
@@ -28,6 +29,11 @@ class EnterRoomCodePage extends Component {
         this.setState({ tentativeRoomCode: event.target.value });
       } else {
         this.setState({ tentativeRoomCode: false });
+      }
+    };
+    const enableJoinIfNameGiven = event => {
+      if (event.target.value.length > 0) {
+        this.setState({ tentativeGameName: event.target.value });
       }
     };
 
@@ -58,6 +64,7 @@ class EnterRoomCodePage extends Component {
           <TextField
             helperText="it's who you are for this seder"
             variant="outlined"
+            onChange={enableJoinIfNameGiven}
           />
         </div>
         <br />
@@ -66,7 +73,9 @@ class EnterRoomCodePage extends Component {
             madliberationid="join-this-seder-button"
             color="primary"
             variant="contained"
-            disabled={!this.state.tentativeRoomCode}
+            disabled={
+              !this.state.tentativeRoomCode || !this.state.tentativeGameName
+            }
           >
             Join
           </Button>

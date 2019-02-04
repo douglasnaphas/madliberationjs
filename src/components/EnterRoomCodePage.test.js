@@ -25,6 +25,16 @@ describe('<EnterRoomCodePage />', () => {
       Join
     </Button>
   );
+  const enabledJoinButton = (
+    <Button
+      madliberationid="join-this-seder-button"
+      color="primary"
+      variant="contained"
+      disabled={false}
+    >
+      Join
+    </Button>
+  );
 
   beforeEach(() => {
     mount = createMount();
