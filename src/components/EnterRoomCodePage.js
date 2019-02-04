@@ -34,6 +34,8 @@ class EnterRoomCodePage extends Component {
     const enableJoinIfNameGiven = event => {
       if (event.target.value.length > 0) {
         this.setState({ tentativeGameName: event.target.value });
+      } else {
+        this.setState({ tentativeGameName: false });
       }
     };
 
@@ -62,6 +64,7 @@ class EnterRoomCodePage extends Component {
         </div>
         <div>
           <TextField
+            madliberationid="game-name-text-field"
             helperText="it's who you are for this seder"
             variant="outlined"
             onChange={enableJoinIfNameGiven}
