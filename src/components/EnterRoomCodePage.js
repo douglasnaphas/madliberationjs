@@ -4,6 +4,8 @@ import MenuAppBar from './MenuAppBar';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
+import { Configs } from '../Configs';
+
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit
@@ -14,8 +16,20 @@ const styles = theme => ({
 });
 
 class EnterRoomCodePage extends Component {
+  state = { tentativeRoomCode: false };
+
   render() {
     const { classes, user } = this.props;
+    const enableJoinIfCodeValid = event => {
+      if (
+        event.target.value &&
+        event.target.value.match(Configs.roomCodeRegex())
+      ) {
+        this.setState({ tentativeRoomCode: event.target.value });
+      } else {
+        this.setState({ tentativeRoomCode: false });
+      }
+    };
 
     return (
       <div madliberationid="enter-room-code-page">
@@ -33,6 +47,7 @@ class EnterRoomCodePage extends Component {
             madliberationid="enter-room-code-text-field"
             helperText="6 capital letters"
             variant="outlined"
+            onChange={enableJoinIfCodeValid}
           />
         </div>
         <br />
@@ -51,7 +66,7 @@ class EnterRoomCodePage extends Component {
             madliberationid="join-this-seder-button"
             color="primary"
             variant="contained"
-            disabled
+            disabled={!this.state.tentativeRoomCode}
           >
             Join
           </Button>

@@ -22,6 +22,10 @@ class Configs {
     }
     return 'https://api.madliberationgame.com/';
   }
+
+  static roomCodeRegex() {
+    return /^[A-Z]{6}$/;
+  }
 }
 
 export { Configs };

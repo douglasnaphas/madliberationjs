@@ -46,9 +46,5 @@ describe('<EnterRoomCodePage />', () => {
       wrapper.find('[madliberationid="join-this-seder-button"]')
     ).toBeTruthy();
     expect(wrapper.containsMatchingElement(disabledJoinButton)).toBeTruthy();
-    wrapper
-      .find('[madliberationid="enter-room-code-text-field"]')
-      .first()
-      .simulate('click');
   });
 });
