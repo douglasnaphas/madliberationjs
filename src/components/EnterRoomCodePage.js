@@ -29,11 +29,15 @@ class EnterRoomCodePage extends Component {
           </p>
         </div>
         <div>
-          <TextField helperText="6 capital letters" variant="outlined" />
+          <TextField
+            madliberationid="enter-room-code-text-field"
+            helperText="6 capital letters"
+            variant="outlined"
+          />
         </div>
         <br />
         <div>
-          <p>Also, what is your nickname?</p>
+          <p>Also, what is your game name?</p>
         </div>
         <div>
           <TextField
@@ -43,7 +47,12 @@ class EnterRoomCodePage extends Component {
         </div>
         <br />
         <div>
-          <Button color="primary" variant="contained">
+          <Button
+            madliberationid="join-this-seder-button"
+            color="primary"
+            variant="contained"
+            disabled
+          >
             Join
           </Button>
         </div>
