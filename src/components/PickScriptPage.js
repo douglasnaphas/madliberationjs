@@ -1,5 +1,4 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Configs } from '../Configs';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
 import ScriptTable from './ScriptTable';
@@ -18,16 +17,12 @@ class PickScriptPage extends Component {
   state = { isMounting: true };
 
   componentDidMount() {
+    const { getScripts } = this.props;
     this._isMounted = true;
-    const scriptsUrl = new URL('/scripts', Configs.apiUrl());
-    fetch(scriptsUrl)
-      .then(r => {
-        return r.json();
-      })
-      .then(j => {
-        this.setState({ scripts: j.scripts.Items });
-        this.setState({ isMounting: false });
-      });
+    getScripts().then(j => {
+      this.setState({ scripts: j.scripts.Items });
+      this.setState({ isMounting: false });
+    });
   }
 
   componentWillUnmount() {

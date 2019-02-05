@@ -5,14 +5,11 @@ import { Router } from 'react-router-dom';
 
 import About from './components/About';
 import './App.css';
+import { getScriptsFromApi } from './lib/getScriptsFromApi';
 import HowToPlay from './components/HowToPlay';
-import LoggedInHomePage from './components/LoggedInHomePage';
-import MenuAppBar from './components/MenuAppBar';
 import NoAuthHomePage from './components/NoAuthHomePage';
-import PublicHomePage from './components/PublicHomePage';
 import history from './history';
 import { Configs } from './Configs';
-import { signIn } from './lib/cognito';
 import PickScriptPage from './components/PickScriptPage';
 import EnterRoomCodePage from './components/EnterRoomCodePage';
 import YourRoomCodePage from './components/YourRoomCodePage';
@@ -42,7 +39,9 @@ class App extends Component {
             <Route
               path="/pick-script"
               exact
-              render={props => <PickScriptPage {...props} />}
+              render={props => (
+                <PickScriptPage {...props} getScripts={getScriptsFromApi} />
+              )}
             />
             <Route path="/about" exact render={props => <About {...props} />} />
             <Route
