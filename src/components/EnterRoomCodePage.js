@@ -22,6 +22,7 @@ class EnterRoomCodePage extends Component {
   render() {
     const { classes, user } = this.props;
     const enableJoinIfCodeValid = event => {
+      event.target.value = event.target.value.toUpperCase();
       if (
         event.target.value &&
         event.target.value.match(Configs.roomCodeRegex())
