@@ -26,7 +26,7 @@ class EnterRoomCodePage extends Component {
         event.target.value &&
         event.target.value.match(Configs.roomCodeRegex())
       ) {
-        this.setState({ tentativeRoomCode: event.target.value });
+        this.setState({ tentativeRoomCode: event.target.value.toUpperCase() });
       } else {
         this.setState({ tentativeRoomCode: false });
       }
@@ -53,7 +53,7 @@ class EnterRoomCodePage extends Component {
         <div>
           <TextField
             madliberationid="enter-room-code-text-field"
-            helperText="6 capital letters"
+            helperText="6 letters"
             variant="outlined"
             onChange={enableJoinIfCodeValid}
           />

@@ -24,7 +24,7 @@ class Configs {
   }
 
   static roomCodeRegex() {
-    return /^[A-Z]{6}$/;
+    return /^[A-Za-z]{6}$/;
   }
 }
 
