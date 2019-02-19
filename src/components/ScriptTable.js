@@ -53,10 +53,10 @@ class ScriptTable extends React.Component {
             />
           </TableCell>
           <TableCell key={`row${i}-short_desc`}>
-            {scripts[i].haggadah_short_desc.S}
+            {scripts[i].haggadah_short_desc}
           </TableCell>
           <TableCell key={`row${i}-description`}>
-            {scripts[i].haggadah_description.S}
+            {scripts[i].haggadah_description}
           </TableCell>
         </TableRow>
       );
