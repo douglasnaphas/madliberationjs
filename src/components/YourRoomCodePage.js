@@ -19,7 +19,7 @@ class YourRoomCodePage extends Component {
     fetch(roomCodeUrl, {
       method: 'POST',
       body: JSON.stringify({
-        path: this.props.location.state.selectedScript.path.S
+        path: this.props.location.state.selectedScript.path
       }),
       headers: { 'Content-Type': 'application/json' }
     })
