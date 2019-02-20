@@ -26,6 +26,14 @@ class Configs {
   static roomCodeRegex() {
     return /^[A-Za-z]{6}$/;
   }
+
+  static gameNameBlacklist() {
+    return /[^-A-Za-z ,0-9]/g;
+  }
+
+  static libBlackList() {
+    return /[^-A-Za-z ,0-9."']/g;
+  }
 }
 
 export { Configs };

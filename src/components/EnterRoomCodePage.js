@@ -33,6 +33,10 @@ class EnterRoomCodePage extends Component {
       }
     };
     const enableJoinIfNameGiven = event => {
+      event.target.value = event.target.value.replace(
+        Configs.gameNameBlacklist(),
+        ''
+      );
       if (event.target.value.length > 0) {
         this.setState({ tentativeGameName: event.target.value });
       } else {
