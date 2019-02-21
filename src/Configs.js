@@ -32,7 +32,7 @@ class Configs {
   }
 
   static libBlackList() {
-    return /[^-A-Za-z ,0-9."']/g;
+    return /[^-A-Za-z ,0-9."'?!/]/g;
   }
 }
 
