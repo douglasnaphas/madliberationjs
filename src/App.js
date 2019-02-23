@@ -16,7 +16,12 @@ import EnterRoomCodePage from './components/EnterRoomCodePage';
 import YourRoomCodePage from './components/YourRoomCodePage';
 
 class App extends Component {
-  state = { user: undefined, isSigningIn: true };
+  state = {
+    user: undefined,
+    isSigningIn: true,
+    confirmedRoomCode: false,
+    isRingleader: false
+  };
 
   componentDidMount() {
     this._isMounted = true;
@@ -27,6 +32,9 @@ class App extends Component {
   }
 
   render() {
+    const setRoomCode = roomCode => {
+      this.setState({ confirmedRoomCode: roomCode });
+    };
     return (
       <React.Fragment>
         <CssBaseline />
@@ -54,7 +62,11 @@ class App extends Component {
               path="/enter-room-code"
               exact
               render={props => (
-                <EnterRoomCodePage {...props} joinSeder={joinSeder} />
+                <EnterRoomCodePage
+                  {...props}
+                  joinSeder={joinSeder}
+                  setRoomCode={setRoomCode}
+                />
               )}
             />
             <Route
@@ -62,6 +74,8 @@ class App extends Component {
               exact
               render={props => <YourRoomCodePage {...props} />}
             />
+            {/* <Route path="/play" /> */}
+            {/* <Route path="/read" /> */}
           </div>
         </Router>
       </React.Fragment>
