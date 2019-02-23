@@ -17,10 +17,24 @@ const styles = theme => ({
 });
 
 class EnterRoomCodePage extends Component {
-  state = { tentativeRoomCode: false, tentativeGameName: false };
+  state = {
+    tentativeRoomCode: false,
+    tentativeGameName: false,
+    joinButtonPressed: false
+  };
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, joinSeder, user } = this.props;
+    const joinSederClick = () => {
+      this.setState({ joinButtonPressed: true });
+      joinSeder(
+        this.state.tentativeRoomCode,
+        this.state.tentativeGameName
+      ).then(d => {
+        this.setState({ joinSederResponse: d });
+        this.setState({ joinButtonPressed: false });
+      });
+    };
     const enableJoinIfCodeValid = event => {
       event.target.value = event.target.value.toUpperCase();
       if (
@@ -82,8 +96,11 @@ class EnterRoomCodePage extends Component {
             color="primary"
             variant="contained"
             disabled={
-              !this.state.tentativeRoomCode || !this.state.tentativeGameName
+              !this.state.tentativeRoomCode ||
+              !this.state.tentativeGameName ||
+              this.state.joinButtonPressed
             }
+            onClick={joinSederClick}
           >
             Join
           </Button>

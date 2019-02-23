@@ -5,11 +5,12 @@ import { Router } from 'react-router-dom';
 
 import About from './components/About';
 import './App.css';
+import { Configs } from './Configs';
 import { getScriptsFromApi } from './lib/getScriptsFromApi';
 import HowToPlay from './components/HowToPlay';
 import NoAuthHomePage from './components/NoAuthHomePage';
 import history from './history';
-import { Configs } from './Configs';
+import { joinSeder } from './lib/joinSeder';
 import PickScriptPage from './components/PickScriptPage';
 import EnterRoomCodePage from './components/EnterRoomCodePage';
 import YourRoomCodePage from './components/YourRoomCodePage';
@@ -52,7 +53,9 @@ class App extends Component {
             <Route
               path="/enter-room-code"
               exact
-              render={props => <EnterRoomCodePage {...props} />}
+              render={props => (
+                <EnterRoomCodePage {...props} joinSeder={joinSeder} />
+              )}
             />
             <Route
               path="/your-room-code"
