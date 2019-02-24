@@ -18,6 +18,15 @@ const styles = theme => ({
 });
 
 class YourRoomCodePage extends Component {
+  state = {
+    roomCodeLoading: true,
+    roomCode: '',
+    tentativeGameName: false,
+    thatsMyNameButtonPressed: false,
+    failedAttempt: false,
+    failureMessage: ''
+  };
+
   componentDidMount() {
     const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
     fetch(roomCodeUrl, {
@@ -37,12 +46,6 @@ class YourRoomCodePage extends Component {
       });
   }
 
-  state = {
-    roomCodeLoading: true,
-    roomCode: '',
-    tentativeGameName: false,
-    thatsMyNameButtonPressed: false
-  };
   render() {
     const {
       classes,
@@ -69,6 +72,20 @@ class YourRoomCodePage extends Component {
         if (d.status == 200) {
           this.setState({ confirmedGameName: d.data.gameName });
           setConfirmedGameName(d.data.gameName);
+        } else {
+          this.setState({ failedAttempt: true });
+          if (d.err == Configs.generic400ErrorMessage) {
+            this.setState({
+              failureMessage:
+                'We could not join you to your own seder with that Game Name. ' +
+                'Please make sure it has not been more than ' +
+                Configs.msToJoinSeder() / 1000 / 60 +
+                ' minutes since you got your code, and ' +
+                'try again, or try a different Game Name'
+            });
+          } else {
+            this.setState({ failureMessage: d.data.err });
+          }
         }
         this.setState({ thatsMyNameButtonPressed: false });
       });
@@ -138,6 +155,15 @@ class YourRoomCodePage extends Component {
             >
               That's my name
             </Button>
+          </div>
+          <div
+            hidden={
+              !this.state.failedAttempt || this.state.thatsMyNameButtonPressed
+            }
+          >
+            <Typography component="p" color="secondary">
+              {this.state.failureMessage}
+            </Typography>
           </div>
         </div>
       );
