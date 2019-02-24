@@ -2,6 +2,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
 import ScriptTable from './ScriptTable';
+import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -43,7 +44,9 @@ class PickScriptPage extends Component {
         <MenuAppBar user={user} />
         <div>
           <br />
-          <h2>Which script would you like to use?</h2>
+          <Typography variant="h4" gutterBottom>
+            Which script would you like to use?
+          </Typography>
         </div>
         <div>{spinnerOrScriptMenu}</div>
       </div>

@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
 import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 import { Configs } from '../Configs';
@@ -104,15 +105,17 @@ class EnterRoomCodePage extends Component {
         />
         <div>
           <br />
-          <h2>You're at a seder!</h2>
+          <Typography variant="h3" gutterBottom>
+            You're at a seder!
+          </Typography>
           <br />
         </div>
         <div hidden={this.state.sederJoined}>
           <div>
-            <p>
+            <Typography component="p" paragraph gutterBottom>
               Prove it. Enter the Room Code that your sedermaker gave you
               orally.
-            </p>
+            </Typography>
           </div>
           <div>
             <TextField
@@ -124,7 +127,9 @@ class EnterRoomCodePage extends Component {
           </div>
           <br />
           <div>
-            <p>Also, what is your game name?</p>
+            <Typography component="p" paragraph>
+              Also, what is your game name?
+            </Typography>
           </div>
           <div>
             <TextField
@@ -153,11 +158,13 @@ class EnterRoomCodePage extends Component {
           <div
             hidden={!this.state.failedAttempt || this.state.joinButtonPressed}
           >
-            <p style={madLiberationStyles.red}>{this.state.failureMessage}</p>
+            <Typography component="p" color="secondary">
+              {this.state.failureMessage}
+            </Typography>
           </div>
         </div>
         <div hidden={!this.state.sederJoined}>
-          <p>
+          <Typography component="p" paragraph gutterBottom>
             You have joined Seder{' '}
             <span style={madLiberationStyles.lightGrayBackround}>
               {this.state.confirmedRoomCode}
@@ -167,14 +174,17 @@ class EnterRoomCodePage extends Component {
               {this.state.confirmedGameName}
             </span>
             . Congratulations.
-          </p>
-          <p>
-            Now wait until your Sederator tells you to, and then{' '}
-            <Button color="primary" variant="contained">
-              click this button
-            </Button>{' '}
+          </Typography>
+          <Typography component="p" paragraph gutterBottom>
+            Now wait until your Sederator tells you to, and then
+          </Typography>
+          <Button color="primary" variant="contained">
+            click this button
+          </Button>
+          <br />
+          <Typography component="p" paragraph gutterBottom>
             to get your assignments.
-          </p>
+          </Typography>
         </div>
       </div>
     );

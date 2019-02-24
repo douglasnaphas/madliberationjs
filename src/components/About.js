@@ -24,7 +24,7 @@ class About extends Component {
           <Typography variant="h2" gutterBottom>
             About
           </Typography>
-          <Typography variant="body2">
+          <Typography component="p">
             Mad Liberation is a game of mad lib haggadahs.
           </Typography>
         </div>

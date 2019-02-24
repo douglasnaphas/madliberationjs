@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
 import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
@@ -76,7 +77,7 @@ class YourRoomCodePage extends Component {
     if (this.state.roomCodeLoading) {
       spinnerOrRoomCode = (
         <div>
-          <h2>Generating a Room Code...</h2>
+          <Typography variant="h3">Generating a Room Code...</Typography>
           <br />
           <CircularProgress />
         </div>
@@ -84,29 +85,36 @@ class YourRoomCodePage extends Component {
     } else {
       spinnerOrRoomCode = (
         <div>
-          <h2>Your Room Code is:</h2>
+          <Typography variant="h3" gutterBottom>
+            Your Room Code is:
+          </Typography>
           <br />
-          <h2>{this.state.roomCode}</h2>
+          <Typography variant="h3" gutterBottom>
+            {this.state.roomCode}
+          </Typography>
           <br />
-          <p>
+          <Typography component="p">
             Tell everyone physically at your seder to go to{' '}
             <a target="_blank" href="https://madliberationgame.com">
               madliberationgame.com
             </a>{' '}
             (opens in a new tab) on their computer or mini-computer, click "Join
             a Seder", and enter that Room Code to join you virtually.
-          </p>
+          </Typography>
+          <br />
           <div>
             <Divider />
           </div>
           <div>
-            <h2>Meanwhile</h2>
+            <Typography variant="h3" gutterBottom>
+              Meanwhile
+            </Typography>
           </div>
           <div>
-            <p>
+            <Typography component="p" paragraph gutterBottom>
               What's your Game Name? It's how you, personally, will be known
               throughout this seder.
-            </p>
+            </Typography>
           </div>
           <div>
             <TextField
