@@ -32,8 +32,11 @@ class App extends Component {
   }
 
   render() {
-    const setRoomCode = roomCode => {
+    const setConfirmedRoomCode = roomCode => {
       this.setState({ confirmedRoomCode: roomCode });
+    };
+    const setConfirmedGameName = gameName => {
+      this.setState({ setConfirmedGameName: gameName });
     };
     return (
       <React.Fragment>
@@ -65,7 +68,8 @@ class App extends Component {
                 <EnterRoomCodePage
                   {...props}
                   joinSeder={joinSeder}
-                  setRoomCode={setRoomCode}
+                  setConfirmedRoomCode={setConfirmedRoomCode}
+                  setConfirmedGameName={setConfirmedGameName}
                 />
               )}
             />

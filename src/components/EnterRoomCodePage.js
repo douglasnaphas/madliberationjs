@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { Configs } from '../Configs';
 import { ENETDOWN } from 'constants';
+import { madLiberationStyles } from '../madLiberationStyles';
 
 const styles = theme => ({
   button: {
@@ -140,13 +141,20 @@ class EnterRoomCodePage extends Component {
           <div
             hidden={!this.state.failedAttempt || this.state.joinButtonPressed}
           >
-            <p style={{ color: 'red' }}>{this.state.failureMessage}</p>
+            <p style={madLiberationStyles.red}>{this.state.failureMessage}</p>
           </div>
         </div>
         <div hidden={!this.state.sederJoined}>
           <p>
-            You have joined Seder {this.state.confirmedRoomCode} as{' '}
-            {this.state.confirmedGameName}. Congratulations.
+            You have joined Seder{' '}
+            <span style={madLiberationStyles.lightGrayBackround}>
+              {this.state.confirmedRoomCode}
+            </span>{' '}
+            as{' '}
+            <span style={madLiberationStyles.lightGrayBackround}>
+              {this.state.confirmedGameName}
+            </span>
+            . Congratulations.
           </p>
           <p>
             Now wait until your Sederator tells you to, and then{' '}
