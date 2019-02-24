@@ -20,13 +20,25 @@ class EnterRoomCodePage extends Component {
   state = {
     tentativeRoomCode: false,
     tentativeGameName: false,
+    confirmedRoomCode: false,
+    confirmedGameName: false,
     joinSederResponse: false,
     sederJoined: false,
-    joinButtonPressed: false
+    joinButtonPressed: false,
+    failedAttempt: false,
+    failureMessage: ''
   };
 
   render() {
     const { classes, joinSeder } = this.props;
+    const joinSederCatchAllErrorMessage =
+      'We could not join you to this ' +
+      'seder, please double-check your Room Code, make sure it is not more' +
+      ' than ' +
+      Configs.msToJoinSeder() / 1000 / 60 +
+      ' minutes old, and ' +
+      'try again, or try a different Game Name or with a different browser' +
+      ' or device';
     const joinSederClick = () => {
       this.setState({ joinButtonPressed: true });
       joinSeder(
@@ -35,7 +47,18 @@ class EnterRoomCodePage extends Component {
       ).then(d => {
         this.setState({ joinSederResponse: d });
         if (d.status == 200) {
-          this.setState({ sederJoined: true });
+          this.setState({
+            sederJoined: true,
+            confirmedRoomCode: d.data.roomCode,
+            confirmedGameName: d.data.gameName
+          });
+        } else {
+          this.setState({ failedAttempt: true });
+          if (d.err == Configs.generic400ErrorMessage) {
+            this.setState({ failureMessage: joinSederCatchAllErrorMessage });
+          } else {
+            this.setState({ failureMessage: d.data.err });
+          }
         }
         this.setState({ joinButtonPressed: false });
       });
@@ -114,9 +137,17 @@ class EnterRoomCodePage extends Component {
               Join
             </Button>
           </div>
+          <div
+            hidden={!this.state.failedAttempt || this.state.joinButtonPressed}
+          >
+            <p style={{ color: 'red' }}>{this.state.failureMessage}</p>
+          </div>
         </div>
         <div hidden={!this.state.sederJoined}>
-          <p>You have joined Seder ... . Congratulations.</p>
+          <p>
+            You have joined Seder {this.state.confirmedRoomCode} as{' '}
+            {this.state.confirmedGameName}. Congratulations.
+          </p>
           <p>
             Now wait until your Sederator tells you to, and then{' '}
             <Button color="primary" variant="contained">
