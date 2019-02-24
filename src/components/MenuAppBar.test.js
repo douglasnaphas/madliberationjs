@@ -21,7 +21,7 @@ describe('testing <App />', () => {
     mount.cleanUp();
   });
 
-  test('Menu should link to Home, About, and How to Play', async () => {
+  test.skip('Menu should link to Home, About, and How to Play', async () => {
     const wrapper = await mount(
       <MemoryRouter>
         <MenuAppBar />

@@ -20,6 +20,7 @@ class App extends Component {
     user: undefined,
     isSigningIn: true,
     confirmedRoomCode: false,
+    confirmedGameName: false,
     isRingleader: false
   };
 
@@ -36,7 +37,7 @@ class App extends Component {
       this.setState({ confirmedRoomCode: roomCode });
     };
     const setConfirmedGameName = gameName => {
-      this.setState({ setConfirmedGameName: gameName });
+      this.setState({ confirmedGameName: gameName });
     };
     return (
       <React.Fragment>
@@ -70,13 +71,23 @@ class App extends Component {
                   joinSeder={joinSeder}
                   setConfirmedRoomCode={setConfirmedRoomCode}
                   setConfirmedGameName={setConfirmedGameName}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
                 />
               )}
             />
             <Route
               path="/your-room-code"
               exact
-              render={props => <YourRoomCodePage {...props} />}
+              render={props => (
+                <YourRoomCodePage
+                  {...props}
+                  setConfirmedRoomCode={setConfirmedRoomCode}
+                  setConfirmedGameName={setConfirmedGameName}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
+                />
+              )}
             />
             {/* <Route path="/play" /> */}
             {/* <Route path="/read" /> */}

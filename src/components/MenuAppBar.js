@@ -47,81 +47,100 @@ class MenuAppBar extends React.Component {
   };
 
   render() {
-    const { user, classes } = this.props;
+    const { user, classes, confirmedRoomCode, confirmedGameName } = this.props;
     const { anchorEl, leftAnchorEl } = this.state;
     const open = Boolean(anchorEl);
     const leftOpen = Boolean(leftAnchorEl);
     const leftMenu = (
-      <Menu
-        id="leftMenu"
-        anchorEl={leftAnchorEl}
-        open={leftOpen}
-        onClose={this.handleLeftClose}
-      >
-        <MenuItem onClick={this.handleLeftClose}>
-          <Link madliberationid="menu-home-link" to="/">
-            Home
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={this.handleLeftClose}>
-          <Link madliberationid="menu-about-link" to="/about">
-            About
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={this.handleLeftClose}>
-          <Link madliberationid="menu-how-to-play-link" to="/how-to-play">
-            How to play
-          </Link>
-        </MenuItem>
-      </Menu>
+      <div>
+        <IconButton
+          madliberationid="app-bar-menu-icon-button"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="Menu"
+          onClick={this.handleLeftMenu}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="leftMenu"
+          anchorEl={leftAnchorEl}
+          open={leftOpen}
+          onClose={this.handleLeftClose}
+        >
+          <MenuItem onClick={this.handleLeftClose}>
+            <Link madliberationid="menu-home-link" to="/">
+              Home
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleLeftClose}>
+            <Link madliberationid="menu-about-link" to="/about">
+              About
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleLeftClose}>
+            <Link madliberationid="menu-how-to-play-link" to="/how-to-play">
+              How to play
+            </Link>
+          </MenuItem>
+        </Menu>
+      </div>
+    );
+    const leftContent = confirmedRoomCode ? (
+      <div>
+        <div>Room Code</div>
+        <div>{confirmedRoomCode}</div>
+      </div>
+    ) : (
+      leftMenu
+    );
+    const rightContent = confirmedGameName ? (
+      <div>
+        <div>Game Name</div>
+        <div>{confirmedGameName}</div>
+      </div>
+    ) : (
+      <div />
+    );
+    const userContent /* not used yet, relates to login */ = user && (
+      <div>
+        <IconButton
+          aria-owns={open ? 'menu-appbar' : undefined}
+          aria-haspopup="true"
+          onClick={this.handleMenu}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        {user.nickname}
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right'
+          }}
+          open={open}
+          onClose={this.handleClose}
+        >
+          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+        </Menu>
+      </div>
     );
 
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
           <Toolbar>
-            <IconButton
-              madliberationid="app-bar-menu-icon-button"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Menu"
-              onClick={this.handleLeftMenu}
-            >
-              <MenuIcon />
-            </IconButton>
-            {leftMenu}
+            {leftContent}
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Mad Liberation
             </Typography>
-            {user && (
-              <div>
-                <IconButton
-                  aria-owns={open ? 'menu-appbar' : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleMenu}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-                {user.nickname}
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right'
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                </Menu>
-              </div>
-            )}
+            {rightContent}
           </Toolbar>
         </AppBar>
         <br />

@@ -29,12 +29,19 @@ class YourRoomCodePage extends Component {
       .then(j => {
         this.setState({ roomCode: j.roomCode });
         this.setState({ roomCodeLoading: false });
+        this.props.setConfirmedRoomCode(j.roomCode);
       });
   }
 
   state = { roomCodeLoading: true, roomCode: '' };
   render() {
-    const { classes, user } = this.props;
+    const {
+      classes,
+      setConfirmedRoomCode,
+      setConfirmedGameName,
+      confirmedRoomCode,
+      confirmedGameName
+    } = this.props;
     let spinnerOrRoomCode;
     if (this.state.roomCodeLoading) {
       spinnerOrRoomCode = (
@@ -65,7 +72,10 @@ class YourRoomCodePage extends Component {
 
     return (
       <div madliberationid="your-room-code-page">
-        <MenuAppBar user={user} />
+        <MenuAppBar
+          confirmedRoomCode={confirmedRoomCode}
+          confirmedGameName={confirmedGameName}
+        />
         <br />
         {spinnerOrRoomCode}
       </div>
