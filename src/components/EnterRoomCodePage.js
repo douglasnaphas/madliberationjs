@@ -65,7 +65,7 @@ class EnterRoomCodePage extends Component {
           setConfirmedGameName(d.data.gameName);
         } else {
           this.setState({ failedAttempt: true });
-          if (d.err == Configs.generic400ErrorMessage) {
+          if (d.data.err == Configs.generic400ErrorMessage) {
             this.setState({ failureMessage: joinSederCatchAllErrorMessage });
           } else {
             this.setState({ failureMessage: d.data.err });
@@ -178,9 +178,12 @@ class EnterRoomCodePage extends Component {
           <Typography component="p" paragraph gutterBottom>
             Now wait until your Sederator tells you to, and then
           </Typography>
-          <Button color="primary" variant="contained">
-            click this button
-          </Button>
+          <div>
+            <Button color="primary" variant="contained">
+              click this button
+            </Button>
+          </div>
+          <br />
           <br />
           <Typography component="p" paragraph gutterBottom>
             to get your assignments.
