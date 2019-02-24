@@ -82,6 +82,7 @@ class App extends Component {
               render={props => (
                 <YourRoomCodePage
                   {...props}
+                  joinSeder={joinSeder}
                   setConfirmedRoomCode={setConfirmedRoomCode}
                   setConfirmedGameName={setConfirmedGameName}
                   confirmedRoomCode={this.state.confirmedRoomCode}
