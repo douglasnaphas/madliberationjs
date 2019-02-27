@@ -14,11 +14,11 @@ const styles = theme => ({
 
 class HowToPlay extends Component {
   render() {
-    const { classes, user } = this.props;
+    const { classes } = this.props;
 
     return (
       <div>
-        <MenuAppBar user={user} />
+        <MenuAppBar />
         <div madliberationid="how-to-play-page">
           <br />
           <Typography variant="h2" gutterBottom>

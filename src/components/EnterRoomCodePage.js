@@ -184,7 +184,6 @@ class EnterRoomCodePage extends Component {
             </Button>
           </div>
           <br />
-          <br />
           <Typography component="p" paragraph gutterBottom>
             to get your assignments.
           </Typography>

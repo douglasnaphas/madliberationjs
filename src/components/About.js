@@ -14,11 +14,11 @@ const styles = theme => ({
 
 class About extends Component {
   render() {
-    const { classes, user } = this.props;
+    const { classes } = this.props;
 
     return (
       <div>
-        <MenuAppBar user={user} />
+        <MenuAppBar />
         <div madliberationid="about-page">
           <br />
           <Typography variant="h2" gutterBottom>

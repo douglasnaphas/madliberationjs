@@ -14,6 +14,7 @@ import { joinSeder } from './lib/joinSeder';
 import PickScriptPage from './components/PickScriptPage';
 import EnterRoomCodePage from './components/EnterRoomCodePage';
 import YourRoomCodePage from './components/YourRoomCodePage';
+import RosterPage from './components/RosterPage';
 
 class App extends Component {
   state = {
@@ -85,6 +86,17 @@ class App extends Component {
                   joinSeder={joinSeder}
                   setConfirmedRoomCode={setConfirmedRoomCode}
                   setConfirmedGameName={setConfirmedGameName}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
+                />
+              )}
+            />
+            <Route
+              path="/roster"
+              exact
+              render={props => (
+                <RosterPage
+                  {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
                 />

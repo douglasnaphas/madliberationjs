@@ -6,7 +6,10 @@ import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
+import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
+
+import ThatsMyNameButtonWithRouter from './ThatsMyNameButtonWithRouter';
 
 const styles = theme => ({
   button: {
@@ -66,6 +69,37 @@ class YourRoomCodePage extends Component {
         this.setState({ tentativeGameName: false });
       }
     };
+    const setThatsMyNameButtonPressed = bool => {
+      this.setState({ thatsMyNameButtonPressed: bool });
+    };
+    const setFailedAttempt = bool => {
+      this.setState({ failedAttempt: bool });
+    };
+    const joinSederAndGoToRoster = history => {
+      this.setState({ thatsMyNameButtonPressed: true });
+      joinSeder(this.state.roomCode, this.state.tentativeGameName).then(d => {
+        if (d.status == 200) {
+          this.setState({ confirmedGameName: d.data.gameName });
+          setConfirmedGameName(d.data.gameName);
+          history.push('/roster');
+        } else {
+          this.setState({ failedAttempt: true });
+          if (d.err == Configs.generic400ErrorMessage) {
+            this.setState({
+              failureMessage:
+                'We could not join you to your own seder with that Game Name. ' +
+                'Please make sure it has not been more than ' +
+                Configs.msToJoinSeder() / 1000 / 60 +
+                ' minutes since you got your code, and ' +
+                'try again, or try a different Game Name'
+            });
+          } else {
+            this.setState({ failureMessage: d.data.err });
+          }
+        }
+        this.setState({ thatsMyNameButtonPressed: false });
+      });
+    };
     const thatsMyNameClick = event => {
       this.setState({ thatsMyNameButtonPressed: true });
       joinSeder(this.state.roomCode, this.state.tentativeGameName).then(d => {
@@ -90,6 +124,20 @@ class YourRoomCodePage extends Component {
         this.setState({ thatsMyNameButtonPressed: false });
       });
     };
+    const thatsMyNameButton = (
+      <Button
+        madliberationid="thats-my-name-button"
+        color="primary"
+        variant="contained"
+        disabled={
+          !this.state.tentativeGameName || this.state.thatsMyNameButtonPressed
+        }
+        onClick={thatsMyNameClick}
+      >
+        That's my name
+      </Button>
+    );
+    // const thatsMyNameButtonWithRouter = withRouter(thatsMyNameButton);
     let spinnerOrRoomCode;
     if (this.state.roomCodeLoading) {
       spinnerOrRoomCode = (
@@ -143,18 +191,11 @@ class YourRoomCodePage extends Component {
           </div>
           <br />
           <div>
-            <Button
-              madliberationid="thats-my-name-button"
-              color="primary"
-              variant="contained"
-              disabled={
-                !this.state.tentativeGameName ||
-                this.state.thatsMyNameButtonPressed
-              }
-              onClick={thatsMyNameClick}
-            >
-              That's my name
-            </Button>
+            <ThatsMyNameButtonWithRouter
+              joinSederAndGoToRoster={joinSederAndGoToRoster}
+              tentativeGameName={this.state.tentativeGameName}
+              thatsMyNameButtonPressed={this.state.thatsMyNameButtonPressed}
+            />
           </div>
           <div
             hidden={
