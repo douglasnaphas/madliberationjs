@@ -2,7 +2,14 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import React, { Component } from 'react';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import MenuAppBar from './MenuAppBar';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -16,8 +23,67 @@ const styles = theme => ({
 });
 
 class RosterPage extends Component {
+  state = { rosterLoading: true, participants: [] };
+  _isMounted = false;
+  fetchRoster = () => {
+    const { confirmedRoomCode, confirmedGameName, roster } = this.props;
+    roster(confirmedRoomCode, confirmedGameName).then(d => {
+      console.log(d);
+      if (d.status == 200) {
+        if (this._isMounted) {
+          this.setState({
+            rosterLoading: false,
+            participants: d.data.participants
+          });
+        }
+      }
+    });
+  };
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.fetchRoster();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
+    const rosterRows = [];
+    const rosterListRows = [];
+    for (let i = 0; i < this.state.participants.length; i++) {
+      rosterRows.push(
+        <TableRow key={`participantRow${i}`}>
+          <TableCell key={`participantLeftCell${i}`} />
+          <TableCell key={`participantCell${i}`}>
+            {this.state.participants[i]}
+          </TableCell>
+          <TableCell key={`participantRightCell${i}`} />
+        </TableRow>
+      );
+      rosterListRows.push(
+        <ListItem key={`participantListItem${i}`}>
+          <ListItemText
+            key={`participantListItemText${i}`}
+            primary={this.state.participants[i]}
+          />
+        </ListItem>
+      );
+    }
+    var spinnerOrRoster;
+    if (this.state.rosterLoading) {
+      spinnerOrRoster = <CircularProgress />;
+    } else {
+      spinnerOrRoster = (
+        <Table>
+          <TableBody>{rosterRows}</TableBody>
+        </Table>
+        // <List>{rosterListRows}</List>
+      );
+    }
+
     return (
       <div>
         <MenuAppBar
@@ -28,6 +94,7 @@ class RosterPage extends Component {
         <Typography variant="h3" gutterBottom>
           Seder Roster
         </Typography>
+        {spinnerOrRoster}
       </div>
     );
   }

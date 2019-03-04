@@ -15,6 +15,7 @@ import PickScriptPage from './components/PickScriptPage';
 import EnterRoomCodePage from './components/EnterRoomCodePage';
 import YourRoomCodePage from './components/YourRoomCodePage';
 import RosterPage from './components/RosterPage';
+import { roster } from './lib/roster';
 
 class App extends Component {
   state = {
@@ -99,6 +100,7 @@ class App extends Component {
                   {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
+                  roster={roster}
                 />
               )}
             />

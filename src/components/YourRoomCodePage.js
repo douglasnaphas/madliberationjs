@@ -29,8 +29,10 @@ class YourRoomCodePage extends Component {
     failedAttempt: false,
     failureMessage: ''
   };
+  _isMounted = false;
 
   componentDidMount() {
+    this._isMounted = true;
     const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
     fetch(roomCodeUrl, {
       method: 'POST',
@@ -43,10 +45,16 @@ class YourRoomCodePage extends Component {
         return r.json();
       })
       .then(j => {
-        this.setState({ roomCode: j.roomCode });
-        this.setState({ roomCodeLoading: false });
-        this.props.setConfirmedRoomCode(j.roomCode);
+        if (this._isMounted) {
+          this.setState({ roomCode: j.roomCode });
+          this.setState({ roomCodeLoading: false });
+          this.props.setConfirmedRoomCode(j.roomCode);
+        }
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -78,6 +86,7 @@ class YourRoomCodePage extends Component {
     const joinSederAndGoToRoster = history => {
       this.setState({ thatsMyNameButtonPressed: true });
       joinSeder(this.state.roomCode, this.state.tentativeGameName).then(d => {
+        if (!this._isMounted) return;
         if (d.status == 200) {
           this.setState({ confirmedGameName: d.data.gameName });
           setConfirmedGameName(d.data.gameName);
@@ -97,47 +106,9 @@ class YourRoomCodePage extends Component {
             this.setState({ failureMessage: d.data.err });
           }
         }
-        this.setState({ thatsMyNameButtonPressed: false });
+        if (this._isMounted) this.setState({ thatsMyNameButtonPressed: false });
       });
     };
-    const thatsMyNameClick = event => {
-      this.setState({ thatsMyNameButtonPressed: true });
-      joinSeder(this.state.roomCode, this.state.tentativeGameName).then(d => {
-        if (d.status == 200) {
-          this.setState({ confirmedGameName: d.data.gameName });
-          setConfirmedGameName(d.data.gameName);
-        } else {
-          this.setState({ failedAttempt: true });
-          if (d.err == Configs.generic400ErrorMessage) {
-            this.setState({
-              failureMessage:
-                'We could not join you to your own seder with that Game Name. ' +
-                'Please make sure it has not been more than ' +
-                Configs.msToJoinSeder() / 1000 / 60 +
-                ' minutes since you got your code, and ' +
-                'try again, or try a different Game Name'
-            });
-          } else {
-            this.setState({ failureMessage: d.data.err });
-          }
-        }
-        this.setState({ thatsMyNameButtonPressed: false });
-      });
-    };
-    const thatsMyNameButton = (
-      <Button
-        madliberationid="thats-my-name-button"
-        color="primary"
-        variant="contained"
-        disabled={
-          !this.state.tentativeGameName || this.state.thatsMyNameButtonPressed
-        }
-        onClick={thatsMyNameClick}
-      >
-        That's my name
-      </Button>
-    );
-    // const thatsMyNameButtonWithRouter = withRouter(thatsMyNameButton);
     let spinnerOrRoomCode;
     if (this.state.roomCodeLoading) {
       spinnerOrRoomCode = (
