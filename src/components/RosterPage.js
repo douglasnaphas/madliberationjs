@@ -2,9 +2,6 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import React, { Component } from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import MenuAppBar from './MenuAppBar';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -28,7 +25,7 @@ class RosterPage extends Component {
   fetchRoster = () => {
     const { confirmedRoomCode, confirmedGameName, roster } = this.props;
     roster(confirmedRoomCode, confirmedGameName).then(d => {
-      if (d.status == 200) {
+      if (d.status === 200) {
         if (this._isMounted) {
           this.setState({
             rosterLoading: false,
@@ -51,7 +48,6 @@ class RosterPage extends Component {
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
     const rosterRows = [];
-    const rosterListRows = [];
     for (let i = 0; i < this.state.participants.length; i++) {
       rosterRows.push(
         <TableRow key={`participantRow${i}`}>
@@ -62,14 +58,6 @@ class RosterPage extends Component {
           <TableCell key={`participantRightCell${i}`} />
         </TableRow>
       );
-      rosterListRows.push(
-        <ListItem key={`participantListItem${i}`}>
-          <ListItemText
-            key={`participantListItemText${i}`}
-            primary={this.state.participants[i]}
-          />
-        </ListItem>
-      );
     }
     var spinnerOrRoster;
     if (this.state.rosterLoading) {
@@ -79,7 +67,6 @@ class RosterPage extends Component {
         <Table>
           <TableBody>{rosterRows}</TableBody>
         </Table>
-        // <List>{rosterListRows}</List>
       );
     }
 

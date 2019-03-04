@@ -1,4 +1,3 @@
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import Divider from '@material-ui/core/Divider';
@@ -87,13 +86,13 @@ class YourRoomCodePage extends Component {
       this.setState({ thatsMyNameButtonPressed: true });
       joinSeder(this.state.roomCode, this.state.tentativeGameName).then(d => {
         if (!this._isMounted) return;
-        if (d.status == 200) {
+        if (d.status === 200) {
           this.setState({ confirmedGameName: d.data.gameName });
           setConfirmedGameName(d.data.gameName);
           history.push('/roster');
         } else {
           this.setState({ failedAttempt: true });
-          if (d.err == Configs.generic400ErrorMessage) {
+          if (d.err === Configs.generic400ErrorMessage) {
             this.setState({
               failureMessage:
                 'We could not join you to your own seder with that Game Name. ' +
