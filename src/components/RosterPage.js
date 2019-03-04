@@ -28,7 +28,6 @@ class RosterPage extends Component {
   fetchRoster = () => {
     const { confirmedRoomCode, confirmedGameName, roster } = this.props;
     roster(confirmedRoomCode, confirmedGameName).then(d => {
-      console.log(d);
       if (d.status == 200) {
         if (this._isMounted) {
           this.setState({
