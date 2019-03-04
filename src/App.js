@@ -16,6 +16,7 @@ import EnterRoomCodePage from './components/EnterRoomCodePage';
 import YourRoomCodePage from './components/YourRoomCodePage';
 import RosterPage from './components/RosterPage';
 import { roster } from './lib/roster';
+import PlayPage from './components/PlayPage';
 
 class App extends Component {
   state = {
@@ -104,7 +105,17 @@ class App extends Component {
                 />
               )}
             />
-            {/* <Route path="/play" /> */}
+            <Route
+              path="/play"
+              exact
+              render={props => (
+                <PlayPage
+                  {...props}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
+                />
+              )}
+            />
             {/* <Route path="/read" /> */}
           </div>
         </Router>

@@ -12,7 +12,6 @@ const styles = theme => ({
   }
 });
 
-// A simple component that shows the pathname of the current location
 class ThatsMyNameButton extends React.Component {
   render() {
     const {

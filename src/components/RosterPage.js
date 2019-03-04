@@ -20,10 +20,15 @@ const styles = theme => ({
 });
 
 class RosterPage extends Component {
-  state = { rosterLoading: true, participants: [] };
+  state = {
+    rosterLoading: true,
+    participants: [],
+    thatsEveryonePressed: false
+  };
   _isMounted = false;
   fetchRoster = () => {
     const { confirmedRoomCode, confirmedGameName, roster } = this.props;
+    if (this._isMounted) this.setState({ rosterLoading: true });
     roster(confirmedRoomCode, confirmedGameName).then(d => {
       if (d.status === 200) {
         if (this._isMounted) {
@@ -34,6 +39,10 @@ class RosterPage extends Component {
         }
       }
     });
+  };
+  closeSederAndPlay = history => {
+    // send the api request to close the seder
+    // go to the /play page
   };
 
   componentDidMount() {
@@ -51,11 +60,9 @@ class RosterPage extends Component {
     for (let i = 0; i < this.state.participants.length; i++) {
       rosterRows.push(
         <TableRow key={`participantRow${i}`}>
-          <TableCell key={`participantLeftCell${i}`} />
           <TableCell key={`participantCell${i}`}>
             {this.state.participants[i]}
           </TableCell>
-          <TableCell key={`participantRightCell${i}`} />
         </TableRow>
       );
     }
@@ -64,9 +71,11 @@ class RosterPage extends Component {
       spinnerOrRoster = <CircularProgress />;
     } else {
       spinnerOrRoster = (
-        <Table>
-          <TableBody>{rosterRows}</TableBody>
-        </Table>
+        <div>
+          <Table>
+            <TableBody>{rosterRows}</TableBody>
+          </Table>
+        </div>
       );
     }
 
@@ -80,7 +89,29 @@ class RosterPage extends Component {
         <Typography variant="h3" gutterBottom>
           Seder Roster
         </Typography>
-        {spinnerOrRoster}
+        <div>
+          <Typography component="p" paragraph gutterBottom>
+            This flock has joined your seder:
+          </Typography>
+        </div>
+        <div>{spinnerOrRoster}</div>
+        <div>
+          <Typography component="p" paragraph gutterBottom>
+            Is that everyone?
+          </Typography>
+        </div>
+        <div>
+          <Button
+            variant="contained"
+            disabled={
+              this.state.rosterLoading || this.state.thatsEveryonePressed
+            }
+            onClick={this.fetchRoster}
+          >
+            No, check again
+          </Button>
+        </div>
+        <div />
       </div>
     );
   }
