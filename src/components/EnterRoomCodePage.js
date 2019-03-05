@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
-import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import MenuAppBar from './MenuAppBar';
+import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -179,7 +180,12 @@ class EnterRoomCodePage extends Component {
             Now wait until your Sederator tells you to, and then
           </Typography>
           <div>
-            <Button color="primary" variant="contained">
+            <Button
+              color="primary"
+              variant="contained"
+              component={Link}
+              to="/play"
+            >
               click this button
             </Button>
           </div>

@@ -7,6 +7,7 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import ThatsEveryoneButtonWithRouter from './ThatsEveryoneButtonWithRouter';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -23,7 +24,8 @@ class RosterPage extends Component {
   state = {
     rosterLoading: true,
     participants: [],
-    thatsEveryonePressed: false
+    thatsEveryonePressed: false,
+    thatsEveryoneFailed: false
   };
   _isMounted = false;
   fetchRoster = () => {
@@ -41,8 +43,21 @@ class RosterPage extends Component {
     });
   };
   closeSederAndPlay = history => {
-    // send the api request to close the seder
-    // go to the /play page
+    const { closeSeder, confirmedRoomCode, confirmedGameName } = this.props;
+    if (this._isMounted) this.setState({ thatsEveryonePressed: true });
+    closeSeder(confirmedRoomCode, confirmedGameName).then(d => {
+      if (!this._isMounted) return;
+      if (d.status === 200) {
+        history.push('/let-them-press-button');
+        return;
+      }
+      if (this._isMounted) {
+        this.setState({
+          thatsEveryonePressed: false,
+          thatsEveryoneFailed: true
+        });
+      }
+    });
   };
 
   componentDidMount() {
@@ -110,6 +125,21 @@ class RosterPage extends Component {
           >
             No, check again
           </Button>
+        </div>
+        <br />
+        <div>
+          <ThatsEveryoneButtonWithRouter
+            closeSederAndPlay={this.closeSederAndPlay}
+            disabled={
+              this.state.thatsEveryonePressed || this.state.rosterLoading
+            }
+          />
+        </div>
+        <div hidden={!this.state.thatsEveryoneFailed}>
+          <Typography component="p" color="secondary">
+            There was an unexplained problem, please try again or accept our
+            apologies and make a new seder after trying again many times
+          </Typography>
         </div>
         <div />
       </div>

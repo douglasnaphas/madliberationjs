@@ -5,9 +5,11 @@ import { Router } from 'react-router-dom';
 
 import About from './components/About';
 import './App.css';
+import { closeSeder } from './lib/closeSeder';
 import { Configs } from './Configs';
 import { getScriptsFromApi } from './lib/getScriptsFromApi';
 import HowToPlay from './components/HowToPlay';
+import LetThemPressButtonPage from './components/LetThemPressButtonPage';
 import NoAuthHomePage from './components/NoAuthHomePage';
 import history from './history';
 import { joinSeder } from './lib/joinSeder';
@@ -102,6 +104,18 @@ class App extends Component {
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
                   roster={roster}
+                  closeSeder={closeSeder}
+                />
+              )}
+            />
+            <Route
+              path="/let-them-press-button"
+              exact
+              render={props => (
+                <LetThemPressButtonPage
+                  {...props}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
                 />
               )}
             />
