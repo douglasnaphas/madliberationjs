@@ -24,8 +24,19 @@ class About extends Component {
           <Typography variant="h2" gutterBottom>
             About
           </Typography>
-          <Typography component="p">
+          <Typography component="p" paragraph gutterBottom>
             Mad Liberation is a game of mad lib haggadahs.
+          </Typography>
+          <Typography component="p" paragraph gutterBottom>
+            Try it out and let us know what you think. Feel free to raise an
+            issue on{' '}
+            <a
+              target="_blank"
+              href="https://github.com/douglasnaphas/madliberation-issues/issues"
+            >
+              GitHub
+            </a>{' '}
+            (opens in a new tab) for any bugs encountered or features desired.
           </Typography>
         </div>
       </div>
