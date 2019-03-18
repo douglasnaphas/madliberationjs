@@ -26,7 +26,8 @@ class App extends Component {
     isSigningIn: true,
     confirmedRoomCode: false,
     confirmedGameName: false,
-    isRingleader: false
+    isRingleader: false,
+    chosenPath: false
   };
 
   componentDidMount() {
@@ -44,6 +45,9 @@ class App extends Component {
     const setConfirmedGameName = gameName => {
       this.setState({ confirmedGameName: gameName });
     };
+    const setChosenPath = path => {
+      this.setState({ chosenPath: path });
+    };
     return (
       <React.Fragment>
         <CssBaseline />
@@ -58,7 +62,11 @@ class App extends Component {
               path="/pick-script"
               exact
               render={props => (
-                <PickScriptPage {...props} getScripts={getScriptsFromApi} />
+                <PickScriptPage
+                  {...props}
+                  getScripts={getScriptsFromApi}
+                  setChosenPath={setChosenPath}
+                />
               )}
             />
             <Route path="/about" exact render={props => <About {...props} />} />
@@ -105,6 +113,7 @@ class App extends Component {
                   confirmedGameName={this.state.confirmedGameName}
                   roster={roster}
                   closeSeder={closeSeder}
+                  chosenPath={this.state.chosenPath}
                 />
               )}
             />

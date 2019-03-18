@@ -39,7 +39,7 @@ class ScriptTable extends React.Component {
     });
   };
   render() {
-    const { classes, scripts } = this.props;
+    const { classes, scripts, setChosenPath } = this.props;
     const scriptRows = [];
     for (let i = 0; i < scripts.length; i++) {
       scriptRows[i] = (
@@ -71,6 +71,9 @@ class ScriptTable extends React.Component {
             variant="contained"
             className={classes.button}
             component={Link}
+            onClick={e => {
+              setChosenPath(this.state.selectedScript.path);
+            }}
             to={{
               pathname: '/your-room-code',
               state: { selectedScript: this.state.selectedScript }

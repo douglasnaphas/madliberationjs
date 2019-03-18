@@ -31,12 +31,17 @@ class PickScriptPage extends Component {
   }
 
   render() {
-    const { classes, user } = this.props;
+    const { classes, user, setChosenPath } = this.props;
     var spinnerOrScriptMenu;
     if (this.state.isMounting) {
       spinnerOrScriptMenu = <CircularProgress />;
     } else {
-      spinnerOrScriptMenu = <ScriptTable scripts={this.state.scripts} />;
+      spinnerOrScriptMenu = (
+        <ScriptTable
+          scripts={this.state.scripts}
+          setChosenPath={setChosenPath}
+        />
+      );
     }
 
     return (

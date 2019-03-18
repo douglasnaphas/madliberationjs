@@ -43,9 +43,14 @@ class RosterPage extends Component {
     });
   };
   closeSederAndPlay = history => {
-    const { closeSeder, confirmedRoomCode, confirmedGameName } = this.props;
+    const {
+      closeSeder,
+      confirmedRoomCode,
+      confirmedGameName,
+      chosenPath
+    } = this.props;
     if (this._isMounted) this.setState({ thatsEveryonePressed: true });
-    closeSeder(confirmedRoomCode, confirmedGameName).then(d => {
+    closeSeder(confirmedRoomCode, confirmedGameName, chosenPath).then(d => {
       if (!this._isMounted) return;
       if (d.status === 200) {
         history.push('/let-them-press-button');

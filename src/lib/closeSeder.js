@@ -6,8 +6,9 @@ import { Configs } from '../Configs';
  *   err: the error if any, or null
  * @param {String} roomCode The Room Code of the seder
  * @param {String} gameName The Game Name of the requestor
+ * @param {String} path The path of the selected script
  */
-async function closeSeder(roomCode, gameName) {
+async function closeSeder(roomCode, gameName, path) {
   const closeSederUrl = new URL(`/close-seder`, Configs.apiUrl());
   if (!roomCode || !gameName) return {};
   const response = await fetch(closeSederUrl, {
@@ -16,7 +17,7 @@ async function closeSeder(roomCode, gameName) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ roomCode: roomCode, gameName: gameName })
+    body: JSON.stringify({ roomCode: roomCode, gameName: gameName, path: path })
   });
   const data = await response.json();
   const status = response.status;
