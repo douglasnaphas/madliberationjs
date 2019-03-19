@@ -39,6 +39,7 @@ class PlayPage extends Component {
     this._isMounted = false;
   }
 
+  // increment lib method
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
     return (

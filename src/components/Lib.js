@@ -6,18 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  },
-  input: {
-    display: 'none'
-  },
-  paperPadding: {
-    padding: '3px',
-    margin: '2px'
-  }
-});
+const styles = theme => madLiberationStyles;
 
 class Lib extends Component {
   state = {};
@@ -41,7 +30,31 @@ class Lib extends Component {
               {lib ? lib.prompt : ''}
             </Paper>
           </Typography>
-          <TextField variant="outlined" />
+          <TextField variant="outlined" fullWidth />
+          {lib && lib.sentence ? (
+            <div>
+              <br />
+              <Typography component="span">
+                Your answer should complete the sentence:{' '}
+                <span className={classes.blue}>
+                  {lib.sentence.replace(/_/, '__')}
+                </span>
+              </Typography>
+            </div>
+          ) : (
+            ''
+          )}
+          {lib && lib.example ? (
+            <div>
+              <br />
+              <Typography component="span">
+                For example, you could write:{' '}
+                <span className={classes.blue}>{lib.example}</span>
+              </Typography>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     );

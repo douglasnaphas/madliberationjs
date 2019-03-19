@@ -1,5 +1,13 @@
 const madLiberationStyles = {
   red: { color: 'red' },
-  lightGrayBackround: { backgroundColor: 'lightgray' }
+  blue: { color: 'blue', fontStyle: 'italic' },
+  lightGrayBackround: { backgroundColor: 'lightgray' },
+  paperPadding: {
+    padding: '3px',
+    margin: '2px'
+  },
+  input: {
+    display: 'none'
+  }
 };
 export { madLiberationStyles };
