@@ -1,5 +1,7 @@
+import Lib from './Lib';
 import MenuAppBar from './MenuAppBar';
 import React, { Component } from 'react';
+import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -13,7 +15,7 @@ const styles = theme => ({
 });
 
 class PlayPage extends Component {
-  state = { fetchingPrompts: true };
+  state = { fetchingPrompts: true, assignmentsData: [] };
   _isMounted = false;
   fetchAssignments = () => {
     const { confirmedRoomCode, confirmedGameName, assignments } = this.props;
@@ -36,6 +38,7 @@ class PlayPage extends Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
+
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
     return (
@@ -49,6 +52,9 @@ class PlayPage extends Component {
           <Typography variant="h4" gutterBottom>
             Fetching your prompts, they'll be ready promptly...
           </Typography>
+        </div>
+        <div hidden={this.state.fetchingPrompts && this.state.assignmentsData}>
+          <Lib lib={this.state.assignmentsData[0]} />
         </div>
       </div>
     );

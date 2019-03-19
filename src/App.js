@@ -20,6 +20,7 @@ import RosterPage from './components/RosterPage';
 import { roster } from './lib/roster';
 import PlayPage from './components/PlayPage';
 import { assignments } from './lib/assignments';
+import { assignmentsPlaceholder } from './lib/assignmentsPlaceholder';
 
 class App extends Component {
   state = {
@@ -28,7 +29,14 @@ class App extends Component {
     confirmedRoomCode: false,
     confirmedGameName: false,
     isRingleader: false,
-    chosenPath: false
+    chosenPath: false,
+    answers: []
+  };
+  _isMounted = false;
+  setAnswer = answer => {
+    if (this._isMounted) {
+      this.setState({ answers: this.state.answers.concat([answer]) });
+    }
   };
 
   componentDidMount() {
@@ -49,6 +57,7 @@ class App extends Component {
     const setChosenPath = path => {
       this.setState({ chosenPath: path });
     };
+
     return (
       <React.Fragment>
         <CssBaseline />
@@ -137,7 +146,8 @@ class App extends Component {
                   {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
-                  assignments={assignments}
+                  assignments={assignmentsPlaceholder}
+                  setAnswer={this.setAnswer}
                 />
               )}
             />
