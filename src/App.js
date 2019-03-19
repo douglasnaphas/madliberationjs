@@ -19,6 +19,7 @@ import YourRoomCodePage from './components/YourRoomCodePage';
 import RosterPage from './components/RosterPage';
 import { roster } from './lib/roster';
 import PlayPage from './components/PlayPage';
+import { assignments } from './lib/assignments';
 
 class App extends Component {
   state = {
