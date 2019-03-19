@@ -8,7 +8,7 @@ import { Configs } from '../Configs';
  * @param {String} roomCode The Room Code of the seder
  * @param {String} gameName The Game Name of the requestor
  */
-async function assignments(roomCode, gameName, path) {
+async function assignments(roomCode, gameName) {
   const assignmentsUrl = new URL(
     `/assignments?roomcode=${roomCode}&gamename=${encodeURI(gameName)}`,
     Configs.apiUrl()

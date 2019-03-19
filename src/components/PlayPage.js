@@ -15,8 +15,23 @@ const styles = theme => ({
 class PlayPage extends Component {
   state = { fetchingPrompts: true };
   _isMounted = false;
+  fetchAssignments = () => {
+    const { confirmedRoomCode, confirmedGameName, assignments } = this.props;
+    if (this._isMounted) this.setState({ fetchingPrompts: true });
+    assignments(confirmedRoomCode, confirmedGameName).then(d => {
+      if (d.status === 200) {
+        if (this._isMounted) {
+          this.setState({
+            fetchingPrompts: false,
+            assignmentsData: d.data
+          });
+        }
+      }
+    });
+  };
   componentDidMount() {
     this._isMounted = true;
+    this.fetchAssignments();
   }
   componentWillUnmount() {
     this._isMounted = false;
