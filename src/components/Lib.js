@@ -1,5 +1,6 @@
 import { madLiberationStyles } from '../madLiberationStyles';
 import MenuAppBar from './MenuAppBar';
+import Paper from '@material-ui/core/Paper';
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
@@ -11,6 +12,10 @@ const styles = theme => ({
   },
   input: {
     display: 'none'
+  },
+  paperPadding: {
+    padding: '3px',
+    margin: '2px'
   }
 });
 
@@ -24,7 +29,7 @@ class Lib extends Component {
     this._isMounted = false;
   }
   render() {
-    const { lib } = this.props;
+    const { lib, classes } = this.props;
     return (
       <div>
         <div>
@@ -32,9 +37,9 @@ class Lib extends Component {
             Enter a word or phrase to replace...
           </Typography>
           <Typography component="p" paragraph>
-            <span style={madLiberationStyles.lightGrayBackround}>
+            <Paper component="span" className={classes.paperPadding}>
               {lib ? lib.prompt : ''}
-            </span>
+            </Paper>
           </Typography>
           <TextField variant="outlined" />
         </div>
