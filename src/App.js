@@ -148,6 +148,7 @@ class App extends Component {
                   confirmedGameName={this.state.confirmedGameName}
                   assignments={assignmentsPlaceholder}
                   setAnswer={this.setAnswer}
+                  answers={this.state.answers}
                 />
               )}
             />

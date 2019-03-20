@@ -2,6 +2,8 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Lib from './Lib';
 import MenuAppBar from './MenuAppBar';
@@ -72,7 +74,7 @@ class PlayPage extends Component {
   }
 
   render() {
-    const { confirmedRoomCode, confirmedGameName } = this.props;
+    const { confirmedRoomCode, confirmedGameName, answers } = this.props;
     return (
       <div>
         <MenuAppBar
@@ -109,13 +111,24 @@ class PlayPage extends Component {
               color="primary"
               variant="contained"
               onClick={this.submitAllClick}
+              aria-labelledby="submit-your-answers-dialog"
+              aria-describedby="submit-your-answers-dialog-description"
             >
               Submit all of these
             </Button>
-            <Dialog open={this.state.dialogOpen}>
-              <DialogTitle>Submit your answers?</DialogTitle>
+            <Dialog open={this.state.dialogOpen} onClose={this.onDialogClose}>
+              <DialogTitle id="submit-your-answers-dialog">
+                Submit your answers?
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="submit-your-answers-dialog-description">
+                  You have {this.state.assignmentsData.length - answers.length}{' '}
+                  unanswered prompts
+                </DialogContentText>
+              </DialogContent>
               <DialogActions>
                 <Button onClick={this.onDialogClose}>Cancel</Button>
+                <Button>Yes, submit</Button>
               </DialogActions>
             </Dialog>
           </div>
