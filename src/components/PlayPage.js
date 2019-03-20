@@ -16,7 +16,7 @@ const styles = theme => ({
 });
 
 class PlayPage extends Component {
-  state = { fetchingPrompts: true, assignmentsData: [] };
+  state = { fetchingPrompts: true, assignmentsData: [], libIndex: 0 };
   _isMounted = false;
   fetchAssignments = () => {
     const { confirmedRoomCode, confirmedGameName, assignments } = this.props;
@@ -32,6 +32,22 @@ class PlayPage extends Component {
       }
     });
   };
+  incrementLibIndex = () => {
+    if (this._isMounted && this.state.assignmentsData.length > 0) {
+      this.setState({
+        libIndex: (this.state.libIndex + 1) % this.state.assignmentsData.length
+      });
+    }
+  };
+  decrementLibIndex = () => {
+    if (this._isMounted) {
+      if (this.state.libIndex == 0) {
+        this.setState({ libIndex: this.state.assignmentsData.length - 1 });
+      } else {
+        this.setState({ libIndex: this.state.libIndex - 1 });
+      }
+    }
+  };
   componentDidMount() {
     this._isMounted = true;
     this.fetchAssignments();
@@ -40,7 +56,6 @@ class PlayPage extends Component {
     this._isMounted = false;
   }
 
-  // increment lib method
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
     return (
@@ -57,8 +72,21 @@ class PlayPage extends Component {
           <br />
           <CircularProgress />
         </div>
-        <div hidden={this.state.fetchingPrompts && this.state.assignmentsData}>
-          <Lib lib={this.state.assignmentsData[0]} />
+        <div
+          hidden={
+            this.state.fetchingPrompts ||
+            !this.state.assignmentsData ||
+            !Array.isArray(this.state.assignmentsData) ||
+            this.state.assignmentsData < 1
+          }
+        >
+          <Lib
+            lib={this.state.assignmentsData[this.state.libIndex]}
+            libIndex={this.state.libIndex}
+            libCount={this.state.assignmentsData.length}
+            incrementLibIndex={this.incrementLibIndex}
+            decrementLibIndex={this.decrementLibIndex}
+          />
         </div>
       </div>
     );

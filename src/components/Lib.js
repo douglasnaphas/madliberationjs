@@ -1,5 +1,8 @@
+import IconButton from '@material-ui/core/IconButton';
 import { madLiberationStyles } from '../madLiberationStyles';
 import MenuAppBar from './MenuAppBar';
+import NavigateBefore from '@material-ui/icons/NavigateBefore';
+import NavigateNext from '@material-ui/icons/NavigateNext';
 import Paper from '@material-ui/core/Paper';
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
@@ -18,7 +21,14 @@ class Lib extends Component {
     this._isMounted = false;
   }
   render() {
-    const { lib, classes } = this.props;
+    const {
+      lib,
+      classes,
+      libIndex,
+      libCount,
+      incrementLibIndex,
+      decrementLibIndex
+    } = this.props;
     return (
       <div>
         <div>
@@ -56,6 +66,16 @@ class Lib extends Component {
           ) : (
             ''
           )}
+        </div>
+        <br />
+        <div>
+          <IconButton>
+            <NavigateBefore onClick={decrementLibIndex} />
+          </IconButton>
+          {libIndex + 1} / {libCount}
+          <IconButton>
+            <NavigateNext onClick={incrementLibIndex} />
+          </IconButton>
         </div>
       </div>
     );
