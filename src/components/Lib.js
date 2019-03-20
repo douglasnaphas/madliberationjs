@@ -22,21 +22,22 @@ class Lib extends Component {
     return (
       <div>
         <div>
-          <Typography variant="h5" gutterBottom>
+          <Typography component="p" paragraph gutterBottom>
             Enter a word or phrase to replace...
           </Typography>
-          <Typography component="p" paragraph>
-            <Paper component="span" className={classes.paperPadding}>
-              {lib ? lib.prompt : ''}
+          <div>
+            <Paper className={classes.paper}>
+              <Typography variant="h5">{lib ? lib.prompt : ''}</Typography>
             </Paper>
-          </Typography>
+          </div>
+          <br />
           <TextField variant="outlined" fullWidth />
           {lib && lib.sentence ? (
             <div>
               <br />
               <Typography component="span">
                 Your answer should complete the sentence:{' '}
-                <span className={classes.blue}>
+                <span className={classes.blueItalic}>
                   {lib.sentence.replace(/_/, '__')}
                 </span>
               </Typography>
@@ -49,7 +50,7 @@ class Lib extends Component {
               <br />
               <Typography component="span">
                 For example, you could write:{' '}
-                <span className={classes.blue}>{lib.example}</span>
+                <span className={classes.blueItalic}>{lib.example}</span>
               </Typography>
             </div>
           ) : (
