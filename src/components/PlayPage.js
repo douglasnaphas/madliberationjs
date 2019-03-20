@@ -1,3 +1,4 @@
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Lib from './Lib';
 import MenuAppBar from './MenuAppBar';
 import React, { Component } from 'react';
@@ -53,6 +54,8 @@ class PlayPage extends Component {
           <Typography variant="h4" gutterBottom>
             Fetching your prompts, they'll be ready promptly...
           </Typography>
+          <br />
+          <CircularProgress />
         </div>
         <div hidden={this.state.fetchingPrompts && this.state.assignmentsData}>
           <Lib lib={this.state.assignmentsData[0]} />
