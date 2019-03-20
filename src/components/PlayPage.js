@@ -1,4 +1,8 @@
+import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Lib from './Lib';
 import MenuAppBar from './MenuAppBar';
 import React, { Component } from 'react';
@@ -16,7 +20,12 @@ const styles = theme => ({
 });
 
 class PlayPage extends Component {
-  state = { fetchingPrompts: true, assignmentsData: [], libIndex: 0 };
+  state = {
+    fetchingPrompts: true,
+    assignmentsData: [],
+    libIndex: 0,
+    dialogOpen: false
+  };
   _isMounted = false;
   fetchAssignments = () => {
     const { confirmedRoomCode, confirmedGameName, assignments } = this.props;
@@ -47,6 +56,12 @@ class PlayPage extends Component {
         this.setState({ libIndex: this.state.libIndex - 1 });
       }
     }
+  };
+  submitAllClick = event => {
+    this.setState({ dialogOpen: true });
+  };
+  onDialogClose = event => {
+    this.setState({ dialogOpen: false });
   };
   componentDidMount() {
     this._isMounted = true;
@@ -80,13 +95,30 @@ class PlayPage extends Component {
             this.state.assignmentsData < 1
           }
         >
-          <Lib
-            lib={this.state.assignmentsData[this.state.libIndex]}
-            libIndex={this.state.libIndex}
-            libCount={this.state.assignmentsData.length}
-            incrementLibIndex={this.incrementLibIndex}
-            decrementLibIndex={this.decrementLibIndex}
-          />
+          <div>
+            <Lib
+              lib={this.state.assignmentsData[this.state.libIndex]}
+              libIndex={this.state.libIndex}
+              libCount={this.state.assignmentsData.length}
+              incrementLibIndex={this.incrementLibIndex}
+              decrementLibIndex={this.decrementLibIndex}
+            />
+          </div>
+          <div>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={this.submitAllClick}
+            >
+              Submit all of these
+            </Button>
+            <Dialog open={this.state.dialogOpen}>
+              <DialogTitle>Submit your answers?</DialogTitle>
+              <DialogActions>
+                <Button onClick={this.onDialogClose}>Cancel</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
         </div>
       </div>
     );
