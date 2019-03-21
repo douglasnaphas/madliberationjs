@@ -14,12 +14,17 @@ const styles = theme => madLiberationStyles;
 class Lib extends Component {
   state = {};
   _isMounted = false;
+  onAnswerChange = event => {
+    const { setAnswer, libIndex } = this.props;
+    setAnswer(event.target.value, libIndex);
+  };
   componentDidMount() {
     this._isMounted = true;
   }
   componentWillUnmount() {
     this._isMounted = false;
   }
+
   render() {
     const {
       lib,
@@ -41,7 +46,11 @@ class Lib extends Component {
             </Paper>
           </div>
           <br />
-          <TextField variant="outlined" fullWidth />
+          <TextField
+            variant="outlined"
+            fullWidth
+            onChange={this.onAnswerChange}
+          />
           {lib && lib.sentence ? (
             <div>
               <br />

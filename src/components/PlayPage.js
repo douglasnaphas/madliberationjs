@@ -26,7 +26,8 @@ class PlayPage extends Component {
     fetchingPrompts: true,
     assignmentsData: [],
     libIndex: 0,
-    dialogOpen: false
+    dialogOpen: false,
+    answers: []
   };
   _isMounted = false;
   fetchAssignments = () => {
@@ -34,10 +35,11 @@ class PlayPage extends Component {
     if (this._isMounted) this.setState({ fetchingPrompts: true });
     assignments(confirmedRoomCode, confirmedGameName).then(d => {
       if (d.status === 200) {
-        if (this._isMounted) {
+        if (this._isMounted && Array.isArray(d.data)) {
           this.setState({
             fetchingPrompts: false,
-            assignmentsData: d.data
+            assignmentsData: d.data,
+            answers: d.data
           });
         }
       }
@@ -64,6 +66,22 @@ class PlayPage extends Component {
   };
   onDialogClose = event => {
     this.setState({ dialogOpen: false });
+  };
+  setAnswer = (answer, index) => {
+    if (this._isMounted) {
+      this.setState(state => {
+        const newAnswers = state.answers.map((a, i) => {
+          if (i === index) {
+            return answer;
+          } else {
+            return a;
+          }
+        });
+        return {
+          answers: newAnswers
+        };
+      });
+    }
   };
   componentDidMount() {
     this._isMounted = true;
@@ -104,6 +122,7 @@ class PlayPage extends Component {
               libCount={this.state.assignmentsData.length}
               incrementLibIndex={this.incrementLibIndex}
               decrementLibIndex={this.decrementLibIndex}
+              setAnswer={this.setAnswer}
             />
           </div>
           <div>
