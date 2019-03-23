@@ -32,7 +32,8 @@ class Lib extends Component {
       libIndex,
       libCount,
       incrementLibIndex,
-      decrementLibIndex
+      decrementLibIndex,
+      answer
     } = this.props;
     return (
       <div>
@@ -50,6 +51,7 @@ class Lib extends Component {
             variant="outlined"
             fullWidth
             onChange={this.onAnswerChange}
+            value={answer && answer.answer ? answer.answer : ''}
           />
           {lib && lib.sentence ? (
             <div>

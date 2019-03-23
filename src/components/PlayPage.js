@@ -39,7 +39,9 @@ class PlayPage extends Component {
           this.setState({
             fetchingPrompts: false,
             assignmentsData: d.data,
-            answers: d.data
+            answers: d.data.map(a => {
+              return { id: a.id };
+            })
           });
         }
       }
@@ -72,7 +74,7 @@ class PlayPage extends Component {
       this.setState(state => {
         const newAnswers = state.answers.map((a, i) => {
           if (i === index) {
-            return answer;
+            return { answer: answer, id: a.id };
           } else {
             return a;
           }
@@ -123,6 +125,7 @@ class PlayPage extends Component {
               incrementLibIndex={this.incrementLibIndex}
               decrementLibIndex={this.decrementLibIndex}
               setAnswer={this.setAnswer}
+              answer={this.state.answers[this.state.libIndex]}
             />
           </div>
           <div>
@@ -141,7 +144,8 @@ class PlayPage extends Component {
               </DialogTitle>
               <DialogContent>
                 <DialogContentText id="submit-your-answers-dialog-description">
-                  You have {this.state.assignmentsData.length - answers.length}{' '}
+                  You have{' '}
+                  {this.state.assignmentsData.length /* minus something */}{' '}
                   unanswered prompts
                 </DialogContentText>
               </DialogContent>

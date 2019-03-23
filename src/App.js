@@ -29,15 +29,9 @@ class App extends Component {
     confirmedRoomCode: false,
     confirmedGameName: false,
     isRingleader: false,
-    chosenPath: false,
-    answers: []
+    chosenPath: false
   };
   _isMounted = false;
-  setAnswer = answer => {
-    if (this._isMounted) {
-      this.setState({ answers: this.state.answers.concat([answer]) });
-    }
-  };
 
   componentDidMount() {
     this._isMounted = true;
@@ -146,7 +140,7 @@ class App extends Component {
                   {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
-                  assignments={assignments}
+                  assignments={assignmentsPlaceholder}
                   setAnswer={this.setAnswer}
                   answers={this.state.answers}
                 />
