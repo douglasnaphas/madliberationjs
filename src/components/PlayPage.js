@@ -85,6 +85,14 @@ class PlayPage extends Component {
       });
     }
   };
+  unansweredPrompts = () => {
+    return this.state.answers.reduce((acc, curr) => {
+      if (curr.answer && curr.answer.length > 0) {
+        return acc - 1;
+      }
+      return acc;
+    }, this.state.answers.length);
+  };
   componentDidMount() {
     this._isMounted = true;
     this.fetchAssignments();
@@ -144,9 +152,7 @@ class PlayPage extends Component {
               </DialogTitle>
               <DialogContent>
                 <DialogContentText id="submit-your-answers-dialog-description">
-                  You have{' '}
-                  {this.state.assignmentsData.length /* minus something */}{' '}
-                  unanswered prompts
+                  You have {this.unansweredPrompts()} unanswered prompts
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
