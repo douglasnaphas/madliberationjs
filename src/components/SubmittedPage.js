@@ -39,6 +39,39 @@ class SubmittedPage extends Component {
           confirmedRoomCode={confirmedRoomCode}
           confirmedGameName={confirmedGameName}
         />
+        <br />
+        <div>
+          <Typography variant="h4" gutterBottom>
+            You submitted your answers!
+          </Typography>
+        </div>
+        <div>
+          <Typography component="p" paragraph gutterBottom>
+            You've done your part for this seder. Your answers will be plugged
+            into the script in funny places. Now, a question:
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="h4" gutterBottom>
+            Do you want to read the haggadah from this device?
+          </Typography>
+        </div>
+        <div>
+          <Typography component="p" paragraph gutterBottom>
+            It's usually best for just one person to receive the script on their
+            device, and to pass it around for all to read. The script says when
+            to pass the device to the next person.
+          </Typography>
+        </div>
+        <div>
+          <Button variant="contained">Yes, I want the script</Button>{' '}
+        </div>
+        <br />
+        <div>
+          <Button variant="contained">
+            No, we'll use someone else's device
+          </Button>
+        </div>
       </div>
     );
   }
