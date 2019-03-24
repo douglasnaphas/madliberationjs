@@ -64,10 +64,10 @@ class PlayPage extends Component {
     }
   };
   submitAllClick = event => {
-    this.setState({ dialogOpen: true });
+    if (this._isMounted) this.setState({ dialogOpen: true });
   };
   onDialogClose = event => {
-    this.setState({ dialogOpen: false });
+    if (this._isMounted) this.setState({ dialogOpen: false });
   };
   setAnswer = (answer, index) => {
     if (this._isMounted) {
