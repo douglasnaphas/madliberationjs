@@ -12,6 +12,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import YesSubmitLibsButtonWithRouter from './YesSubmitLibsButtonWithRouter';
 
 const styles = theme => ({
   button: {
@@ -28,7 +29,9 @@ class PlayPage extends Component {
     assignmentsData: [],
     libIndex: 0,
     dialogOpen: false,
-    answers: []
+    answers: [],
+    submitButtonPressed: false,
+    failedAttempt: false
   };
   _isMounted = false;
   fetchAssignments = () => {
@@ -94,6 +97,24 @@ class PlayPage extends Component {
       return acc;
     }, this.state.answers.length);
   };
+  submitLibsAndGoToSubmittedPage = history => {
+    const { confirmedRoomCode, confirmedGameName, submitLibs } = this.props;
+    if (this._isMounted) this.setState({ submitButtonPressed: true });
+    submitLibs(confirmedRoomCode, confirmedGameName, this.state.answers).then(
+      d => {
+        if (!this._isMounted) return;
+        if (d.status === 200) {
+          history.push('/submitted');
+          return;
+        }
+        this.setState({
+          submitButtonPressed: false,
+          failedAttempt: true,
+          dialogOpen: false
+        });
+      }
+    );
+  };
   componentDidMount() {
     this._isMounted = true;
     this.fetchAssignments();
@@ -157,16 +178,29 @@ class PlayPage extends Component {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.onDialogClose}>Cancel</Button>
                 <Button
-                  madliberationid="yes-submit-libs-button"
-                  component={Link}
-                  to={{ pathname: '/submitted' }}
+                  disabled={this.state.submitButtonPressed}
+                  onClick={this.onDialogClose}
                 >
-                  Yes, submit
+                  Cancel
                 </Button>
+                <YesSubmitLibsButtonWithRouter
+                  submitLibsAndGoToSubmittedPage={
+                    this.submitLibsAndGoToSubmittedPage
+                  }
+                  disabled={this.state.submitButtonPressed}
+                />
               </DialogActions>
             </Dialog>
+            <div
+              hidden={
+                !this.state.failedAttempt || this.state.submitButtonPressed
+              }
+            >
+              <Typography component="p" color="secondary">
+                Couldn't submit your answers, please try again.
+              </Typography>
+            </div>
           </div>
         </div>
       </div>
