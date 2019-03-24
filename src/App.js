@@ -21,6 +21,7 @@ import { roster } from './lib/roster';
 import PlayPage from './components/PlayPage';
 import { assignments } from './lib/assignments';
 import { assignmentsPlaceholder } from './lib/assignmentsPlaceholder';
+import SubmittedPage from './components/SubmittedPage';
 
 class App extends Component {
   state = {
@@ -141,8 +142,17 @@ class App extends Component {
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
                   assignments={assignments}
-                  setAnswer={this.setAnswer}
-                  answers={this.state.answers}
+                />
+              )}
+            />
+            <Route
+              path="/submitted"
+              exact
+              render={props => (
+                <SubmittedPage
+                  {...props}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
                 />
               )}
             />

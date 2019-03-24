@@ -102,7 +102,7 @@ class PlayPage extends Component {
   }
 
   render() {
-    const { confirmedRoomCode, confirmedGameName, answers } = this.props;
+    const { confirmedRoomCode, confirmedGameName } = this.props;
     return (
       <div>
         <MenuAppBar
