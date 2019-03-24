@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Lib from './Lib';
+import { Link } from 'react-router-dom';
 import MenuAppBar from './MenuAppBar';
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
@@ -157,7 +158,13 @@ class PlayPage extends Component {
               </DialogContent>
               <DialogActions>
                 <Button onClick={this.onDialogClose}>Cancel</Button>
-                <Button>Yes, submit</Button>
+                <Button
+                  madliberationid="yes-submit-libs-button"
+                  component={Link}
+                  to={{ pathname: '/submitted' }}
+                >
+                  Yes, submit
+                </Button>
               </DialogActions>
             </Dialog>
           </div>
