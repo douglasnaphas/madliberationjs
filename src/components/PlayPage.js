@@ -26,12 +26,13 @@ const styles = theme => ({
 class PlayPage extends Component {
   state = {
     fetchingPrompts: true,
+    failedFetch: false,
     assignmentsData: [],
     libIndex: 0,
     dialogOpen: false,
     answers: [],
     submitButtonPressed: false,
-    failedAttempt: false
+    failedSubmitAttempt: false
   };
   _isMounted = false;
   fetchAssignments = () => {
@@ -42,14 +43,22 @@ class PlayPage extends Component {
         if (this._isMounted && Array.isArray(d.data)) {
           this.setState({
             fetchingPrompts: false,
+            failedFetch: false,
             assignmentsData: d.data,
             answers: d.data.map(a => {
               return { id: a.id };
             })
           });
         }
+      } else {
+        if (this._isMounted) {
+          this.setState({ fetchingPrompts: false, failedFetch: true });
+        }
       }
     });
+  };
+  tryAgainClick = () => {
+    this.fetchAssignments();
   };
   incrementLibIndex = () => {
     if (this._isMounted && this.state.assignmentsData.length > 0) {
@@ -109,7 +118,7 @@ class PlayPage extends Component {
         }
         this.setState({
           submitButtonPressed: false,
-          failedAttempt: true,
+          failedSubmitAttempt: true,
           dialogOpen: false
         });
       }
@@ -139,9 +148,32 @@ class PlayPage extends Component {
           <br />
           <CircularProgress />
         </div>
+        <div hidden={!this.state.failedFetch}>
+          <Typography component="p" color="secondary" gutterBottom>
+            Well actually, fetching your prompts failed. Make sure the person
+            who started this virtual seder really wants you to click this
+            button, then try to
+          </Typography>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.tryAgainClick}
+              gutterBottom
+            >
+              click this button
+            </Button>
+          </div>
+          <div>
+            <Typography component="p" color="secondary">
+              again to get your assignments.
+            </Typography>
+          </div>
+        </div>
         <div
           hidden={
             this.state.fetchingPrompts ||
+            this.state.failedFetch ||
             !this.state.assignmentsData ||
             !Array.isArray(this.state.assignmentsData) ||
             this.state.assignmentsData < 1
@@ -194,7 +226,8 @@ class PlayPage extends Component {
             </Dialog>
             <div
               hidden={
-                !this.state.failedAttempt || this.state.submitButtonPressed
+                !this.state.failedSubmitAttempt ||
+                this.state.submitButtonPressed
               }
             >
               <Typography component="p" color="secondary">

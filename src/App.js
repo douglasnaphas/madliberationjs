@@ -21,6 +21,7 @@ import { roster } from './lib/roster';
 import PlayPage from './components/PlayPage';
 import { assignments } from './lib/assignments';
 import { assignmentsPlaceholder } from './lib/assignmentsPlaceholder';
+import { assignmentsFailure } from './lib/assignmentsFailure';
 import SubmittedPage from './components/SubmittedPage';
 import { submitLibs } from './lib/submitLibs';
 
