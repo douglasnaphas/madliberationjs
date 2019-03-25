@@ -11,9 +11,7 @@ import { Configs } from '../Configs';
  */
 async function submitLibs(roomCode, gameName, answers) {
   const submitLibsUrl = new URL(`/submit-libs`, Configs.apiUrl());
-  console.log('submitLibs: about to check roomCode, gameName');
   if (!roomCode || !gameName) return {};
-  console.log('about to submit libs');
   const response = await fetch(submitLibsUrl, {
     method: 'POST',
     credentials: 'include',
@@ -28,7 +26,6 @@ async function submitLibs(roomCode, gameName, answers) {
   });
   const data = await response.json();
   const status = response.status;
-  console.log('submitted libs');
   return {
     data: data,
     status: status
