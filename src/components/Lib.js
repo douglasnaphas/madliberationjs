@@ -80,12 +80,12 @@ class Lib extends Component {
         </div>
         <br />
         <div>
-          <IconButton>
-            <NavigateBefore onClick={decrementLibIndex} />
+          <IconButton onClick={decrementLibIndex}>
+            <NavigateBefore />
           </IconButton>
           {libIndex + 1} / {libCount}
-          <IconButton>
-            <NavigateNext onClick={incrementLibIndex} />
+          <IconButton onClick={incrementLibIndex}>
+            <NavigateNext />
           </IconButton>
         </div>
       </div>
