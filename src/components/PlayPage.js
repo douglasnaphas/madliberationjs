@@ -159,7 +159,6 @@ class PlayPage extends Component {
               variant="contained"
               color="primary"
               onClick={this.tryAgainClick}
-              gutterBottom
             >
               click this button
             </Button>
