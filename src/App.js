@@ -24,6 +24,8 @@ import { assignmentsPlaceholder } from './lib/assignmentsPlaceholder';
 import { assignmentsFailure } from './lib/assignmentsFailure';
 import SubmittedPage from './components/SubmittedPage';
 import { submitLibs } from './lib/submitLibs';
+import ReadRosterPage from './components/ReadRosterPage';
+import { readRoster } from './lib/readRoster';
 
 class App extends Component {
   state = {
@@ -156,6 +158,18 @@ class App extends Component {
                   {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
+                />
+              )}
+            />
+            <Route
+              path="/read-roster"
+              exact
+              render={props => (
+                <ReadRosterPage
+                  {...props}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
+                  roster={readRoster}
                 />
               )}
             />

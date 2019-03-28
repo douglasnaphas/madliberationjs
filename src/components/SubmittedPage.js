@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Lib from './Lib';
+import { Link } from 'react-router-dom';
 import MenuAppBar from './MenuAppBar';
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
@@ -64,7 +65,9 @@ class SubmittedPage extends Component {
           </Typography>
         </div>
         <div>
-          <Button variant="contained">Yes, I want the script</Button>{' '}
+          <Button variant="contained" component={Link} to="/read-roster">
+            Yes, I want the script
+          </Button>{' '}
         </div>
         <br />
         <div>
