@@ -20,7 +20,7 @@ const styles = theme => ({
   }
 });
 
-class ReadRosterPage extends Component {
+class ReadPage extends Component {
   state = {
     rosterLoading: true,
     done: [],
@@ -29,6 +29,7 @@ class ReadRosterPage extends Component {
     thatsEveryoneFailed: false
   };
   _isMounted = false;
+
   fetchRoster = () => {
     const { confirmedRoomCode, roster } = this.props;
     if (this._isMounted) this.setState({ rosterLoading: true });
@@ -43,6 +44,43 @@ class ReadRosterPage extends Component {
         }
       }
     });
+  };
+
+  /**
+   * Return:
+   *   - A spinner if rosterLoading, otherwise all the following
+   *   - An explanation that some people are not done
+   *   - A done table
+   *   - A notDone table
+   *   - A button to check again
+   *   - A button to proceed anyway
+   */
+  readRoster = (rosterLoading, done, notDone) => {
+    if (rosterLoading) {
+      return <CircularProgress />;
+    }
+    if (!Array.isArray(done) || !Array.isArray(notDone)) {
+      return <div />;
+    }
+    if (done.length < 1 || notDone.length < 1) {
+      return <div />;
+    }
+    const doneRows = [];
+    for (let i = 0; i < done.length; i++) {
+      doneRows.push(
+        <TableRow key={`doneRow${i}`}>
+          <TableCell key={`doneCell${i}`}>{this.state.done[i]}</TableCell>
+        </TableRow>
+      );
+    }
+    const notDoneRows = [];
+    for (let i = 0; i < this.state.notDone.length; i++) {
+      notDoneRows.push(
+        <TableRow key={`notDoneRow${i}`}>
+          <TableCell key={`notDoneCell${i}`}>{this.state.notDone[i]}</TableCell>
+        </TableRow>
+      );
+    }
   };
 
   componentDidMount() {
@@ -83,7 +121,7 @@ class ReadRosterPage extends Component {
       spinnerOrRoster = (
         <div>
           <div>
-            <Typography component="p" paragraph gutterBottom>
+            <Typography component="p" paragraph>
               These sedergoers have submitted their answers:
             </Typography>
           </div>
@@ -92,8 +130,9 @@ class ReadRosterPage extends Component {
               <TableBody>{doneRows}</TableBody>
             </Table>
           </div>
+          <br />
           <div>
-            <Typography component="p" paragraph gutterBottom>
+            <Typography component="p" paragraph>
               These have not:
             </Typography>
           </div>
@@ -153,4 +192,4 @@ class ReadRosterPage extends Component {
   }
 }
 
-export default withStyles(styles)(ReadRosterPage);
+export default withStyles(styles)(ReadPage);

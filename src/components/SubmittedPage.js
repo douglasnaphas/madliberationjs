@@ -65,7 +65,7 @@ class SubmittedPage extends Component {
           </Typography>
         </div>
         <div>
-          <Button variant="contained" component={Link} to="/read-roster">
+          <Button variant="contained" component={Link} to="/read">
             Yes, I want the script
           </Button>{' '}
         </div>
