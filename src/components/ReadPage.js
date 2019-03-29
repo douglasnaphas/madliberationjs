@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import React, { Component } from 'react';
+import ReadRoster from './ReadRoster';
 import MenuAppBar from './MenuAppBar';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,129 +23,31 @@ const styles = theme => ({
 
 class ReadPage extends Component {
   state = {
-    rosterLoading: true,
-    done: [],
-    notDone: [],
-    thatsEveryonePressed: false,
-    thatsEveryoneFailed: false
+    readyForScript: false
   };
   _isMounted = false;
-
-  fetchRoster = () => {
-    const { confirmedRoomCode, roster } = this.props;
-    if (this._isMounted) this.setState({ rosterLoading: true });
-    roster(confirmedRoomCode).then(d => {
-      if (d.status === 200) {
-        if (this._isMounted) {
-          this.setState({
-            rosterLoading: false,
-            done: d.data.done,
-            notDone: d.data.notDone
-          });
-        }
-      }
-    });
-  };
-
-  /**
-   * Return:
-   *   - A spinner if rosterLoading, otherwise all the following
-   *   - An explanation that some people are not done
-   *   - A done table
-   *   - A notDone table
-   *   - A button to check again
-   *   - A button to proceed anyway
-   */
-  readRoster = (rosterLoading, done, notDone) => {
-    if (rosterLoading) {
-      return <CircularProgress />;
-    }
-    if (!Array.isArray(done) || !Array.isArray(notDone)) {
-      return <div />;
-    }
-    if (done.length < 1 || notDone.length < 1) {
-      return <div />;
-    }
-    const doneRows = [];
-    for (let i = 0; i < done.length; i++) {
-      doneRows.push(
-        <TableRow key={`doneRow${i}`}>
-          <TableCell key={`doneCell${i}`}>{this.state.done[i]}</TableCell>
-        </TableRow>
-      );
-    }
-    const notDoneRows = [];
-    for (let i = 0; i < this.state.notDone.length; i++) {
-      notDoneRows.push(
-        <TableRow key={`notDoneRow${i}`}>
-          <TableCell key={`notDoneCell${i}`}>{this.state.notDone[i]}</TableCell>
-        </TableRow>
-      );
+  requestScript = () => {
+    if (this._isMounted) {
+      this.setState({ readyForScript: true });
     }
   };
-
   componentDidMount() {
     this._isMounted = true;
-    this.fetchRoster();
   }
-
   componentWillUnmount() {
     this._isMounted = false;
   }
-
   render() {
-    const { confirmedRoomCode, confirmedGameName } = this.props;
-    const doneRows = [];
-    for (let i = 0; i < this.state.done.length; i++) {
-      doneRows.push(
-        <TableRow key={`doneRow${i}`}>
-          <TableCell key={`doneCell${i}`}>{this.state.done[i]}</TableCell>
-        </TableRow>
-      );
-    }
-    const notDoneRows = [];
-    for (let i = 0; i < this.state.notDone.length; i++) {
-      notDoneRows.push(
-        <TableRow key={`notDoneRow${i}`}>
-          <TableCell key={`notDoneCell${i}`}>{this.state.notDone[i]}</TableCell>
-        </TableRow>
-      );
-    }
-    var doneHeading;
-    var doneTable;
-    var notDoneHeading;
-    var notDoneTable;
-    var spinnerOrRoster;
-    if (this.state.rosterLoading) {
-      spinnerOrRoster = <CircularProgress />;
-    } else {
-      spinnerOrRoster = (
-        <div>
-          <div>
-            <Typography component="p" paragraph>
-              These sedergoers have submitted their answers:
-            </Typography>
-          </div>
-          <div>
-            <Table>
-              <TableBody>{doneRows}</TableBody>
-            </Table>
-          </div>
-          <br />
-          <div>
-            <Typography component="p" paragraph>
-              These have not:
-            </Typography>
-          </div>
-          <div>
-            <Table>
-              <TableBody>{notDoneRows}</TableBody>
-            </Table>
-          </div>
-        </div>
-      );
-    }
-
+    const { confirmedRoomCode, confirmedGameName, roster } = this.props;
+    const readRoster = this.state.readyForScript ? (
+      <div />
+    ) : (
+      <ReadRoster
+        roster={roster}
+        confirmedRoomCode={confirmedRoomCode}
+        requestScript={this.requestScript}
+      />
+    );
     return (
       <div>
         <MenuAppBar
@@ -152,41 +55,7 @@ class ReadPage extends Component {
           confirmedGameName={confirmedGameName}
         />
         <br />
-        <div>{spinnerOrRoster}</div>
-        <div>
-          <Typography component="p" paragraph gutterBottom>
-            Is that everyone?
-          </Typography>
-        </div>
-        <div>
-          <Button
-            variant="contained"
-            disabled={
-              this.state.rosterLoading || this.state.thatsEveryonePressed
-            }
-            onClick={this.fetchRoster}
-          >
-            No, check again
-          </Button>
-        </div>
-        <br />
-        <div>
-          <Button
-            variant="contained"
-            disabled={
-              this.state.thatsEveryonePressed || this.state.rosterLoading
-            }
-          >
-            That's everyone
-          </Button>
-        </div>
-        <div hidden={!this.state.thatsEveryoneFailed}>
-          <Typography component="p" color="secondary">
-            There was an unexplained problem, please try again or accept our
-            apologies and make a new seder after trying again many times
-          </Typography>
-        </div>
-        <div />
+        {readRoster}
       </div>
     );
   }
