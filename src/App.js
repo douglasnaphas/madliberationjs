@@ -174,7 +174,6 @@ class App extends Component {
                 />
               )}
             />
-            {/* <Route path="/read" /> */}
           </div>
         </Router>
       </React.Fragment>

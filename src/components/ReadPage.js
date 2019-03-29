@@ -45,6 +45,7 @@ class ReadPage extends Component {
       <ReadRoster
         roster={roster}
         confirmedRoomCode={confirmedRoomCode}
+        confirmedGameName={confirmedGameName}
         requestScript={this.requestScript}
       />
     );

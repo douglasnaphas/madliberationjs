@@ -19,9 +19,14 @@ class ReadRoster extends React.Component {
   state = { rosterLoading: true, done: [], notDone: [], dialogOpen: false };
   _isMounted = false;
   fetchRoster = () => {
-    const { confirmedRoomCode, roster, requestScript } = this.props;
+    const {
+      confirmedRoomCode,
+      confirmedGameName,
+      roster,
+      requestScript
+    } = this.props;
     if (this._isMounted) this.setState({ rosterLoading: true });
-    roster(confirmedRoomCode).then(d => {
+    roster(confirmedRoomCode, confirmedGameName).then(d => {
       if (d.status === 200) {
         if (this._isMounted) {
           if (d.data.notDone.length < 1) {

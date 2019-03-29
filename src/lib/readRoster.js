@@ -10,10 +10,11 @@ import { Configs } from '../Configs';
  *       have not submitted their answers
  *   err: the error if any, or null
  * @param {String} roomCode The Room Code of the seder
+ * @param {String} gameName The Game Name of the participant
  */
-async function readRoster(roomCode) {
+async function readRoster(roomCode, gameName) {
   const rosterUrl = new URL(
-    `/read-roster?roomcode=${roomCode}`,
+    `/read-roster?roomcode=${roomCode}&gamename=${encodeURI(gameName)}`,
     Configs.apiUrl()
   );
   if (!roomCode) return {};
