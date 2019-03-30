@@ -6,8 +6,28 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({});
 class Page extends React.Component {
+  state = {
+    readyForContent: false
+  };
+  _isMounted = false;
+  setReadyForContent = () => {
+    if (this._isMounted) {
+      this.setState({ readyForContent: true });
+    }
+  };
+  componentDidMount() {
+    this._isMounted = true;
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.pageIndex != this.props.pageIndex) {
+      this.setState({ readyForContent: false });
+    }
+  }
   render() {
-    const { page } = this.props;
+    const { page, pageIndex, incrementPageIndex } = this.props;
     if (!Array.isArray(page.lines) || page.lines.length < 1) {
       return <div />;
     }
@@ -110,18 +130,36 @@ class Page extends React.Component {
       }
     });
 
-    return (
-      <div>
-        <div>{lines}</div>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={this.props.incrementPageIndex}
-        >
-          Next page
-        </Button>
-      </div>
-    );
+    if (!this.state.readyForContent) {
+      const order = pageIndex == 0 ? 'first' : 'next';
+      return (
+        <div>
+          <Typography variant="h5" gutterBottom>
+            Pass this device to the {order} reader, then click:
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.setReadyForContent}
+          >
+            Ready to read
+          </Button>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div>{lines}</div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={incrementPageIndex}
+          >
+            Next page
+          </Button>
+        </div>
+      );
+    }
   }
 }
 export default withStyles(styles)(Page);

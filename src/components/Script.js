@@ -68,6 +68,7 @@ class Script extends React.Component {
         <Page
           page={this.state.script.pages[this.state.pageIndex]}
           incrementPageIndex={this.incrementPageIndex}
+          pageIndex={this.state.pageIndex}
         />
       );
     }
