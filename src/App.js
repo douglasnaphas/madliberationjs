@@ -29,6 +29,7 @@ import { readRoster } from './lib/readRoster';
 import { readRosterDone } from './lib/readRosterDone';
 import { readRosterSplit } from './lib/readRosterSplit';
 import { script } from './lib/script';
+import { scriptPractice } from './lib/scriptPractice';
 
 class App extends Component {
   state = {
@@ -172,8 +173,8 @@ class App extends Component {
                   {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
-                  roster={readRoster}
-                  script={script}
+                  roster={readRosterDone}
+                  script={scriptPractice}
                 />
               )}
             />

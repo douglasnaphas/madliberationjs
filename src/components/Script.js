@@ -1,12 +1,15 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Page from './Page';
 import React from 'react';
+import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({});
 class Script extends React.Component {
   state = {
     fetchingScript: false,
-    script: false
+    script: false,
+    pageIndex: 0
   };
   _isMounted = false;
   getScript = () => {
@@ -31,7 +34,34 @@ class Script extends React.Component {
     if (this.state.fetchingScript) {
       return <CircularProgress />;
     }
-    return <div>Script fetched</div>;
+    if (this.state.script) {
+      if (
+        !Array.isArray(this.state.script.pages) ||
+        this.state.pageIndex > this.state.script.pages.length
+      ) {
+        return (
+          <div>
+            <div>
+              <Typography variant="h4" gutterBottom>
+                The seder has ended successfully
+              </Typography>
+            </div>
+            <br />
+            <div>
+              <Typography variant="p" paragraph>
+                לשנה הבאה בירושלים
+              </Typography>
+              <Typography variant="p" paragraph>
+                Next year in Jerusalem!
+              </Typography>
+            </div>
+          </div>
+        );
+      }
+
+      return <Page page={this.state.script.pages[this.state.pageIndex]} />;
+    }
+    return <div />;
   }
 }
 export default withStyles(styles)(Script);
