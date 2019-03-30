@@ -19,10 +19,22 @@ class Page extends React.Component {
     spans.push(<span key="span1">{spanText1}</span>);
     spans.push(<span key="span2">{spanText2}</span>);
     spans.push(<span key="span3">{spanText3}</span>);
+    lines.push(<div key="some_spans">{spans}</div>);
+    lines.push(
+      <div key="now_a_break">
+        <br />
+      </div>
+    );
+    lines.push(
+      <div key="more_spans">
+        {[<span key="x">ano</span>, <span key="y">ther</span>]}
+      </div>
+    );
+
     return (
       <div>
         <div>{page.lines.length} lines</div>
-        <div>{spans}</div>
+        <div>{lines}</div>
       </div>
     );
   }
