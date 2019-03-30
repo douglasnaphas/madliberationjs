@@ -1,4 +1,3 @@
-import Lib from './Lib';
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,30 +9,33 @@ class Page extends React.Component {
     if (!Array.isArray(page.lines) || page.lines.length < 1) {
       return <div />;
     }
+    const linesExample = [];
     const lines = [];
-    page.lines.forEach(line => {});
-    const spanText1 = 'This is the first ';
-    const spanText2 = 'segment, and this next is';
-    const spanText3 = ' the last.';
-    const spans = [];
-    spans.push(<span key="span1">{spanText1}</span>);
-    spans.push(<span key="span2">{spanText2}</span>);
-    spans.push(<span key="span3">{spanText3}</span>);
-    lines.push(<div key="some_spans">{spans}</div>);
-    lines.push(
-      <div key="now_a_break">
-        <br />
-      </div>
-    );
-    lines.push(
-      <div key="more_spans">
-        {[<span key="x">ano</span>, <span key="y">ther</span>]}
-      </div>
-    );
+    page.lines.forEach((line, lineIndex) => {
+      const segments = [];
+      if (!Array.isArray(line.segments)) {
+        return;
+      }
+      line.segments.forEach((segment, segmentIndex) => {
+        if (segment.type === 'text') {
+          segments.push(
+            <span key={`segment-${lineIndex}-${segmentIndex}`}>
+              {segment.text}
+            </span>
+          );
+        }
+      });
+      if (line.type === 'h1') {
+        lines.push(
+          <Typography variant="h1" key={`line-${lineIndex}`}>
+            {segments}
+          </Typography>
+        );
+      }
+    });
 
     return (
       <div>
-        <div>{page.lines.length} lines</div>
         <div>{lines}</div>
       </div>
     );
