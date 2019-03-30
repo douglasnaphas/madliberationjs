@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 import { madLiberationStyles } from '../madLiberationStyles';
 import React from 'react';
+import Tooltip from '@material-ui/core/Tooltip';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -48,12 +49,14 @@ class Page extends React.Component {
         }
         if (segment.type === 'lib') {
           segments.push(
-            <span
-              key={`segment-${lineIndex}-${segmentIndex}`}
-              style={madLiberationStyles.lightGrayBackround}
-            >
-              {segment.answer}
-            </span>
+            <Tooltip title={segment.prompt}>
+              <span
+                key={`segment-${lineIndex}-${segmentIndex}`}
+                style={madLiberationStyles.lightGrayBackround}
+              >
+                {segment.answer}
+              </span>
+            </Tooltip>
           );
         }
       });
