@@ -1,3 +1,4 @@
+import { madLiberationStyles } from '../madLiberationStyles';
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -21,6 +22,16 @@ class Page extends React.Component {
           segments.push(
             <span key={`segment-${lineIndex}-${segmentIndex}`}>
               {segment.text}
+            </span>
+          );
+        }
+        if (segment.type === 'lib') {
+          segments.push(
+            <span
+              key={`segment-${lineIndex}-${segmentIndex}`}
+              style={madLiberationStyles.lightGrayBackround}
+            >
+              {segment.answer}
             </span>
           );
         }
