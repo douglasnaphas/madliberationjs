@@ -26,7 +26,9 @@ import SubmittedPage from './components/SubmittedPage';
 import { submitLibs } from './lib/submitLibs';
 import ReadPage from './components/ReadPage';
 import { readRoster } from './lib/readRoster';
+import { readRosterDone } from './lib/readRosterDone';
 import { readRosterSplit } from './lib/readRosterSplit';
+import { script } from './lib/script';
 
 class App extends Component {
   state = {
@@ -171,6 +173,7 @@ class App extends Component {
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
                   roster={readRoster}
+                  script={script}
                 />
               )}
             />

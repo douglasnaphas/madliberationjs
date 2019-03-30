@@ -4,6 +4,7 @@ import { Configs } from '../Configs';
 import React, { Component } from 'react';
 import ReadRoster from './ReadRoster';
 import MenuAppBar from './MenuAppBar';
+import Script from './Script';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -38,7 +39,7 @@ class ReadPage extends Component {
     this._isMounted = false;
   }
   render() {
-    const { confirmedRoomCode, confirmedGameName, roster } = this.props;
+    const { confirmedRoomCode, confirmedGameName, roster, script } = this.props;
     const readRoster = this.state.readyForScript ? (
       <div />
     ) : (
@@ -49,6 +50,15 @@ class ReadPage extends Component {
         requestScript={this.requestScript}
       />
     );
+    const scriptComponent = this.state.readyForScript ? (
+      <Script
+        script={script}
+        confirmedRoomCode={confirmedRoomCode}
+        confirmedGameName={confirmedGameName}
+      />
+    ) : (
+      <div />
+    );
     return (
       <div>
         <MenuAppBar
@@ -57,6 +67,7 @@ class ReadPage extends Component {
         />
         <br />
         {readRoster}
+        {scriptComponent}
       </div>
     );
   }
