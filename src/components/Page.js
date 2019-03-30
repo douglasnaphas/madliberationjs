@@ -79,7 +79,7 @@ class Page extends React.Component {
           </Typography>
         );
       }
-      if (line.type === 'p' || line.type === 'indent') {
+      if (line.type === 'p') {
         lines.push(
           <Typography
             variant="p"
@@ -90,6 +90,23 @@ class Page extends React.Component {
             {segments}
           </Typography>
         );
+      }
+      if (line.type === 'indent') {
+        lines.push(
+          <Typography variant="p" component="p" key={`line-${lineIndex}`}>
+            <span style={madLiberationStyles.italic}>{segments}</span>
+          </Typography>
+        );
+        if (
+          lineIndex < page.lines.length - 1 &&
+          page.lines[lineIndex + 1].type != 'indent'
+        ) {
+          lines.push(
+            <div key={`br-after-line-${lineIndex}`}>
+              <br />
+            </div>
+          );
+        }
       }
     });
 

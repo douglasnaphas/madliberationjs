@@ -1,5 +1,6 @@
 const madLiberationStyles = {
   red: { color: 'red' },
+  italic: { fontStyle: 'italic' },
   blueItalic: { color: 'blue', fontStyle: 'italic' },
   lightGrayBackround: { backgroundColor: 'lightgray' },
   paper: {
