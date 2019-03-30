@@ -7,6 +7,7 @@ import About from './components/About';
 import './App.css';
 import { closeSeder } from './lib/closeSeder';
 import { Configs } from './Configs';
+import DoneNotReadingPage from './components/DoneNotReadingPage';
 import { getScriptsFromApi } from './lib/getScriptsFromApi';
 import HowToPlay from './components/HowToPlay';
 import LetThemPressButtonPage from './components/LetThemPressButtonPage';
@@ -159,6 +160,17 @@ class App extends Component {
               exact
               render={props => (
                 <SubmittedPage
+                  {...props}
+                  confirmedRoomCode={this.state.confirmedRoomCode}
+                  confirmedGameName={this.state.confirmedGameName}
+                />
+              )}
+            />
+            <Route
+              path="/done-not-reading"
+              exact
+              render={props => (
+                <DoneNotReadingPage
                   {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}

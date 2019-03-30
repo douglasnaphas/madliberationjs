@@ -71,7 +71,7 @@ class SubmittedPage extends Component {
         </div>
         <br />
         <div>
-          <Button variant="contained">
+          <Button variant="contained" component={Link} to="/done-not-reading">
             No, we'll use someone else's device
           </Button>
         </div>
