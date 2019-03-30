@@ -23,6 +23,11 @@ class Script extends React.Component {
       this.setState({ fetchingScript: false });
     });
   };
+  incrementPageIndex = () => {
+    if (this._isMounted) {
+      this.setState({ pageIndex: this.state.pageIndex + 1 });
+    }
+  };
   componentDidMount() {
     this._isMounted = true;
     this.getScript();
@@ -37,7 +42,7 @@ class Script extends React.Component {
     if (this.state.script) {
       if (
         !Array.isArray(this.state.script.pages) ||
-        this.state.pageIndex > this.state.script.pages.length
+        this.state.pageIndex >= this.state.script.pages.length
       ) {
         return (
           <div>
@@ -59,7 +64,12 @@ class Script extends React.Component {
         );
       }
 
-      return <Page page={this.state.script.pages[this.state.pageIndex]} />;
+      return (
+        <Page
+          page={this.state.script.pages[this.state.pageIndex]}
+          incrementPageIndex={this.incrementPageIndex}
+        />
+      );
     }
     return <div />;
   }

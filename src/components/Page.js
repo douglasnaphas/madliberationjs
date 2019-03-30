@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import { madLiberationStyles } from '../madLiberationStyles';
 import React from 'react';
 import { Typography } from '@material-ui/core';
@@ -95,6 +96,13 @@ class Page extends React.Component {
     return (
       <div>
         <div>{lines}</div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.props.incrementPageIndex}
+        >
+          Next page
+        </Button>
       </div>
     );
   }
