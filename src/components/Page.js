@@ -27,7 +27,54 @@ class Page extends React.Component {
       });
       if (line.type === 'h1') {
         lines.push(
-          <Typography variant="h1" key={`line-${lineIndex}`}>
+          <Typography variant="h1" key={`line-${lineIndex}`} gutterBottom>
+            {segments}
+          </Typography>
+        );
+      }
+      if (line.type === 'h2') {
+        lines.push(
+          <Typography variant="h2" key={`line-${lineIndex}`} gutterBottom>
+            {segments}
+          </Typography>
+        );
+      }
+      if (line.type === 'h3') {
+        lines.push(
+          <Typography variant="h3" key={`line-${lineIndex}`} gutterBottom>
+            {segments}
+          </Typography>
+        );
+      }
+      if (line.type === 'h4') {
+        lines.push(
+          <Typography variant="h4" key={`line-${lineIndex}`} gutterBottom>
+            {segments}
+          </Typography>
+        );
+      }
+      if (line.type === 'h5') {
+        lines.push(
+          <Typography variant="h5" key={`line-${lineIndex}`} gutterBottom>
+            {segments}
+          </Typography>
+        );
+      }
+      if (line.type === 'h6') {
+        lines.push(
+          <Typography variant="h6" key={`line-${lineIndex}`} gutterBottom>
+            {segments}
+          </Typography>
+        );
+      }
+      if (line.type === 'p' || line.type === 'indent') {
+        lines.push(
+          <Typography
+            variant="p"
+            component="p"
+            key={`line-${lineIndex}`}
+            paragraph
+          >
             {segments}
           </Typography>
         );
