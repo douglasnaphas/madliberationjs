@@ -32,11 +32,12 @@ class YourRoomCodePage extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    const { chosenPath } = this.props;
     const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
     fetch(roomCodeUrl, {
       method: 'POST',
       body: JSON.stringify({
-        path: this.props.location.state.selectedScript.path
+        path: chosenPath
       }),
       headers: { 'Content-Type': 'application/json' }
     })

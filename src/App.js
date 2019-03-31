@@ -1,7 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Component } from 'react';
 import Route from 'react-router-dom/Route';
-import { Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 import About from './components/About';
 import './App.css';
@@ -114,6 +114,7 @@ class App extends Component {
                   setConfirmedGameName={setConfirmedGameName}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
+                  chosenPath={this.state.chosenPath}
                 />
               )}
             />
