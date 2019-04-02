@@ -49,7 +49,10 @@ class Page extends React.Component {
         }
         if (segment.type === 'lib') {
           segments.push(
-            <Tooltip title={segment.prompt}>
+            <Tooltip
+              key={`tooltip-${lineIndex}-${segmentIndex}`}
+              title={segment.prompt}
+            >
               <span
                 key={`segment-${lineIndex}-${segmentIndex}`}
                 style={madLiberationStyles.lightGrayBackround}
@@ -104,19 +107,14 @@ class Page extends React.Component {
       }
       if (line.type === 'p') {
         lines.push(
-          <Typography
-            variant="p"
-            component="p"
-            key={`line-${lineIndex}`}
-            paragraph
-          >
+          <Typography component="p" key={`line-${lineIndex}`} paragraph>
             {segments}
           </Typography>
         );
       }
       if (line.type === 'indent') {
         lines.push(
-          <Typography variant="p" component="p" key={`line-${lineIndex}`}>
+          <Typography component="p" key={`line-${lineIndex}`}>
             <span style={madLiberationStyles.italic}>{segments}</span>
           </Typography>
         );

@@ -42,15 +42,22 @@ class App extends Component {
     chosenPath: false
   };
   _isMounted = false;
-
+  persistState = () => {
+    console.log(
+      `I would persist: ${this.state.confirmedRoomCode} and ${
+        this.state.confirmedGameName
+      }`
+    );
+  };
   componentDidMount() {
     this._isMounted = true;
+    window.addEventListener('beforeunload', this.persistState);
   }
-
   componentWillUnmount() {
+    this.persistState();
+    window.removeEventListener('beforeunload', this.persistState);
     this._isMounted = false;
   }
-
   render() {
     const setConfirmedRoomCode = roomCode => {
       this.setState({ confirmedRoomCode: roomCode });
@@ -65,7 +72,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Router {...{ history }}>
+        <Router>
           <div className="App">
             <Route
               path="(/|/index.html)"

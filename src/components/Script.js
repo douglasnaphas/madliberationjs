@@ -53,12 +53,8 @@ class Script extends React.Component {
             </div>
             <br />
             <div>
-              <Typography variant="p" paragraph>
-                לשנה הבאה בירושלים
-              </Typography>
-              <Typography variant="p" paragraph>
-                Next year in Jerusalem!
-              </Typography>
+              <Typography paragraph>לשנה הבאה בירושלים</Typography>
+              <Typography paragraph>Next year in Jerusalem!</Typography>
             </div>
           </div>
         );
