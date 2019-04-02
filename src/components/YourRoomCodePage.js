@@ -32,7 +32,10 @@ class YourRoomCodePage extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    const { chosenPath } = this.props;
+    let { chosenPath } = this.props;
+    if (!chosenPath && localStorage.getItem('chosenPath')) {
+      chosenPath = localStorage.getItem('chosenPath');
+    }
     const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
     fetch(roomCodeUrl, {
       method: 'POST',

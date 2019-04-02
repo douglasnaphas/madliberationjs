@@ -43,11 +43,15 @@ class App extends Component {
   };
   _isMounted = false;
   persistState = () => {
-    console.log(
-      `I would persist: ${this.state.confirmedRoomCode} and ${
-        this.state.confirmedGameName
-      }`
-    );
+    if (this.state.confirmedRoomCode) {
+      localStorage.setItem('roomCode', this.state.confirmedRoomCode);
+    }
+    if (this.state.confirmedGameName) {
+      localStorage.setItem('gameName', this.state.confirmedGameName);
+    }
+    if (this.state.chosenPath) {
+      localStorage.setItem('chosenPath', this.state.chosenPath);
+    }
   };
   componentDidMount() {
     this._isMounted = true;
