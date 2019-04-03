@@ -31,29 +31,48 @@ class EnterRoomCodePage extends Component {
     failureMessage: ''
   };
 
-  render() {
+  joinSederCatchAllErrorMessage =
+    'We could not join you to this ' +
+    'seder, please double-check your Room Code, make sure it is not more' +
+    ' than ' +
+    Configs.msToJoinSeder() / 1000 / 60 +
+    ' minutes old, and ' +
+    'try again, or try a different Game Name or with a different browser' +
+    ' or device';
+
+  enableJoinIfCodeValid = event => {
+    event.target.value = event.target.value.toUpperCase();
+    if (
+      event.target.value &&
+      event.target.value.match(Configs.roomCodeRegex())
+    ) {
+      this.setState({ tentativeRoomCode: event.target.value.toUpperCase() });
+    } else {
+      this.setState({ tentativeRoomCode: false });
+    }
+  };
+
+  enableJoinIfNameGiven = event => {
+    event.target.value = event.target.value.replace(
+      Configs.gameNameBlacklist(),
+      ''
+    );
+    if (event.target.value.length > 0) {
+      this.setState({ tentativeGameName: event.target.value });
+    } else {
+      this.setState({ tentativeGameName: false });
+    }
+  };
+
+  joinSederClick = () => {
     const {
-      classes,
-      joinSeder,
       setConfirmedRoomCode,
       setConfirmedGameName,
-      confirmedRoomCode,
-      confirmedGameName
+      joinSeder
     } = this.props;
-    const joinSederCatchAllErrorMessage =
-      'We could not join you to this ' +
-      'seder, please double-check your Room Code, make sure it is not more' +
-      ' than ' +
-      Configs.msToJoinSeder() / 1000 / 60 +
-      ' minutes old, and ' +
-      'try again, or try a different Game Name or with a different browser' +
-      ' or device';
-    const joinSederClick = () => {
-      this.setState({ joinButtonPressed: true });
-      joinSeder(
-        this.state.tentativeRoomCode,
-        this.state.tentativeGameName
-      ).then(d => {
+    this.setState({ joinButtonPressed: true });
+    joinSeder(this.state.tentativeRoomCode, this.state.tentativeGameName).then(
+      d => {
         this.setState({ joinSederResponse: d });
         if (d.status == 200) {
           this.setState({
@@ -66,36 +85,27 @@ class EnterRoomCodePage extends Component {
         } else {
           this.setState({ failedAttempt: true });
           if (d.data.err == Configs.generic400ErrorMessage) {
-            this.setState({ failureMessage: joinSederCatchAllErrorMessage });
+            this.setState({
+              failureMessage: this.joinSederCatchAllErrorMessage
+            });
           } else {
             this.setState({ failureMessage: d.data.err });
           }
         }
         this.setState({ joinButtonPressed: false });
-      });
-    };
-    const enableJoinIfCodeValid = event => {
-      event.target.value = event.target.value.toUpperCase();
-      if (
-        event.target.value &&
-        event.target.value.match(Configs.roomCodeRegex())
-      ) {
-        this.setState({ tentativeRoomCode: event.target.value.toUpperCase() });
-      } else {
-        this.setState({ tentativeRoomCode: false });
       }
-    };
-    const enableJoinIfNameGiven = event => {
-      event.target.value = event.target.value.replace(
-        Configs.gameNameBlacklist(),
-        ''
-      );
-      if (event.target.value.length > 0) {
-        this.setState({ tentativeGameName: event.target.value });
-      } else {
-        this.setState({ tentativeGameName: false });
-      }
-    };
+    );
+  };
+
+  render() {
+    const {
+      classes,
+      joinSeder,
+      setConfirmedRoomCode,
+      setConfirmedGameName,
+      confirmedRoomCode,
+      confirmedGameName
+    } = this.props;
 
     return (
       <div madliberationid="enter-room-code-page">
@@ -122,7 +132,7 @@ class EnterRoomCodePage extends Component {
               madliberationid="enter-room-code-text-field"
               helperText="6 letters"
               variant="outlined"
-              onChange={enableJoinIfCodeValid}
+              onChange={this.enableJoinIfCodeValid}
             />
           </div>
           <br />
@@ -136,7 +146,7 @@ class EnterRoomCodePage extends Component {
               madliberationid="game-name-text-field"
               helperText="it's who you are for this seder"
               variant="outlined"
-              onChange={enableJoinIfNameGiven}
+              onChange={this.enableJoinIfNameGiven}
             />
           </div>
           <br />
@@ -150,7 +160,7 @@ class EnterRoomCodePage extends Component {
                 !this.state.tentativeGameName ||
                 this.state.joinButtonPressed
               }
-              onClick={joinSederClick}
+              onClick={this.joinSederClick}
             >
               Join
             </Button>
