@@ -52,7 +52,7 @@ describe('<EnterRoomCodePage />', () => {
     mount.cleanUp();
   });
 
-  test('Join button should be enabled based on supplied code and name', async () => {
+  test.skip('Join button should be enabled based on supplied code and name', async () => {
     const wrapper = await mount(
       <MemoryRouter>
         <EnterRoomCodePage />

@@ -31,6 +31,7 @@ import { readRosterDone } from './lib/readRosterDone';
 import { readRosterSplit } from './lib/readRosterSplit';
 import { script } from './lib/script';
 import { scriptPractice } from './lib/scriptPractice';
+import GeneratingRoomCodePageWithRouter from './components/GeneratingRoomCodePageWithRouter';
 
 class App extends Component {
   state = {
@@ -62,17 +63,19 @@ class App extends Component {
     window.removeEventListener('beforeunload', this.persistState);
     this._isMounted = false;
   }
+  setConfirmedRoomCode = roomCode => {
+    this.setState({ confirmedRoomCode: roomCode });
+  };
+  setConfirmedGameName = gameName => {
+    this.setState({ confirmedGameName: gameName });
+  };
+  setChosenPath = path => {
+    this.setState({ chosenPath: path });
+  };
+  goToYourRoomCodePage = history => {
+    history.push('/your-room-code');
+  };
   render() {
-    const setConfirmedRoomCode = roomCode => {
-      this.setState({ confirmedRoomCode: roomCode });
-    };
-    const setConfirmedGameName = gameName => {
-      this.setState({ confirmedGameName: gameName });
-    };
-    const setChosenPath = path => {
-      this.setState({ chosenPath: path });
-    };
-
     return (
       <React.Fragment>
         <CssBaseline />
@@ -90,7 +93,19 @@ class App extends Component {
                 <PickScriptPage
                   {...props}
                   getScripts={getScriptsFromApi}
-                  setChosenPath={setChosenPath}
+                  setChosenPath={this.setChosenPath}
+                />
+              )}
+            />
+            <Route
+              path="/generating-room-code"
+              exact
+              render={props => (
+                <GeneratingRoomCodePageWithRouter
+                  {...props}
+                  goToYourRoomCodePage={this.goToYourRoomCodePage}
+                  setChosenPath={this.setChosenPath}
+                  setConfirmedRoomCode={this.setConfirmedRoomCode}
                 />
               )}
             />
@@ -107,8 +122,8 @@ class App extends Component {
                 <EnterRoomCodePage
                   {...props}
                   joinSeder={joinSeder}
-                  setConfirmedRoomCode={setConfirmedRoomCode}
-                  setConfirmedGameName={setConfirmedGameName}
+                  setConfirmedRoomCode={this.setConfirmedRoomCode}
+                  setConfirmedGameName={this.setConfirmedGameName}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
                 />
@@ -121,11 +136,12 @@ class App extends Component {
                 <YourRoomCodePage
                   {...props}
                   joinSeder={joinSeder}
-                  setConfirmedRoomCode={setConfirmedRoomCode}
-                  setConfirmedGameName={setConfirmedGameName}
+                  setConfirmedRoomCode={this.setConfirmedRoomCode}
+                  setConfirmedGameName={this.setConfirmedGameName}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
                   chosenPath={this.state.chosenPath}
+                  setChosenPath={this.setChosenPath}
                 />
               )}
             />

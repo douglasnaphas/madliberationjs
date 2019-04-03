@@ -75,8 +75,7 @@ class ScriptTable extends React.Component {
               setChosenPath(this.state.selectedScript.path);
             }}
             to={{
-              pathname: '/your-room-code',
-              state: { selectedScript: this.state.selectedScript }
+              pathname: '/generating-room-code'
             }}
           >
             Use this one
