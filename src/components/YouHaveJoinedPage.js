@@ -20,18 +20,24 @@ const styles = theme => ({
 
 class EnterRoomCodePage extends Component {
   componentDidMount() {
-    const { confirmedGameName } = this.props;
-  }
-  render() {
-    let { confirmedRoomCode, confirmedGameName } = this.props;
+    let {
+      confirmedRoomCode,
+      confirmedGameName,
+      setConfirmedRoomCode,
+      setConfirmedGameName
+    } = this.props;
     if (
       !confirmedRoomCode &&
       !confirmedGameName &&
-      localStorage.getItem('confirmedRoomCode') &&
-      localStorage.getItem('confirmedGameName')
+      localStorage.getItem('roomCode') &&
+      localStorage.getItem('gameName')
     ) {
+      setConfirmedRoomCode(localStorage.getItem('roomCode'));
+      setConfirmedGameName(localStorage.getItem('gameName'));
     }
-
+  }
+  render() {
+    let { confirmedRoomCode, confirmedGameName } = this.props;
     return (
       <div madliberationid="you-have-joined-page">
         <MenuAppBar
@@ -39,13 +45,7 @@ class EnterRoomCodePage extends Component {
           confirmedGameName={confirmedGameName}
         />
         <br />
-
-        <div hidden={!this.state.failedAttempt || this.state.joinButtonPressed}>
-          <Typography component="p" color="secondary">
-            {this.state.failureMessage}
-          </Typography>
-        </div>
-        <div hidden={!this.state.sederJoined}>
+        <div>
           <Typography component="p" paragraph gutterBottom>
             You have joined Seder{' '}
             <span style={madLiberationStyles.lightGrayBackround}>

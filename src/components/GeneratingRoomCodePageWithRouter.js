@@ -34,7 +34,7 @@ class GeneratingRoomCodePage extends Component {
       })
       .then(j => {
         setConfirmedRoomCode(j.roomCode);
-        goToYourRoomCodePage(history);
+        history.push('/your-room-code');
       });
   }
   render() {

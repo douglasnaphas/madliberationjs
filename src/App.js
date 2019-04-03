@@ -32,6 +32,8 @@ import { readRosterSplit } from './lib/readRosterSplit';
 import { script } from './lib/script';
 import { scriptPractice } from './lib/scriptPractice';
 import GeneratingRoomCodePageWithRouter from './components/GeneratingRoomCodePageWithRouter';
+import EnterRoomCodePageWithRouter from './components/EnterRoomCodePageWithRouter';
+import YouHaveJoinedPage from './components/YouHaveJoinedPage';
 
 class App extends Component {
   state = {
@@ -119,13 +121,24 @@ class App extends Component {
               path="/enter-room-code"
               exact
               render={props => (
-                <EnterRoomCodePage
+                <EnterRoomCodePageWithRouter
                   {...props}
                   joinSeder={joinSeder}
                   setConfirmedRoomCode={this.setConfirmedRoomCode}
                   setConfirmedGameName={this.setConfirmedGameName}
+                />
+              )}
+            />
+            <Route
+              path="/you-have-joined"
+              exact
+              render={props => (
+                <YouHaveJoinedPage
+                  {...props}
                   confirmedRoomCode={this.state.confirmedRoomCode}
                   confirmedGameName={this.state.confirmedGameName}
+                  setConfirmedRoomCode={this.setConfirmedRoomCode}
+                  setConfirmedGameName={this.setConfirmedGameName}
                 />
               )}
             />
