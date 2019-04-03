@@ -21,8 +21,6 @@ const styles = theme => ({
 
 class YourRoomCodePage extends Component {
   state = {
-    roomCodeLoading: true,
-    roomCode: '',
     tentativeGameName: false,
     thatsMyNameButtonPressed: false,
     failedAttempt: false,
@@ -32,29 +30,10 @@ class YourRoomCodePage extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    let { chosenPath, setChosenPath } = this.props;
-    if (!chosenPath && localStorage.getItem('chosenPath')) {
-      chosenPath = localStorage.getItem('chosenPath');
-      setChosenPath(chosenPath);
+    const { confirmedRoomCode, setConfirmedRoomCode } = this.props;
+    if (!confirmedRoomCode && localStorage.getItem('roomCode')) {
+      setConfirmedRoomCode(localStorage.getItem('roomCode'));
     }
-    const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
-    fetch(roomCodeUrl, {
-      method: 'POST',
-      body: JSON.stringify({
-        path: chosenPath
-      }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(r => {
-        return r.json();
-      })
-      .then(j => {
-        if (this._isMounted) {
-          this.setState({ roomCode: j.roomCode });
-          this.setState({ roomCodeLoading: false });
-          this.props.setConfirmedRoomCode(j.roomCode);
-        }
-      });
   }
 
   componentWillUnmount() {
@@ -65,10 +44,8 @@ class YourRoomCodePage extends Component {
     const {
       classes,
       joinSeder,
-      setConfirmedRoomCode,
       setConfirmedGameName,
-      confirmedRoomCode,
-      confirmedGameName
+      confirmedRoomCode
     } = this.props;
     const gameNameChanged = event => {
       event.target.value = event.target.value.replace(
@@ -89,7 +66,7 @@ class YourRoomCodePage extends Component {
     };
     const joinSederAndGoToRoster = history => {
       this.setState({ thatsMyNameButtonPressed: true });
-      joinSeder(this.state.roomCode, this.state.tentativeGameName).then(d => {
+      joinSeder(confirmedRoomCode, this.state.tentativeGameName).then(d => {
         if (!this._isMounted) return;
         if (d.status === 200) {
           this.setState({ confirmedGameName: d.data.gameName });
@@ -113,84 +90,70 @@ class YourRoomCodePage extends Component {
         if (this._isMounted) this.setState({ thatsMyNameButtonPressed: false });
       });
     };
-    let spinnerOrRoomCode;
-    if (this.state.roomCodeLoading) {
-      spinnerOrRoomCode = (
+    let spinnerOrRoomCode = (
+      <div>
+        <Typography variant="h3" gutterBottom>
+          Your Room Code is:
+        </Typography>
+        <br />
+        <Typography variant="h3" gutterBottom>
+          {confirmedRoomCode}
+        </Typography>
+        <br />
+        <Typography component="p">
+          Tell everyone physically at your seder to go to{' '}
+          <a target="_blank" href="https://madliberationgame.com">
+            madliberationgame.com
+          </a>{' '}
+          (opens in a new tab) on their computer or mini-computer, click "Join a
+          Seder", and enter that Room Code to join you virtually.
+        </Typography>
+        <br />
         <div>
-          <Typography variant="h3">Generating a Room Code...</Typography>
-          <br />
-          <CircularProgress />
+          <Divider />
         </div>
-      );
-    } else {
-      spinnerOrRoomCode = (
         <div>
           <Typography variant="h3" gutterBottom>
-            Your Room Code is:
+            Meanwhile
           </Typography>
-          <br />
-          <Typography variant="h3" gutterBottom>
-            {this.state.roomCode}
-          </Typography>
-          <br />
-          <Typography component="p">
-            Tell everyone physically at your seder to go to{' '}
-            <a target="_blank" href="https://madliberationgame.com">
-              madliberationgame.com
-            </a>{' '}
-            (opens in a new tab) on their computer or mini-computer, click "Join
-            a Seder", and enter that Room Code to join you virtually.
-          </Typography>
-          <br />
-          <div>
-            <Divider />
-          </div>
-          <div>
-            <Typography variant="h3" gutterBottom>
-              Meanwhile
-            </Typography>
-          </div>
-          <div>
-            <Typography component="p" paragraph gutterBottom>
-              What's your Game Name? It's how you, personally, will be known
-              throughout this seder.
-            </Typography>
-          </div>
-          <div>
-            <TextField
-              madliberationid="ringleader-game-name-text-field"
-              helperText="your nickname this seder"
-              variant="outlined"
-              onChange={gameNameChanged}
-            />
-          </div>
-          <br />
-          <div>
-            <ThatsMyNameButtonWithRouter
-              joinSederAndGoToRoster={joinSederAndGoToRoster}
-              tentativeGameName={this.state.tentativeGameName}
-              thatsMyNameButtonPressed={this.state.thatsMyNameButtonPressed}
-            />
-          </div>
-          <div
-            hidden={
-              !this.state.failedAttempt || this.state.thatsMyNameButtonPressed
-            }
-          >
-            <Typography component="p" color="secondary">
-              {this.state.failureMessage}
-            </Typography>
-          </div>
         </div>
-      );
-    }
+        <div>
+          <Typography component="p" paragraph gutterBottom>
+            What's your Game Name? It's how you, personally, will be known
+            throughout this seder.
+          </Typography>
+        </div>
+        <div>
+          <TextField
+            madliberationid="ringleader-game-name-text-field"
+            helperText="your nickname this seder"
+            variant="outlined"
+            onChange={gameNameChanged}
+          />
+        </div>
+        <br />
+        <div>
+          <ThatsMyNameButtonWithRouter
+            joinSederAndGoToRoster={joinSederAndGoToRoster}
+            tentativeGameName={this.state.tentativeGameName}
+            thatsMyNameButtonPressed={this.state.thatsMyNameButtonPressed}
+          />
+        </div>
+        <div
+          hidden={
+            !this.state.failedAttempt || this.state.thatsMyNameButtonPressed
+          }
+        >
+          <Typography component="p" color="secondary">
+            {this.state.failureMessage}
+          </Typography>
+        </div>
+      </div>
+    );
 
     return (
       <div madliberationid="your-room-code-page">
-        <MenuAppBar
-          confirmedRoomCode={confirmedRoomCode}
-          confirmedGameName={confirmedGameName}
-        />
+        <MenuAppBar confirmedRoomCode={confirmedRoomCode} />
         <br />
         {spinnerOrRoomCode}
       </div>

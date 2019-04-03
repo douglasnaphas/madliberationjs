@@ -42,7 +42,13 @@ class GeneratingRoomCodePage extends Component {
       <div>
         <MenuAppBar />
         <br />
-        <CircularProgress />
+        <div>
+          <Typography variant="h3">Generating a Room Code...</Typography>
+        </div>
+        <br />
+        <div>
+          <CircularProgress />
+        </div>
       </div>
     );
   }
