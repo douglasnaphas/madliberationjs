@@ -77,6 +77,17 @@ class App extends Component {
   goToYourRoomCodePage = history => {
     history.push('/your-room-code');
   };
+  hydrateRoomCodeAndGameName = (roomCode, gameName) => {
+    if (
+      !roomCode &&
+      !gameName &&
+      localStorage.getItem('roomCode') &&
+      localStorage.getItem('gameName')
+    ) {
+      this.setState({ confirmedRoomCode: localStorage.getItem('roomCode') });
+      this.setState({ confirmedGameName: localStorage.getItem('gameName') });
+    }
+  };
   render() {
     return (
       <React.Fragment>
@@ -169,6 +180,10 @@ class App extends Component {
                   roster={roster}
                   closeSeder={closeSeder}
                   chosenPath={this.state.chosenPath}
+                  hydrateRoomCodeAndGameName={this.hydrateRoomCodeAndGameName}
+                  setConfirmedRoomCode={this.setConfirmedRoomCode}
+                  setConfirmedGameName={this.setConfirmedGameName}
+                  setChosenPath={this.setChosenPath}
                 />
               )}
             />

@@ -28,20 +28,29 @@ class RosterPage extends Component {
     thatsEveryoneFailed: false
   };
   _isMounted = false;
-  fetchRoster = () => {
-    const { confirmedRoomCode, confirmedGameName, roster } = this.props;
-    if (this._isMounted) this.setState({ rosterLoading: true });
-    roster(confirmedRoomCode, confirmedGameName).then(d => {
-      if (d.status === 200) {
-        if (this._isMounted) {
-          this.setState({
-            rosterLoading: false,
-            participants: d.data.participants
-          });
+  fetchRoster = (roomCode, gameName) => {
+    const f = () => {
+      const { roster } = this.props;
+      if (this._isMounted) this.setState({ rosterLoading: true });
+      roster(roomCode, gameName).then(d => {
+        if (d.status === 200) {
+          if (this._isMounted) {
+            this.setState({
+              rosterLoading: false,
+              participants: d.data.participants
+            });
+          }
         }
-      }
-    });
+      });
+    };
+    return f;
   };
+  componentDidUpdate() {
+    console.log(
+      `componentDidUpdate called, rc ${this.props.confirmedRoomCode}` +
+        ` gn ${this.props.confirmedGameName}`
+    );
+  }
   closeSederAndPlay = history => {
     const {
       closeSeder,
@@ -67,7 +76,38 @@ class RosterPage extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    this.fetchRoster();
+    const {
+      confirmedRoomCode,
+      confirmedGameName,
+      chosenPath,
+      hydrateRoomCodeAndGameName,
+      setConfirmedRoomCode,
+      setConfirmedGameName,
+      setChosenPath
+    } = this.props;
+    console.log(
+      `componentDidMount called, rc ${confirmedRoomCode} ` +
+        `gn ${confirmedGameName}`
+    );
+    let roomCode = confirmedRoomCode;
+    let gameName = confirmedGameName;
+    let path = chosenPath;
+    if (
+      !roomCode &&
+      !gameName &&
+      !path &&
+      localStorage.getItem('roomCode') &&
+      localStorage.getItem('gameName') &&
+      localStorage.getItem('chosenPath')
+    ) {
+      roomCode = localStorage.getItem('roomCode');
+      setConfirmedRoomCode(roomCode);
+      gameName = localStorage.getItem('gameName');
+      setConfirmedGameName(gameName);
+      path = localStorage.getItem('chosenPath');
+      setChosenPath(path);
+    }
+    this.fetchRoster(roomCode, gameName)();
   }
 
   componentWillUnmount() {
@@ -126,7 +166,7 @@ class RosterPage extends Component {
             disabled={
               this.state.rosterLoading || this.state.thatsEveryonePressed
             }
-            onClick={this.fetchRoster}
+            onClick={this.fetchRoster(confirmedRoomCode, confirmedGameName)}
           >
             No, check again
           </Button>
