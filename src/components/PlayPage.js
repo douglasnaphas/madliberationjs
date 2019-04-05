@@ -35,6 +35,18 @@ class PlayPage extends Component {
     failedSubmitAttempt: false
   };
   _isMounted = false;
+  persistState = () => {
+    if (this.state.assignmentsData) {
+      localStorage.setItem(
+        'assignmentsData',
+        JSON.stringify(this.state.assignmentsData)
+      );
+    }
+    localStorage.setItem('libIndex', this.state.libIndex);
+    if (Array.isArray(this.state.answers) && this.state.answers.length > 0) {
+      localStorage.setItem('answers', JSON.stringify(this.state.answers));
+    }
+  };
   fetchAssignments = () => {
     const { confirmedRoomCode, confirmedGameName, assignments } = this.props;
     if (this._isMounted) this.setState({ fetchingPrompts: true });
@@ -126,9 +138,12 @@ class PlayPage extends Component {
   };
   componentDidMount() {
     this._isMounted = true;
+    window.addEventListener('beforeunload', this.persistState);
     this.fetchAssignments();
   }
   componentWillUnmount() {
+    this.persistState();
+    window.removeEventListener('beforeunload', this.persistState);
     this._isMounted = false;
   }
 

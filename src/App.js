@@ -119,6 +119,7 @@ class App extends Component {
                   goToYourRoomCodePage={this.goToYourRoomCodePage}
                   setChosenPath={this.setChosenPath}
                   setConfirmedRoomCode={this.setConfirmedRoomCode}
+                  chosenPath={this.state.chosenPath}
                 />
               )}
             />
