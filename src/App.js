@@ -34,6 +34,16 @@ import { scriptPractice } from './lib/scriptPractice';
 import GeneratingRoomCodePageWithRouter from './components/GeneratingRoomCodePageWithRouter';
 import EnterRoomCodePageWithRouter from './components/EnterRoomCodePageWithRouter';
 import YouHaveJoinedPage from './components/YouHaveJoinedPage';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: '#81181f' } // Purple and green play nicely together.
+    // secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+  },
+  typography: { useNextVariants: true }
+});
 
 class App extends Component {
   state = {
@@ -90,168 +100,174 @@ class App extends Component {
   };
   render() {
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <Router>
-          <div className="App">
-            <Route
-              path="(/|/index.html)"
-              exact
-              render={props => <NoAuthHomePage {...props} />}
-            />
-            <Route
-              path="/pick-script"
-              exact
-              render={props => (
-                <PickScriptPage
-                  {...props}
-                  getScripts={getScriptsFromApi}
-                  setChosenPath={this.setChosenPath}
-                />
-              )}
-            />
-            <Route
-              path="/generating-room-code"
-              exact
-              render={props => (
-                <GeneratingRoomCodePageWithRouter
-                  {...props}
-                  goToYourRoomCodePage={this.goToYourRoomCodePage}
-                  setChosenPath={this.setChosenPath}
-                  setConfirmedRoomCode={this.setConfirmedRoomCode}
-                  chosenPath={this.state.chosenPath}
-                />
-              )}
-            />
-            <Route path="/about" exact render={props => <About {...props} />} />
-            <Route
-              path="/how-to-play"
-              exact
-              render={props => <HowToPlay {...props} />}
-            />
-            <Route
-              path="/enter-room-code"
-              exact
-              render={props => (
-                <EnterRoomCodePageWithRouter
-                  {...props}
-                  joinSeder={joinSeder}
-                  setConfirmedRoomCode={this.setConfirmedRoomCode}
-                  setConfirmedGameName={this.setConfirmedGameName}
-                />
-              )}
-            />
-            <Route
-              path="/you-have-joined"
-              exact
-              render={props => (
-                <YouHaveJoinedPage
-                  {...props}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                  setConfirmedRoomCode={this.setConfirmedRoomCode}
-                  setConfirmedGameName={this.setConfirmedGameName}
-                />
-              )}
-            />
-            <Route
-              path="/your-room-code"
-              exact
-              render={props => (
-                <YourRoomCodePage
-                  {...props}
-                  joinSeder={joinSeder}
-                  setConfirmedRoomCode={this.setConfirmedRoomCode}
-                  setConfirmedGameName={this.setConfirmedGameName}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                  chosenPath={this.state.chosenPath}
-                  setChosenPath={this.setChosenPath}
-                />
-              )}
-            />
-            <Route
-              path="/roster"
-              exact
-              render={props => (
-                <RosterPage
-                  {...props}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                  roster={roster}
-                  closeSeder={closeSeder}
-                  chosenPath={this.state.chosenPath}
-                  hydrateRoomCodeAndGameName={this.hydrateRoomCodeAndGameName}
-                  setConfirmedRoomCode={this.setConfirmedRoomCode}
-                  setConfirmedGameName={this.setConfirmedGameName}
-                  setChosenPath={this.setChosenPath}
-                />
-              )}
-            />
-            <Route
-              path="/let-them-press-button"
-              exact
-              render={props => (
-                <LetThemPressButtonPage
-                  {...props}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                  setConfirmedRoomCode={this.setConfirmedRoomCode}
-                  setConfirmedGameName={this.setConfirmedGameName}
-                />
-              )}
-            />
-            <Route
-              path="/play"
-              exact
-              render={props => (
-                <PlayPage
-                  {...props}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                  assignments={assignments}
-                  submitLibs={submitLibs}
-                />
-              )}
-            />
-            <Route
-              path="/submitted"
-              exact
-              render={props => (
-                <SubmittedPage
-                  {...props}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                />
-              )}
-            />
-            <Route
-              path="/done-not-reading"
-              exact
-              render={props => (
-                <DoneNotReadingPage
-                  {...props}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                />
-              )}
-            />
-            <Route
-              path="/read"
-              exact
-              render={props => (
-                <ReadPage
-                  {...props}
-                  confirmedRoomCode={this.state.confirmedRoomCode}
-                  confirmedGameName={this.state.confirmedGameName}
-                  roster={readRoster}
-                  script={script}
-                />
-              )}
-            />
-          </div>
-        </Router>
-      </React.Fragment>
+      <MuiThemeProvider theme={theme}>
+        <React.Fragment>
+          <CssBaseline />
+          <Router>
+            <div className="App">
+              <Route
+                path="(/|/index.html)"
+                exact
+                render={props => <NoAuthHomePage {...props} />}
+              />
+              <Route
+                path="/pick-script"
+                exact
+                render={props => (
+                  <PickScriptPage
+                    {...props}
+                    getScripts={getScriptsFromApi}
+                    setChosenPath={this.setChosenPath}
+                  />
+                )}
+              />
+              <Route
+                path="/generating-room-code"
+                exact
+                render={props => (
+                  <GeneratingRoomCodePageWithRouter
+                    {...props}
+                    goToYourRoomCodePage={this.goToYourRoomCodePage}
+                    setChosenPath={this.setChosenPath}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    chosenPath={this.state.chosenPath}
+                  />
+                )}
+              />
+              <Route
+                path="/about"
+                exact
+                render={props => <About {...props} />}
+              />
+              <Route
+                path="/how-to-play"
+                exact
+                render={props => <HowToPlay {...props} />}
+              />
+              <Route
+                path="/enter-room-code"
+                exact
+                render={props => (
+                  <EnterRoomCodePageWithRouter
+                    {...props}
+                    joinSeder={joinSeder}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
+                  />
+                )}
+              />
+              <Route
+                path="/you-have-joined"
+                exact
+                render={props => (
+                  <YouHaveJoinedPage
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
+                  />
+                )}
+              />
+              <Route
+                path="/your-room-code"
+                exact
+                render={props => (
+                  <YourRoomCodePage
+                    {...props}
+                    joinSeder={joinSeder}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                    chosenPath={this.state.chosenPath}
+                    setChosenPath={this.setChosenPath}
+                  />
+                )}
+              />
+              <Route
+                path="/roster"
+                exact
+                render={props => (
+                  <RosterPage
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                    roster={roster}
+                    closeSeder={closeSeder}
+                    chosenPath={this.state.chosenPath}
+                    hydrateRoomCodeAndGameName={this.hydrateRoomCodeAndGameName}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
+                    setChosenPath={this.setChosenPath}
+                  />
+                )}
+              />
+              <Route
+                path="/let-them-press-button"
+                exact
+                render={props => (
+                  <LetThemPressButtonPage
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
+                  />
+                )}
+              />
+              <Route
+                path="/play"
+                exact
+                render={props => (
+                  <PlayPage
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                    assignments={assignments}
+                    submitLibs={submitLibs}
+                  />
+                )}
+              />
+              <Route
+                path="/submitted"
+                exact
+                render={props => (
+                  <SubmittedPage
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                  />
+                )}
+              />
+              <Route
+                path="/done-not-reading"
+                exact
+                render={props => (
+                  <DoneNotReadingPage
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                  />
+                )}
+              />
+              <Route
+                path="/read"
+                exact
+                render={props => (
+                  <ReadPage
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                    roster={readRoster}
+                    script={script}
+                  />
+                )}
+              />
+            </div>
+          </Router>
+        </React.Fragment>
+      </MuiThemeProvider>
     );
   }
 }
