@@ -36,6 +36,7 @@ import EnterRoomCodePageWithRouter from './components/EnterRoomCodePageWithRoute
 import YouHaveJoinedPage from './components/YouHaveJoinedPage';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
+import FetchingPromptsPageWithRouter from './components/FetchingPromptsPageWithRouter';
 
 const theme = createMuiTheme({
   palette: {
@@ -52,7 +53,8 @@ class App extends Component {
     confirmedRoomCode: false,
     confirmedGameName: false,
     isRingleader: false,
-    chosenPath: false
+    chosenPath: false,
+    assignmentsData: false
   };
   _isMounted = false;
   persistState = () => {
@@ -64,6 +66,12 @@ class App extends Component {
     }
     if (this.state.chosenPath) {
       localStorage.setItem('chosenPath', this.state.chosenPath);
+    }
+    if (this.state.assignmentsData) {
+      localStorage.setItem(
+        'assignmentsData',
+        JSON.stringify(this.state.assignmentsData)
+      );
     }
   };
   componentDidMount() {
@@ -83,6 +91,9 @@ class App extends Component {
   };
   setChosenPath = path => {
     this.setState({ chosenPath: path });
+  };
+  setAssignmentsData = assignmentsData => {
+    this.setState({ assignmentsData: assignmentsData });
   };
   goToYourRoomCodePage = history => {
     history.push('/your-room-code');
@@ -217,6 +228,21 @@ class App extends Component {
                 )}
               />
               <Route
+                path="/fetching-prompts"
+                exact
+                render={props => (
+                  <FetchingPromptsPageWithRouter
+                    {...props}
+                    confirmedRoomCode={this.state.confirmedRoomCode}
+                    confirmedGameName={this.state.confirmedGameName}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
+                    assignments={assignments}
+                    setAssignmentsData={this.setAssignmentsData}
+                  />
+                )}
+              />
+              <Route
                 path="/play"
                 exact
                 render={props => (
@@ -224,8 +250,11 @@ class App extends Component {
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
                     confirmedGameName={this.state.confirmedGameName}
-                    assignments={assignments}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
                     submitLibs={submitLibs}
+                    assignmentsData={this.state.assignmentsData}
+                    setAssignmentsData={this.setAssignmentsData}
                   />
                 )}
               />
