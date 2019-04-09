@@ -8,11 +8,15 @@ const styles = theme => ({});
 class Script extends React.Component {
   constructor(props) {
     super(props);
-    let { script, confirmedRoomCode, confirmedGameName } = props;
+    const { getStartingPageFromStorage } = props;
     this.state = {
       fetchingScript: false,
       script: false,
-      pageIndex: 0
+      pageIndex:
+        getStartingPageFromStorage &&
+        Number.isInteger(parseInt(localStorage.getItem('pageIndex')))
+          ? parseInt(localStorage.getItem('pageIndex'))
+          : 0
     };
   }
   _isMounted = false;
@@ -30,7 +34,7 @@ class Script extends React.Component {
   persistState = () => {
     localStorage.setItem('pageIndex', this.state.pageIndex);
     if (this.state.script) {
-      localStorage.setItem('script', this.state.script);
+      localStorage.setItem('script', JSON.stringify(this.state.script));
     }
   };
   incrementPageIndex = () => {
@@ -40,11 +44,13 @@ class Script extends React.Component {
   };
   componentDidMount() {
     this._isMounted = true;
+    window.addEventListener('beforeunload', this.persistState);
     const { confirmedRoomCode, confirmedGameName } = this.props;
     this.getScript(confirmedRoomCode, confirmedGameName);
   }
   componentWillUnmount() {
     this._isMounted = false;
+    window.removeEventListener('beforeunload', this.persistState);
   }
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;

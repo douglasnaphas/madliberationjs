@@ -23,9 +23,18 @@ const styles = theme => ({
 });
 
 class ReadPage extends Component {
-  state = {
-    readyForScript: false
-  };
+  constructor(props) {
+    super(props);
+    const { confirmedRoomCode, confirmedGameName } = this.props;
+    const getStartingPageFromStorage =
+      !confirmedRoomCode &&
+      !confirmedGameName &&
+      localStorage.getItem('pageIndex');
+    this.state = {
+      readyForScript: false,
+      getStartingPageFromStorage: getStartingPageFromStorage
+    };
+  }
   _isMounted = false;
   requestScript = () => {
     if (this._isMounted) {
@@ -68,6 +77,7 @@ class ReadPage extends Component {
         script={script}
         confirmedRoomCode={confirmedRoomCode}
         confirmedGameName={confirmedGameName}
+        getStartingPageFromStorage={this.state.getStartingPageFromStorage}
       />
     ) : (
       <div />
