@@ -32,6 +32,10 @@ class PlayPage extends Component {
       setAssignmentsData
     } = this.props;
     let { confirmedRoomCode, confirmedGameName, assignmentsData } = this.props;
+    if (confirmedRoomCode && confirmedGameName && assignmentsData) {
+      localStorage.removeItem('libIndex');
+      localStorage.removeItem('answers');
+    }
     if (
       !confirmedRoomCode &&
       !confirmedGameName &&
@@ -47,11 +51,14 @@ class PlayPage extends Component {
       assignmentsData = JSON.parse(localStorage.getItem('assignmentsData'));
       setAssignmentsData(assignmentsData);
     }
-    const answers = assignmentsData.map(a => {
-      return { id: a.id };
-    });
+    const answers =
+      (localStorage.getItem('libIndex') &&
+        JSON.parse(localStorage.getItem('answers'))) ||
+      assignmentsData.map(a => {
+        return { id: a.id };
+      });
     this.state = {
-      libIndex: 0,
+      libIndex: parseInt(localStorage.getItem('libIndex')) || 0,
       dialogOpen: false,
       answers: answers,
       submitButtonPressed: false,
@@ -134,8 +141,6 @@ class PlayPage extends Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('beforeunload', this.persistState);
-    localStorage.removeItem('libIndex');
-    localStorage.removeItem('answers');
   }
   componentWillUnmount() {
     this.persistState();
