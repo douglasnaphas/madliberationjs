@@ -26,15 +26,10 @@ const styles = theme => ({
 class PlayPage extends Component {
   constructor(props) {
     super(props);
-    const {
-      setConfirmedRoomCode,
-      setConfirmedGameName,
-      setAssignmentsData
-    } = props;
     let { confirmedRoomCode, confirmedGameName, assignmentsData } = props;
+    let getIndexAndAnswersFromStorage = true;
     if (confirmedRoomCode && confirmedGameName && assignmentsData) {
-      localStorage.removeItem('libIndex');
-      localStorage.removeItem('answers');
+      getIndexAndAnswersFromStorage = false;
     }
     if (
       !confirmedRoomCode &&
@@ -45,20 +40,21 @@ class PlayPage extends Component {
       localStorage.getItem('assignmentsData')
     ) {
       confirmedRoomCode = localStorage.getItem('roomCode');
-      setConfirmedRoomCode(confirmedRoomCode);
       confirmedGameName = localStorage.getItem('gameName');
-      setConfirmedGameName(confirmedGameName);
       assignmentsData = JSON.parse(localStorage.getItem('assignmentsData'));
-      setAssignmentsData(assignmentsData);
     }
     const answers =
-      (localStorage.getItem('libIndex') &&
-        JSON.parse(localStorage.getItem('answers'))) ||
-      assignmentsData.map(a => {
-        return { id: a.id };
-      });
+      getIndexAndAnswersFromStorage && localStorage.getItem('answers')
+        ? JSON.parse(localStorage.getItem('answers'))
+        : assignmentsData.map(a => {
+            return { id: a.id };
+          });
+    const libIndex =
+      getIndexAndAnswersFromStorage && localStorage.getItem('libIndex')
+        ? parseInt(localStorage.getItem('libIndex'))
+        : 0;
     this.state = {
-      libIndex: parseInt(localStorage.getItem('libIndex')) || 0,
+      libIndex: libIndex,
       dialogOpen: false,
       answers: answers,
       submitButtonPressed: false,
@@ -113,6 +109,7 @@ class PlayPage extends Component {
     }
   };
   unansweredPrompts = () => {
+    if (!Array.isArray(this.state.answers)) return 0;
     return this.state.answers.reduce((acc, curr) => {
       if (curr.answer && curr.answer.length > 0) {
         return acc - 1;
@@ -141,6 +138,30 @@ class PlayPage extends Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('beforeunload', this.persistState);
+    const {
+      setConfirmedRoomCode,
+      setConfirmedGameName,
+      setAssignmentsData,
+      confirmedRoomCode,
+      confirmedGameName,
+      assignmentsData
+    } = this.props;
+    if (confirmedRoomCode && confirmedGameName && assignmentsData) {
+      localStorage.removeItem('libIndex');
+      localStorage.removeItem('answers');
+    }
+    if (
+      !confirmedRoomCode &&
+      !confirmedGameName &&
+      !assignmentsData &&
+      localStorage.getItem('roomCode') &&
+      localStorage.getItem('gameName') &&
+      localStorage.getItem('assignmentsData')
+    ) {
+      setConfirmedRoomCode(localStorage.getItem('roomCode'));
+      setConfirmedGameName(localStorage.getItem('gameName'));
+      setAssignmentsData(JSON.parse(localStorage.getItem('assignmentsData')));
+    }
   }
   componentWillUnmount() {
     this.persistState();
