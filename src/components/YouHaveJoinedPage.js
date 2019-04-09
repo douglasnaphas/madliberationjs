@@ -65,7 +65,7 @@ class EnterRoomCodePage extends Component {
               color="primary"
               variant="contained"
               component={Link}
-              to="/play"
+              to="/fetching-prompts"
             >
               click this button
             </Button>
