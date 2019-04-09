@@ -18,29 +18,26 @@ const styles = theme => ({});
 class ReadRoster extends React.Component {
   state = { rosterLoading: true, done: [], notDone: [], dialogOpen: false };
   _isMounted = false;
-  fetchRoster = () => {
-    const {
-      confirmedRoomCode,
-      confirmedGameName,
-      roster,
-      requestScript
-    } = this.props;
-    if (this._isMounted) this.setState({ rosterLoading: true });
-    roster(confirmedRoomCode, confirmedGameName).then(d => {
-      if (d.status === 200) {
-        if (this._isMounted) {
-          if (d.data.notDone.length < 1) {
-            requestScript(); // tells parent: don't render me, I'm done
-            return;
+  fetchRoster = (roomCode, gameName) => {
+    return () => {
+      const { roster, requestScript } = this.props;
+      if (this._isMounted) this.setState({ rosterLoading: true });
+      roster(roomCode, gameName).then(d => {
+        if (d.status === 200) {
+          if (this._isMounted) {
+            if (d.data.notDone.length < 1) {
+              requestScript(); // tells parent: don't render me, I'm done
+              return;
+            }
+            this.setState({
+              rosterLoading: false,
+              done: d.data.done,
+              notDone: d.data.notDone
+            });
           }
-          this.setState({
-            rosterLoading: false,
-            done: d.data.done,
-            notDone: d.data.notDone
-          });
         }
-      }
-    });
+      });
+    };
   };
   onDialogClose = event => {
     if (this._isMounted) this.setState({ dialogOpen: false });
@@ -50,10 +47,23 @@ class ReadRoster extends React.Component {
   };
   componentDidMount() {
     this._isMounted = true;
-    this.fetchRoster();
+    const { confirmedRoomCode, confirmedGameName } = this.props;
+    this.fetchRoster(confirmedRoomCode, confirmedGameName)();
+  }
+  componentDidUpdate(prevProps) {
+    const { confirmedRoomCode, confirmedGameName } = this.props;
+    const {
+      confirmedRoomCode: prevCode,
+      confirmedGameName: prevName
+    } = prevProps;
+    if (confirmedRoomCode == prevCode && confirmedGameName == prevName) return;
+    this.fetchRoster(confirmedRoomCode, confirmedGameName)();
   }
   render() {
-    const { requestScript } = this.props;
+    const { requestScript, confirmedRoomCode, confirmedGameName } = this.props;
+    if (!confirmedRoomCode || !confirmedGameName) {
+      return <div />;
+    }
     if (this.state.rosterLoading) {
       return <CircularProgress />;
     }

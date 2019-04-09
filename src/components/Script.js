@@ -43,6 +43,10 @@ class Script extends React.Component {
     this._isMounted = false;
   }
   render() {
+    const { confirmedRoomCode, confirmedGameName } = this.props;
+    if (!confirmedRoomCode || !confirmedGameName) {
+      return <div />;
+    }
     if (this.state.fetchingScript) {
       return <CircularProgress />;
     }
