@@ -290,6 +290,8 @@ class App extends Component {
                     confirmedGameName={this.state.confirmedGameName}
                     roster={readRoster}
                     script={script}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
                   />
                 )}
               />

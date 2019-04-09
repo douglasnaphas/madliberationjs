@@ -6,16 +6,22 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({});
 class Script extends React.Component {
-  state = {
-    fetchingScript: false,
-    script: false,
-    pageIndex: 0
-  };
+  constructor(props) {
+    super(props);
+    const { setConfirmedRoomCode, setConfirmedGameName } = props;
+    let { script, confirmedRoomCode, confirmedGameName } = props;
+
+    this.state = {
+      fetchingScript: false,
+      script: false,
+      pageIndex: 0
+    };
+  }
   _isMounted = false;
-  getScript = () => {
-    const { confirmedRoomCode, confirmedGameName, script } = this.props;
+  getScript = (roomCode, gameName) => {
+    const { script } = this.props;
     if (this._isMounted) this.setState({ fetchingScript: true });
-    script(confirmedRoomCode, confirmedGameName).then(d => {
+    script(roomCode, gameName).then(d => {
       if (!this._isMounted) return;
       if (d.status === 200) {
         this.setState({ script: d.data });
@@ -30,7 +36,8 @@ class Script extends React.Component {
   };
   componentDidMount() {
     this._isMounted = true;
-    this.getScript();
+    const { confirmedRoomCode, confirmedGameName } = this.props;
+    this.getScript(confirmedRoomCode, confirmedGameName);
   }
   componentWillUnmount() {
     this._isMounted = false;

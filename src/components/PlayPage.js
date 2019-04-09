@@ -30,8 +30,8 @@ class PlayPage extends Component {
       setConfirmedRoomCode,
       setConfirmedGameName,
       setAssignmentsData
-    } = this.props;
-    let { confirmedRoomCode, confirmedGameName, assignmentsData } = this.props;
+    } = props;
+    let { confirmedRoomCode, confirmedGameName, assignmentsData } = props;
     if (confirmedRoomCode && confirmedGameName && assignmentsData) {
       localStorage.removeItem('libIndex');
       localStorage.removeItem('answers');

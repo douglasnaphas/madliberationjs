@@ -34,6 +34,19 @@ class ReadPage extends Component {
   };
   componentDidMount() {
     this._isMounted = true;
+    const { setConfirmedRoomCode, setConfirmedGameName } = this.props;
+    let { confirmedRoomCode, confirmedGameName } = this.props;
+    if (
+      !confirmedRoomCode &&
+      !confirmedGameName &&
+      localStorage.getItem('roomCode') &&
+      localStorage.getItem('gameName')
+    ) {
+      confirmedRoomCode = localStorage.getItem('roomCode');
+      setConfirmedRoomCode(confirmedRoomCode);
+      confirmedGameName = localStorage.getItem('gameName');
+      setConfirmedGameName(confirmedGameName);
+    }
   }
   componentWillUnmount() {
     this._isMounted = false;
