@@ -8,9 +8,7 @@ const styles = theme => ({});
 class Script extends React.Component {
   constructor(props) {
     super(props);
-    const { setConfirmedRoomCode, setConfirmedGameName } = props;
     let { script, confirmedRoomCode, confirmedGameName } = props;
-
     this.state = {
       fetchingScript: false,
       script: false,
@@ -28,6 +26,12 @@ class Script extends React.Component {
       }
       this.setState({ fetchingScript: false });
     });
+  };
+  persistState = () => {
+    localStorage.setItem('pageIndex', this.state.pageIndex);
+    if (this.state.script) {
+      localStorage.setItem('script', this.state.script);
+    }
   };
   incrementPageIndex = () => {
     if (this._isMounted) {
