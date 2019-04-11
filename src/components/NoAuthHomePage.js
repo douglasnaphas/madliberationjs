@@ -38,6 +38,7 @@ class NoAuthHomePage extends Component {
           <br />
           <div>
             <img
+              alt="Mad Liberation: Let My People LOL"
               src={MadLiberationLogo}
               className={classes.madliberationLogo}
             />
@@ -74,6 +75,7 @@ class NoAuthHomePage extends Component {
           <br />
           <br />
           <img
+            alt="Very Awesome Passover"
             src={VeryAwesomePassoverLogo}
             className={classes.veryAwesomePassoverLogo}
           />
