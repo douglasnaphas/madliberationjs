@@ -25,12 +25,24 @@ const styles = theme => ({
 });
 
 class FetchingPromptsPage extends Component {
-  state = {
-    fetchingPrompts: true,
-    failedFetch: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      fetchingPrompts: true,
+      failedFetch: false
+    };
+  }
   _isMounted = false;
   fetchAssignments = (confirmedRoomCode, confirmedGameName) => {
+    if (
+      !confirmedRoomCode &&
+      !confirmedGameName &&
+      localStorage.getItem('roomCode') &&
+      localStorage.getItem('gameName')
+    ) {
+      confirmedRoomCode = localStorage.getItem('roomCode');
+      confirmedGameName = localStorage.getItem('gameName');
+    }
     const { assignments, history, setAssignmentsData } = this.props;
     if (this._isMounted) this.setState({ fetchingPrompts: true });
     assignments(confirmedRoomCode, confirmedGameName).then(d => {
