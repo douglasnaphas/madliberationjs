@@ -30,6 +30,15 @@ class RosterPage extends Component {
   _isMounted = false;
   fetchRoster = (roomCode, gameName) => {
     const f = () => {
+      if (
+        !roomCode &&
+        !gameName &&
+        localStorage.getItem('roomCode') &&
+        localStorage.getItem('gameName')
+      ) {
+        roomCode = localStorage.getItem('roomCode');
+        gameName = localStorage.getItem('gameName');
+      }
       const { roster } = this.props;
       if (this._isMounted) this.setState({ rosterLoading: true });
       roster(roomCode, gameName).then(d => {
