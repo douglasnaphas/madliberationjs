@@ -102,8 +102,8 @@ class YourRoomCodePage extends Component {
         <br />
         <Typography component="p">
           Tell everyone physically at your seder to go to{' '}
-          <a target="_blank" href="https://madliberationgame.com">
-            madliberationgame.com
+          <a target="_blank" href="https://passover.lol">
+            passover.lol
           </a>{' '}
           (opens in a new tab) on their computer or mini-computer, click "Join a
           Seder", and enter that Room Code to join you virtually.
