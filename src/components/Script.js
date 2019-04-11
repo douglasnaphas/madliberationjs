@@ -42,6 +42,13 @@ class Script extends React.Component {
       this.setState({ pageIndex: this.state.pageIndex + 1 });
     }
   };
+  decrementPageIndex = () => {
+    if (this._isMounted) {
+      this.setState({
+        pageIndex: this.state.pageIndex < 2 ? 0 : this.state.pageIndex - 1
+      });
+    }
+  };
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('beforeunload', this.persistState);
@@ -85,6 +92,7 @@ class Script extends React.Component {
         <Page
           page={this.state.script.pages[this.state.pageIndex]}
           incrementPageIndex={this.incrementPageIndex}
+          decrementPageIndex={this.decrementPageIndex}
           pageIndex={this.state.pageIndex}
         />
       );

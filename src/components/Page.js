@@ -28,7 +28,12 @@ class Page extends React.Component {
     }
   }
   render() {
-    const { page, pageIndex, incrementPageIndex } = this.props;
+    const {
+      page,
+      pageIndex,
+      incrementPageIndex,
+      decrementPageIndex
+    } = this.props;
     if (!Array.isArray(page.lines) || page.lines.length < 1) {
       return <div />;
     }
@@ -151,13 +156,21 @@ class Page extends React.Component {
       return (
         <div>
           <div>{lines}</div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={incrementPageIndex}
-          >
-            Next page
-          </Button>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={incrementPageIndex}
+            >
+              Next page
+            </Button>
+          </div>
+          <br />
+          <div hidden={pageIndex === 0}>
+            <Button variant="contained" onClick={decrementPageIndex}>
+              Previous page
+            </Button>
+          </div>
         </div>
       );
     }
