@@ -26,7 +26,7 @@ class ReadPage extends Component {
   constructor(props) {
     super(props);
     const { confirmedRoomCode, confirmedGameName } = this.props;
-    const getStartingPageFromStorage = // maybe persist readyForScript or getStartingPageFromStorage and set this based on that, since on refresh those two vars will have been set
+    const getStartingPageFromStorage =
       !confirmedRoomCode &&
       !confirmedGameName &&
       localStorage.getItem('pageIndex');
