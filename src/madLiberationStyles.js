@@ -10,6 +10,10 @@ const madLiberationStyles = {
   },
   input: {
     display: 'none'
+  },
+  paperContainer: {
+    height: 1356,
+    backgroundImage: `url(${'../background-red-sea.jpg'})`
   }
 };
 export { madLiberationStyles };

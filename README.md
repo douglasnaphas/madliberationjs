@@ -17,4 +17,4 @@ The front-end for Mad Liberation.
 ### Run integration tests
 
 `REACT_APP_MLJSAPI_URL=<Mad Liberation API URL> npm start`
-`node ./src/App.itest.js http://localhost:3000`
+`node ./src/App.itest.js --site http://localhost:3000`
