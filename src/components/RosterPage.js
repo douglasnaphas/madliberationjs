@@ -45,12 +45,6 @@ class RosterPage extends Component {
     };
     return f;
   };
-  componentDidUpdate() {
-    console.log(
-      `componentDidUpdate called, rc ${this.props.confirmedRoomCode}` +
-        ` gn ${this.props.confirmedGameName}`
-    );
-  }
   closeSederAndPlay = history => {
     const {
       closeSeder,
