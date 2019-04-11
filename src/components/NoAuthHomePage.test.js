@@ -14,15 +14,15 @@ configure({ adapter: new Adapter() });
 
 describe('<NoAuthHomePage />', () => {
   let mount;
-  const startSederButton = (
+  const leadSederButton = (
     <Button
-      title="Start a seder"
+      title="Lead a seder"
       variant="contained"
       // className={classes.button}
       component={Link}
       to="/pick-script"
     >
-      Start a seder
+      Lead a seder
     </Button>
   );
   const joinSederButton = (
@@ -53,7 +53,7 @@ describe('<NoAuthHomePage />', () => {
     );
     wrapper.update();
     expect(wrapper.containsMatchingElement(<NoAuthHomePage />)).toBeTruthy();
-    expect(wrapper.containsMatchingElement(startSederButton)).toBeTruthy();
+    expect(wrapper.containsMatchingElement(leadSederButton)).toBeTruthy();
     expect(wrapper.containsMatchingElement(joinSederButton)).toBeTruthy();
     expect(
       wrapper.find('[title="Join a seder"]')

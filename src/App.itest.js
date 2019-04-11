@@ -60,9 +60,9 @@ const waitForSelectorOrFail = async ({
 
   // Home Page
   await page
-    .waitForXPath('//*[text()="Start a seder"]', waitOptions)
+    .waitForXPath('//*[text()="Lead a seder"]', waitOptions)
     .catch(async e => {
-      failTest(e, 'Start a seder button not found', browser);
+      failTest(e, 'Lead a seder button not found', browser);
     });
   await page
     .waitForXPath('//*[text()="Join a seder"]', waitOptions)
@@ -72,10 +72,10 @@ const waitForSelectorOrFail = async ({
 
   // Pick Your Script Page
   await Promise.all([
-    page.click('[madliberationid="start-a-seder-button"]'),
+    page.click('[madliberationid="lead-a-seder-button"]'),
     page.waitForNavigation(waitForNavigationOptions)
   ]).catch(async e => {
-    failTest(e, 'Failed to click Start a seder button', browser);
+    failTest(e, 'Failed to click Lead a seder button', browser);
   });
   await page
     .waitForSelector('[madliberationid="pick-your-script-page"]', waitOptions)
@@ -148,7 +148,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click How to Play link from menu', browser);
   });
-  // Confirm the About page is displayed
+  // Confirm the How to Play page is displayed
   await page
     .waitForSelector('[madliberationid="how-to-play-page"]', waitOptions)
     .catch(async e => {
