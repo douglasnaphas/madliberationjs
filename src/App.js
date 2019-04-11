@@ -57,7 +57,9 @@ class App extends Component {
     assignmentsData: false
   };
   _isMounted = false;
+  _isPersisted = false;
   persistState = () => {
+    if (this._isPersisted) return;
     if (this.state.confirmedRoomCode) {
       localStorage.setItem('roomCode', this.state.confirmedRoomCode);
     }
@@ -73,14 +75,17 @@ class App extends Component {
         JSON.stringify(this.state.assignmentsData)
       );
     }
+    this._isPersisted = true;
   };
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('beforeunload', this.persistState);
+    window.addEventListener('unload', this.persistState);
   }
   componentWillUnmount() {
     this.persistState();
     window.removeEventListener('beforeunload', this.persistState);
+    window.removeEventListener('unload', this.persistState);
     this._isMounted = false;
   }
   setConfirmedRoomCode = roomCode => {
