@@ -110,7 +110,7 @@ class ReadRoster extends React.Component {
         <div>
           <Button
             variant="contained"
-            onClick={this.fetchRoster}
+            onClick={this.fetchRoster(confirmedRoomCode, confirmedGameName)}
             disabled={this.state.rosterLoading}
           >
             Check again
