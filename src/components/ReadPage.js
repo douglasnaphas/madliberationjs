@@ -26,7 +26,7 @@ class ReadPage extends Component {
   constructor(props) {
     super(props);
     const { confirmedRoomCode, confirmedGameName } = this.props;
-    const getStartingPageFromStorage =
+    const getStartingPageFromStorage = // maybe persist readyForScript or getStartingPageFromStorage and set this based on that, since on refresh those two vars will have been set
       !confirmedRoomCode &&
       !confirmedGameName &&
       localStorage.getItem('pageIndex');
@@ -41,8 +41,14 @@ class ReadPage extends Component {
       this.setState({ readyForScript: true });
     }
   };
+  beforeUnload = () => {
+    if (!this.state.readyForScript) {
+      localStorage.removeItem('pageIndex');
+    }
+  };
   componentDidMount() {
     this._isMounted = true;
+    window.addEventListener('beforeunload', this.beforeUnload);
     const { setConfirmedRoomCode, setConfirmedGameName } = this.props;
     let { confirmedRoomCode, confirmedGameName } = this.props;
     if (
@@ -59,6 +65,7 @@ class ReadPage extends Component {
   }
   componentWillUnmount() {
     this._isMounted = false;
+    window.removeEventListener('beforeunload', this.beforeUnload);
   }
   render() {
     const { confirmedRoomCode, confirmedGameName, roster, script } = this.props;
