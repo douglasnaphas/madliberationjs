@@ -64,11 +64,14 @@ class PlayPage extends Component {
     };
   }
   _isMounted = false;
+  _isPersisted = false;
   persistState = () => {
+    if (this._isPersisted) return;
     localStorage.setItem('libIndex', this.state.libIndex);
     if (Array.isArray(this.state.answers) && this.state.answers.length > 0) {
       localStorage.setItem('answers', JSON.stringify(this.state.answers));
     }
+    this._isPersisted = true;
   };
   incrementLibIndex = () => {
     if (this._isMounted && this.state.answers.length > 0) {
@@ -138,6 +141,7 @@ class PlayPage extends Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('beforeunload', this.persistState);
+    window.addEventListener('unload', this.persistState);
     const {
       setConfirmedRoomCode,
       setConfirmedGameName,
@@ -166,6 +170,7 @@ class PlayPage extends Component {
   componentWillUnmount() {
     this.persistState();
     window.removeEventListener('beforeunload', this.persistState);
+    window.removeEventListener('unload', this.persistState);
     this._isMounted = false;
   }
 

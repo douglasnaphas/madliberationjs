@@ -49,6 +49,7 @@ class ReadPage extends Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('beforeunload', this.beforeUnload);
+    window.addEventListener('unload', this.beforeUnload);
     const { setConfirmedRoomCode, setConfirmedGameName } = this.props;
     let { confirmedRoomCode, confirmedGameName } = this.props;
     if (
@@ -66,6 +67,7 @@ class ReadPage extends Component {
   componentWillUnmount() {
     this._isMounted = false;
     window.removeEventListener('beforeunload', this.beforeUnload);
+    window.removeEventListener('unload', this.beforeUnload);
   }
   render() {
     const { confirmedRoomCode, confirmedGameName, roster, script } = this.props;

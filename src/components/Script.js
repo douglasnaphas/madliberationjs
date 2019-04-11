@@ -20,6 +20,7 @@ class Script extends React.Component {
     };
   }
   _isMounted = false;
+  _isPersisted = false;
   getScript = (roomCode, gameName) => {
     const { script } = this.props;
     if (this._isMounted) this.setState({ fetchingScript: true });
@@ -32,10 +33,12 @@ class Script extends React.Component {
     });
   };
   persistState = () => {
+    if (this._isPersisted) return;
     localStorage.setItem('pageIndex', this.state.pageIndex);
     if (this.state.script) {
       localStorage.setItem('script', JSON.stringify(this.state.script));
     }
+    this._isPersisted = true;
   };
   incrementPageIndex = () => {
     if (this._isMounted) {
@@ -52,12 +55,14 @@ class Script extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('beforeunload', this.persistState);
+    window.addEventListener('unload', this.persistState);
     const { confirmedRoomCode, confirmedGameName } = this.props;
     this.getScript(confirmedRoomCode, confirmedGameName);
   }
   componentWillUnmount() {
     this._isMounted = false;
     window.removeEventListener('beforeunload', this.persistState);
+    window.removeEventListener('unload', this.persistState);
   }
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
