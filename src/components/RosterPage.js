@@ -88,10 +88,6 @@ class RosterPage extends Component {
       setConfirmedGameName,
       setChosenPath
     } = this.props;
-    console.log(
-      `componentDidMount called, rc ${confirmedRoomCode} ` +
-        `gn ${confirmedGameName}`
-    );
     let roomCode = confirmedRoomCode;
     let gameName = confirmedGameName;
     let path = chosenPath;
