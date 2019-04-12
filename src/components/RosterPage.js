@@ -119,7 +119,7 @@ class RosterPage extends Component {
     for (let i = 0; i < this.state.participants.length; i++) {
       rosterRows.push(
         <TableRow key={`participantRow${i}`}>
-          <TableCell key={`participantCell${i}`}>
+          <TableCell key={`participantCell${i}`} madliberationid={`pc${i}`}>
             {this.state.participants[i]}
           </TableCell>
         </TableRow>
@@ -161,6 +161,7 @@ class RosterPage extends Component {
         </div>
         <div>
           <Button
+            madliberationid="no-check-again-button"
             variant="contained"
             disabled={
               this.state.rosterLoading || this.state.thatsEveryonePressed
@@ -173,6 +174,7 @@ class RosterPage extends Component {
         <br />
         <div>
           <ThatsEveryoneButtonWithRouter
+            madliberationid="thats-everyone-button-w-router"
             closeSederAndPlay={this.closeSederAndPlay}
             disabled={
               this.state.thatsEveryonePressed || this.state.rosterLoading

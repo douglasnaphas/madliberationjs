@@ -24,7 +24,7 @@ browserOptions.slowMo = slowDown;
 const failTest = async (err, msg, browser) => {
   console.log('test failed: ' + msg);
   console.log(err);
-  await browser.close();
+  if (browser) await browser.close();
   process.exit(1);
 };
 const waitForXPathOrFail = async ({
@@ -208,15 +208,19 @@ const waitForSelectorOrFail = async ({
   await page
     .waitForSelector(practiceScriptSelector, waitOptions)
     .catch(async e => {
-      failTest(e, 'Could not find Practice Script in scripts table');
+      failTest(e, 'Could not find Practice Script in scripts table', browser);
     });
   await Promise.all([page.click(practiceScriptSelector)]).catch(async e => {
-    failTest(e, 'Failed to select Practice Script');
+    failTest(e, 'Failed to select Practice Script', browser);
   });
   await page
     .waitForSelector('[madliberationid="pick-this-script-button"]', waitOptions)
     .catch(async e => {
-      failTest(e, 'Could not find Use This One button after picking script');
+      failTest(
+        e,
+        'Could not find Use This One button after picking script',
+        browser
+      );
     });
   await Promise.all([
     page.click('[madliberationid="pick-this-script-button"]'),
@@ -228,7 +232,7 @@ const waitForSelectorOrFail = async ({
   await page
     .waitForSelector('[madliberationid="your-room-code"]', waitOptions)
     .catch(async e => {
-      failTest(e, 'Did not get a Room Code');
+      failTest(e, 'Did not get a Room Code', browser);
     });
   const roomCode = await page
     .$$('[madliberationid="your-room-code"]')
@@ -352,6 +356,70 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Join a seder button', browser2);
   });
+
+  // Leader checks roster
+  // Click No, Check Again so Player 2 shows up on the roster
+  await page
+    .waitForSelector('[madliberationid="no-check-again-button"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find No Check Again button on roster');
+    });
+  await Promise.all([
+    page.click('[madliberationid="no-check-again-button"]', clickOptions)
+  ]).catch(async e => {
+    failTest(e, 'Failed to click No Check Again button');
+  });
+  // Verify both players are on the roster
+  await page
+    .waitForSelector('[madliberationid="pc0"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find first row in roster');
+    });
+  await page
+    .waitForSelector('[madliberationid="pc1"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find second row in roster');
+    });
+  const leaderNameFromTable = await page
+    .$$('[madliberationid="pc0"]')
+    .then(a => {
+      if (!Array.isArray(a) || a.length < 1) {
+        throw new Error('Could not get array with Participant Cell 0');
+      }
+      return a[0].getProperty('textContent');
+    })
+    .then(textContent => {
+      return textContent.jsonValue();
+    })
+    .catch(async e => {
+      failTest(e, 'Failed to get text from roster Participant Cell 0');
+    });
+  if (leaderNameFromTable != leaderName) {
+    failTest(
+      'wrong name on roster',
+      `expected ${leaderName}, got ` + `${leaderNameFromTable}`
+    );
+  }
+  const p2NameFromTable = await page
+    .$$('[madliberationid="pc1"]')
+    .then(a => {
+      if (!Array.isArray(a) || a.length < 1) {
+        throw new Error('Could not get array with Participant Cell 1');
+      }
+      return a[0].getProperty('textContent');
+    })
+    .then(textContent => {
+      return textContent.jsonValue();
+    })
+    .catch(async e => {
+      failTest(e, 'Failed to get text from roster Participant Cell 1');
+    });
+  if (p2NameFromTable != player2Name) {
+    failTest(
+      'wrong name on roster',
+      `expected ${player2Name}, got ` + `${p2NameFromTable}`
+    );
+  }
 
   // Close browsers
   await browser.close();
