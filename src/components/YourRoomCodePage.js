@@ -132,6 +132,7 @@ class YourRoomCodePage extends Component {
         <br />
         <div>
           <ThatsMyNameButtonWithRouter
+            madliberationid="thats-my-name-button"
             joinSederAndGoToRoster={this.joinSederAndGoToRoster}
             tentativeGameName={this.state.tentativeGameName}
             thatsMyNameButtonPressed={this.state.thatsMyNameButtonPressed}

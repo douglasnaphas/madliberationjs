@@ -56,6 +56,7 @@ const waitForSelectorOrFail = async ({
   const waitOptions = { timeout: timeoutMs /*, visible: true*/ };
   const waitForNavigationOptions = { timeout: timeoutMs };
   const clickOptions = { delay: 200 };
+  const typeOptions = { delay: 90 };
   await page.goto(site);
 
   // Home Page
@@ -229,7 +230,7 @@ const waitForSelectorOrFail = async ({
     .catch(async e => {
       failTest(e, 'Did not get a Room Code');
     });
-  const something = await page
+  const roomCode = await page
     .$$('[madliberationid="your-room-code"]')
     .then(a => {
       if (!Array.isArray(a) || a.length < 1) {
@@ -243,13 +244,55 @@ const waitForSelectorOrFail = async ({
     .catch(async e => {
       failTest(e, 'Failed to get text from Room Code');
     });
-  console.log(something);
+  // Got the Room Code, enter the leader's Game Name
+  const leaderName = `ITestLdr ${roomCode}`;
+  await page
+    .waitForSelector(
+      '[madliberationid="ringleader-game-name-text-field"]',
+      waitOptions
+    )
+    .catch(async e => {
+      failTest(e, 'Could not find leader Game Name text input field');
+    });
+  await Promise.all([
+    page.click(
+      '[madliberationid="ringleader-game-name-text-field"]',
+      clickOptions
+    )
+  ]).catch(async e => {
+    failTest(e, 'Failed to click leader name text field', browser);
+  });
+  await page
+    .type(
+      '[madliberationid="ringleader-game-name-text-field"]',
+      leaderName,
+      typeOptions
+    )
+    .catch(async e => {
+      failTest(e, 'Failed to type leader name');
+    });
+  // Submit leader Game Name
+  await page
+    .waitForSelector('[madliberationid="thats-my-name-button"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find Thats My Name button');
+    });
+  await Promise.all([
+    page.click('[madliberationid="thats-my-name-button"]', clickOptions),
+    page.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(
+      e,
+      'Failed to click Thats My Name button, Your Room Code Page',
+      browser
+    );
+  });
 
   // Add a second player
   const browser2 = await puppeteer.launch(browserOptions);
   const page2 = await browser2.newPage();
   await page2.goto(site);
-
+  // Player 2
   // Click Join a Seder button
   await page2
     .waitForSelector('[madliberationid="join-a-seder-button"]', waitOptions)
@@ -267,7 +310,50 @@ const waitForSelectorOrFail = async ({
     .catch(async e => {
       failTest(e, 'Enter Room Code Page not displayed', browser2);
     });
+  // Enter Room Code and Game Name
+  await page2
+    .waitForSelector(
+      '[madliberationid="enter-room-code-text-field"]',
+      waitOptions
+    )
+    .catch(async e => {
+      failTest(e, 'Could not find Enter Room Code text field');
+    });
+  await page2
+    .waitForSelector('[madliberationid="game-name-text-field"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find Game Name text field');
+    });
+  await page2
+    .waitForSelector('[madliberationid="join-this-seder-button"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find Join button');
+    });
+  const player2Name = `ITestP2 ${roomCode}`;
+  await page2
+    .click('[madliberationid="enter-room-code-text-field"]', clickOptions)
+    .catch(async e => {
+      failTest(e, 'Could not click Enter Room Code text field');
+    });
+  await page2.type(
+    '[madliberationid="enter-room-code-text-field"]',
+    roomCode,
+    typeOptions
+  );
+  await page2.click('[madliberationid="game-name-text-field"]', clickOptions);
+  await page2.type(
+    '[madliberationid="game-name-text-field"]',
+    player2Name,
+    typeOptions
+  );
+  await Promise.all([
+    page2.click('[madliberationid="join-this-seder-button"]', clickOptions),
+    page2.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(e, 'Failed to click Join a seder button', browser2);
+  });
 
+  // Close browsers
   await browser.close();
   await browser2.close();
 })();
