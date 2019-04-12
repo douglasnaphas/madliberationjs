@@ -420,6 +420,18 @@ const waitForSelectorOrFail = async ({
       `expected ${player2Name}, got ` + `${p2NameFromTable}`
     );
   }
+  // Click Thats Everyone
+  await page
+    .waitForSelector('[madliberationid="thats-everyone-button"]', waitOptions)
+    .catch(async e => {
+      failTest(e, "Could not find That's Everyone button on roster");
+    });
+  await Promise.all([
+    page.click('[madliberationid="thats-everyone-button"]', clickOptions),
+    page.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(e, 'Failed to click Thats Everyone button', browser);
+  });
 
   // Close browsers
   await browser.close();
