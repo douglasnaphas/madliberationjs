@@ -54,7 +54,9 @@ class ScriptTable extends React.Component {
             />
           </TableCell>
           <TableCell key={`row${i}-short_desc`}>
-            <label for={`script-${i}`}>{scripts[i].haggadah_short_desc}</label>
+            <label htmlFor={`script-${i}`}>
+              {scripts[i].haggadah_short_desc}
+            </label>
           </TableCell>
           <TableCell key={`row${i}-description`}>
             {scripts[i].haggadah_description}

@@ -117,7 +117,7 @@ class EnterRoomCodePage extends Component {
           <div>
             <Typography component="p" paragraph gutterBottom>
               Prove it. Enter the{' '}
-              <label for="player-room-code">Room Code</label> that your
+              <label htmlFor="player-room-code">Room Code</label> that your
               sedermaker gave you orally.
             </Typography>
           </div>
@@ -133,8 +133,8 @@ class EnterRoomCodePage extends Component {
           <br />
           <div>
             <Typography component="p" paragraph>
-              Also, what is your <label for="player-game-name">game name</label>
-              ?
+              Also, what is your{' '}
+              <label htmlFor="player-game-name">game name</label>?
             </Typography>
           </div>
           <div>

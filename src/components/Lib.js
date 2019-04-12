@@ -45,7 +45,7 @@ class Lib extends Component {
           <div>
             <Paper className={classes.paper}>
               <Typography variant="h5">
-                <label for={`prompt-${libIndex}`}>
+                <label htmlFor={`prompt-${libIndex}`}>
                   {lib ? lib.prompt : ''}
                 </label>
               </Typography>
