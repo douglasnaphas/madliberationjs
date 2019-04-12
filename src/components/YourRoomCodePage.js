@@ -119,8 +119,8 @@ class YourRoomCodePage extends Component {
         </div>
         <div>
           <Typography component="p" paragraph gutterBottom>
-            What's your Game Name? It's how you, personally, will be known
-            throughout this seder.
+            What's your <label for="leader-game-name">Game Name</label>? It's
+            how you, personally, will be known throughout this seder.
           </Typography>
         </div>
         <div>
@@ -129,6 +129,7 @@ class YourRoomCodePage extends Component {
             helperText="your nickname this seder"
             variant="outlined"
             onChange={gameNameChanged}
+            id="leader-game-name"
           />
         </div>
         <br />
