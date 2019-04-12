@@ -185,24 +185,89 @@ const waitForSelectorOrFail = async ({
     failTest(e, 'Failed to click Home link from menu', browser);
   });
 
-  // Click Join a Seder button
+  // Lead a seder
   await page
-    .waitForSelector('[madliberationid="join-a-seder-button"]', waitOptions)
+    .waitForSelector('[madliberationid="lead-a-seder-button"]', waitOptions)
     .catch(async e => {
-      failTest(e, 'Join a seder button not found', browser);
+      failTest(e, 'Lead a seder button not found', browser);
     });
   await Promise.all([
-    page.click('[madliberationid="join-a-seder-button"]', clickOptions),
+    page.click('[madliberationid="lead-a-seder-button"]'),
     page.waitForNavigation(waitForNavigationOptions)
   ]).catch(async e => {
-    failTest(e, 'Failed to click Join a seder button', browser);
+    failTest(e, 'Failed to click Lead a seder button', browser);
   });
   await page
+    .waitForSelector('[madliberationid="pick-your-script-page"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Pick Your Script Page not loaded', browser);
+    });
+  // Pick the Practice Script
+  const practiceScriptSelector = '[madliberationid="Practice Script"]';
+  await page
+    .waitForSelector(practiceScriptSelector, waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find Practice Script in scripts table');
+    });
+  await Promise.all([page.click(practiceScriptSelector)]).catch(async e => {
+    failTest(e, 'Failed to select Practice Script');
+  });
+  await page
+    .waitForSelector('[madliberationid="pick-this-script-button"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Could not find Use This One button after picking script');
+    });
+  await Promise.all([
+    page.click('[madliberationid="pick-this-script-button"]'),
+    page.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(e, 'Failed to click Use This One button, scripts table', browser);
+  });
+  // Wait for a Room Code to appear
+  await page
+    .waitForSelector('[madliberationid="your-room-code"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Did not get a Room Code');
+    });
+  const something = await page
+    .$$('[madliberationid="your-room-code"]')
+    .then(a => {
+      if (!Array.isArray(a) || a.length < 1) {
+        throw new Error('Could not get array with one Room Code');
+      }
+      return a[0].getProperty('textContent');
+    })
+    .then(textContent => {
+      return textContent.jsonValue();
+    })
+    .catch(async e => {
+      failTest(e, 'Failed to get text from Room Code');
+    });
+  console.log(something);
+
+  // Add a second player
+  const browser2 = await puppeteer.launch(browserOptions);
+  const page2 = await browser2.newPage();
+  await page2.goto(site);
+
+  // Click Join a Seder button
+  await page2
+    .waitForSelector('[madliberationid="join-a-seder-button"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'Join a seder button not found', browser2);
+    });
+  await Promise.all([
+    page2.click('[madliberationid="join-a-seder-button"]', clickOptions),
+    page2.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(e, 'Failed to click Join a seder button', browser2);
+  });
+  await page2
     .waitForSelector('[madliberationid="enter-room-code-page"]', waitOptions)
     .catch(async e => {
-      failTest(e, 'Enter Room Code Page not displayed', browser);
+      failTest(e, 'Enter Room Code Page not displayed', browser2);
     });
 
-  //menu-about-link
   await browser.close();
+  await browser2.close();
 })();

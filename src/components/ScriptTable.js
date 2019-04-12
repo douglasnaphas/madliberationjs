@@ -54,7 +54,10 @@ class ScriptTable extends React.Component {
             />
           </TableCell>
           <TableCell key={`row${i}-short_desc`}>
-            <label htmlFor={`script-${i}`}>
+            <label
+              htmlFor={`script-${i}`}
+              madliberationid={`${scripts[i].haggadah_short_desc}`}
+            >
               {scripts[i].haggadah_short_desc}
             </label>
           </TableCell>

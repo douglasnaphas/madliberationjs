@@ -93,7 +93,7 @@ class YourRoomCodePage extends Component {
           Your Room Code is:
         </Typography>
         <br />
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h3" gutterBottom madliberationid="your-room-code">
           {confirmedRoomCode}
         </Typography>
         <br />
