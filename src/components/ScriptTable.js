@@ -50,10 +50,11 @@ class ScriptTable extends React.Component {
               checked={this.state.selectedValue === `${i}`}
               onChange={this.handleChange}
               value={`${i}`}
+              id={`script-${i}`}
             />
           </TableCell>
           <TableCell key={`row${i}-short_desc`}>
-            {scripts[i].haggadah_short_desc}
+            <label for={`script-${i}`}>{scripts[i].haggadah_short_desc}</label>
           </TableCell>
           <TableCell key={`row${i}-description`}>
             {scripts[i].haggadah_description}
@@ -67,7 +68,6 @@ class ScriptTable extends React.Component {
           <br />
           <Button
             madliberationid="pick-this-script-button"
-            title="Use this one"
             variant="contained"
             className={classes.button}
             component={Link}
