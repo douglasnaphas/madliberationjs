@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { madLiberationStyles } from '../madLiberationStyles';
 import MenuAppBar from './MenuAppBar';
@@ -43,7 +44,11 @@ class Lib extends Component {
           </Typography>
           <div>
             <Paper className={classes.paper}>
-              <Typography variant="h5">{lib ? lib.prompt : ''}</Typography>
+              <Typography variant="h5">
+                <label for={`prompt-${libIndex}`}>
+                  {lib ? lib.prompt : ''}
+                </label>
+              </Typography>
             </Paper>
           </div>
           <br />
@@ -51,6 +56,7 @@ class Lib extends Component {
             variant="outlined"
             fullWidth
             onChange={this.onAnswerChange}
+            id={`prompt-${libIndex}`}
             value={answer && answer.answer ? answer.answer : ''}
           />
           {lib && lib.sentence ? (
@@ -80,13 +86,42 @@ class Lib extends Component {
         </div>
         <br />
         <div>
-          <IconButton onClick={decrementLibIndex}>
-            <NavigateBefore />
-          </IconButton>
           {libIndex + 1} / {libCount}
-          <IconButton onClick={incrementLibIndex}>
-            <NavigateNext />
-          </IconButton>
+        </div>
+        <br />
+        <div>
+          {libIndex < libCount - 1 ? (
+            <div>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={incrementLibIndex}
+              >
+                Next
+              </Button>
+              <br />
+              <br />
+            </div>
+          ) : (
+            <div>
+              <br />
+            </div>
+          )}
+        </div>
+        <div>
+          {libIndex == 0 ? (
+            <div>
+              <br />
+            </div>
+          ) : (
+            <div>
+              <Button onClick={decrementLibIndex} variant="contained">
+                Previous
+              </Button>
+              <br />
+              <br />
+            </div>
+          )}
         </div>
       </div>
     );

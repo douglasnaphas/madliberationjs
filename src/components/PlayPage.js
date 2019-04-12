@@ -201,11 +201,10 @@ class PlayPage extends Component {
           </div>
           <div>
             <Button
+              hidden={this.state.libIndex != assignmentsData.length - 1}
               color="primary"
               variant="contained"
               onClick={this.submitAllClick}
-              aria-labelledby="submit-your-answers-dialog"
-              aria-describedby="submit-your-answers-dialog-description"
             >
               Submit all of these
             </Button>
