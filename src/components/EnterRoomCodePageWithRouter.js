@@ -116,8 +116,9 @@ class EnterRoomCodePage extends Component {
         <div>
           <div>
             <Typography component="p" paragraph gutterBottom>
-              Prove it. Enter the Room Code that your sedermaker gave you
-              orally.
+              Prove it. Enter the{' '}
+              <label for="player-room-code">Room Code</label> that your
+              sedermaker gave you orally.
             </Typography>
           </div>
           <div>
@@ -126,12 +127,14 @@ class EnterRoomCodePage extends Component {
               helperText="6 letters"
               variant="outlined"
               onChange={this.enableJoinIfCodeValid}
+              id="player-room-code"
             />
           </div>
           <br />
           <div>
             <Typography component="p" paragraph>
-              Also, what is your game name?
+              Also, what is your <label for="player-game-name">game name</label>
+              ?
             </Typography>
           </div>
           <div>
@@ -140,6 +143,7 @@ class EnterRoomCodePage extends Component {
               helperText="it's who you are for this seder"
               variant="outlined"
               onChange={this.enableJoinIfNameGiven}
+              id="player-game-name"
             />
           </div>
           <br />
