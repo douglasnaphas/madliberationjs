@@ -79,6 +79,59 @@ const itGetText = async ({ page, madliberationid }) => {
     });
   return text;
 };
+const itGetGroupText = async (page, containerMLId, groupName) => {
+  await itWait({ page: page, madliberationid: containerMLId }).catch(
+    async e => {
+      failTest(e, `Failed to find container ${containerMLId}`);
+    }
+  );
+  const container = await page
+    .$(`[madliberationid="${containerMLId}"]`)
+    .catch(async e => {
+      failTest(e, `Failed to get container ${containerMLId}`);
+    });
+  const texts = await container
+    .$$eval(`[${groupName}]`, nodes => nodes.map(n => n.innerText))
+    .catch(async e => {
+      failTest(e, `Failed to get group ${groupName}`);
+    });
+  return texts;
+};
+
+const submitAllLibs = async (page, prefix) => {
+  const answers = [];
+  const progressText = await itGetText({
+    page: page,
+    madliberationid: 'lib-progress'
+  });
+  const progress = progressText.split('/').map(n => parseInt(n.trim()));
+  if (progress.length < 2) {
+    failTest('/play page', 'did not find X / Y showing lib progress');
+  }
+  const numLibs = progress[1];
+  for (let currentLib = progress[0]; currentLib <= numLibs; currentLib++) {
+    // Enter a lib, save it to answers
+    const ans = `${prefix}-${currentLib}`;
+    await itType({
+      page: page,
+      madliberationid: `answer-${currentLib - 1}`,
+      text: ans
+    });
+    answers.push(ans);
+    // If we're on the last lib, submit and return
+    if (currentLib === numLibs) {
+      await itClick({ page: page, madliberationid: 'submit-answers' });
+      await itNavigate({
+        page: page,
+        madliberationid: 'yes-submit-libs-button'
+      });
+      return answers;
+    }
+    // Click the Next button
+    await itClick({ page: page, madliberationid: 'next-prompt' });
+  }
+  failTest('/play page', 'never found a Submit Answers button');
+};
 
 (async () => {
   const browser = await puppeteer.launch(browserOptions);
@@ -222,41 +275,6 @@ const itGetText = async ({ page, madliberationid }) => {
 
   // Make sure we're on the /play page
   await itWait({ page: page, madliberationid: 'lib-progress' });
-
-  const submitAllLibs = async (page, prefix) => {
-    const answers = [];
-    const progressText = await itGetText({
-      page: page,
-      madliberationid: 'lib-progress'
-    });
-    const progress = progressText.split('/').map(n => parseInt(n.trim()));
-    if (progress.length < 2) {
-      failTest('/play page', 'did not find X / Y showing lib progress');
-    }
-    const numLibs = progress[1];
-    for (let currentLib = progress[0]; currentLib <= numLibs; currentLib++) {
-      // Enter a lib, save it to answers
-      const ans = `${prefix}-${currentLib}`;
-      await itType({
-        page: page,
-        madliberationid: `answer-${currentLib - 1}`,
-        text: ans
-      });
-      answers.push(ans);
-      // If we're on the last lib, submit and return
-      if (currentLib === numLibs) {
-        await itClick({ page: page, madliberationid: 'submit-answers' });
-        await itNavigate({
-          page: page,
-          madliberationid: 'yes-submit-libs-button'
-        });
-        return answers;
-      }
-      // Click the Next button
-      await itClick({ page: page, madliberationid: 'next-prompt' });
-    }
-    failTest('/play page', 'never found a Submit Answers button');
-  };
   const leaderAnswers = await submitAllLibs(page, 'leader');
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -274,7 +292,32 @@ const itGetText = async ({ page, madliberationid }) => {
   await itWait({ page: page2, madliberationid: 'lib-progress' });
   const p2Answers = await submitAllLibs(page2, 'p2');
 
-  // Confirm player submissions appeared in the script
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // Player 2: not going to read the script
+  await itNavigate({
+    page: page2,
+    madliberationid: 'use-someone-elses-device-button'
+  });
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  await itWait({ page: page2, madliberationid: 'done-not-reading-page' });
+
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // Leader: confirm both players' submissions appeared in the script
+  await itNavigate({ page: page, madliberationid: 'i-want-the-script-button' });
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // Wait until the Read page shows, then click the button to get to the first
+  // reader, then get all the displayed libs
+  await itWait({ page: page, madliberationid: 'pass-this-device' });
+  await itClick({ page: page, madliberationid: 'ready-to-read-button' });
+  const libTexts = await itGetGroupText(page, 'page', 'madliberationanswer');
+  console.log(libTexts);
 
   // Close browsers
   await browser.close();

@@ -65,13 +65,23 @@ class SubmittedPage extends Component {
           </Typography>
         </div>
         <div>
-          <Button variant="contained" component={Link} to="/read">
+          <Button
+            madliberationid="i-want-the-script-button"
+            variant="contained"
+            component={Link}
+            to="/read"
+          >
             Yes, I want the script
           </Button>{' '}
         </div>
         <br />
         <div>
-          <Button variant="contained" component={Link} to="/done-not-reading">
+          <Button
+            madliberationid="use-someone-elses-device-button"
+            variant="contained"
+            component={Link}
+            to="/done-not-reading"
+          >
             No, we'll use someone else's device
           </Button>
         </div>

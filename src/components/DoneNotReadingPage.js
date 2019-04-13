@@ -8,7 +8,7 @@ class DoneNotReadingPage extends React.Component {
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
     return (
-      <div>
+      <div madliberationid="done-not-reading-page">
         <MenuAppBar
           confirmedRoomCode={confirmedRoomCode}
           confirmedGameName={confirmedGameName}

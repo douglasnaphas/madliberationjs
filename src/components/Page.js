@@ -59,6 +59,12 @@ class Page extends React.Component {
               title={segment.prompt}
             >
               <span
+                madliberationanswer="true"
+                madliberationid={
+                  segment.id
+                    ? `answer-${segment.id}`
+                    : `bad-answer-${segmentIndex}`
+                }
                 key={`segment-${lineIndex}-${segmentIndex}`}
                 style={madLiberationStyles.lightGrayBackround}
               >
@@ -139,11 +145,12 @@ class Page extends React.Component {
     if (!this.state.readyForContent) {
       const order = pageIndex == 0 ? 'first' : 'next';
       return (
-        <div>
+        <div madliberationid="pass-this-device">
           <Typography variant="h5" gutterBottom>
             Pass this device to the {order} reader, then click:
           </Typography>
           <Button
+            madliberationid="ready-to-read-button"
             variant="contained"
             color="primary"
             onClick={this.setReadyForContent}
@@ -154,7 +161,7 @@ class Page extends React.Component {
       );
     } else {
       return (
-        <div>
+        <div madliberationid="page">
           <div>{lines}</div>
           <div>
             <Button
