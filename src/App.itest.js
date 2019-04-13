@@ -49,15 +49,63 @@ const waitForSelectorOrFail = async ({
     failTest(e, 'Failed to find: ' + elementDescription, browser);
   });
 };
-const wait = async ({ page, madliberationid, waitOptions }) => {};
+const waitOptions = { timeout: timeoutMs /*, visible: true*/ };
+const waitForNavigationOptions = { timeout: timeoutMs };
+const clickOptions = { delay: 200 };
+const typeOptions = { delay: 90 };
+const itWait = async ({ page, madliberationid }) => {
+  await page
+    .waitForSelector(`[madliberationid="${madliberationid}"]`, waitOptions)
+    .catch(async e => {
+      failTest(e, `Could not find ${madliberationid}`);
+    });
+};
+const itClick = async ({ page, madliberationid }) => {
+  await itWait({ page: page, madliberationid: madliberationid });
+  await page
+    .click(`[madliberationid="${madliberationid}"]`, clickOptions)
+    .catch(async e => {
+      failTest(e, `Could not click ${madliberationid}`);
+    });
+};
+const itType = async ({ page, madliberationid, text }) => {
+  await itClick({ page: page, madliberationid: madliberationid });
+  await page
+    .type(`[madliberationid="${madliberationid}"]`, text, typeOptions)
+    .catch(async e => {
+      failTest(e, `Could not type into ${madliberationid}`);
+    });
+};
+const itNavigate = async ({ page, madliberationid }) => {
+  await itWait({ page: page, madliberationid: madliberationid });
+  await Promise.all([
+    page.click(`[madliberationid="${madliberationid}"]`, clickOptions),
+    page.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(e, `Could not navigate by clicking on ${madliberationid}`);
+  });
+};
+const itGetText = async ({ page, madliberationid }) => {
+  const text = await page
+    .$$(`[madliberationid="${madliberationid}"]`)
+    .then(a => {
+      if (!Array.isArray(a) || a.length < 1) {
+        throw new Error(`Could not get text from ${madliberationid}`);
+      }
+      return a[0].getProperty('textContent');
+    })
+    .then(textContent => {
+      return textContent.jsonValue();
+    })
+    .catch(async e => {
+      failTest(e, `Failed getting text content of ${madliberationid}`);
+    });
+  return text;
+};
 
 (async () => {
   const browser = await puppeteer.launch(browserOptions);
   const page = await browser.newPage();
-  const waitOptions = { timeout: timeoutMs /*, visible: true*/ };
-  const waitForNavigationOptions = { timeout: timeoutMs };
-  const clickOptions = { delay: 200 };
-  const typeOptions = { delay: 90 };
   await page.goto(site);
 
   ////////////////////////////////////////////////////////////////////////////////
