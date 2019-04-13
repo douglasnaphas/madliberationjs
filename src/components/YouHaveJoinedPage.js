@@ -62,6 +62,7 @@ class EnterRoomCodePage extends Component {
           </Typography>
           <div>
             <Button
+              madliberationid="player-click-this-button"
               color="primary"
               variant="contained"
               component={Link}

@@ -201,6 +201,7 @@ class PlayPage extends Component {
           </div>
           <div>
             <Button
+              madliberationid="submit-answers"
               hidden={this.state.libIndex != assignmentsData.length - 1}
               color="primary"
               variant="contained"

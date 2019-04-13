@@ -63,6 +63,7 @@ class LetThemPressButtonPage extends Component {
           </Typography>
           <div>
             <Button
+              madliberationid="leader-click-this-button"
               color="primary"
               variant="contained"
               component={Link}

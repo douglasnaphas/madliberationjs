@@ -53,6 +53,7 @@ class Lib extends Component {
           </div>
           <br />
           <TextField
+            madliberationid={`answer-${libIndex}`}
             variant="outlined"
             fullWidth
             onChange={this.onAnswerChange}
@@ -85,7 +86,7 @@ class Lib extends Component {
           )}
         </div>
         <br />
-        <div>
+        <div madliberationid="lib-progress">
           {libIndex + 1} / {libCount}
         </div>
         <br />
@@ -93,6 +94,7 @@ class Lib extends Component {
           {libIndex < libCount - 1 ? (
             <div>
               <Button
+                madliberationid="next-prompt"
                 color="primary"
                 variant="contained"
                 onClick={incrementLibIndex}
@@ -115,7 +117,11 @@ class Lib extends Component {
             </div>
           ) : (
             <div>
-              <Button onClick={decrementLibIndex} variant="contained">
+              <Button
+                madliberationid="previous-prompt"
+                onClick={decrementLibIndex}
+                variant="contained"
+              >
                 Previous
               </Button>
               <br />

@@ -49,6 +49,7 @@ const waitForSelectorOrFail = async ({
     failTest(e, 'Failed to find: ' + elementDescription, browser);
   });
 };
+const wait = async ({ page, madliberationid, waitOptions }) => {};
 
 (async () => {
   const browser = await puppeteer.launch(browserOptions);
@@ -59,6 +60,7 @@ const waitForSelectorOrFail = async ({
   const typeOptions = { delay: 90 };
   await page.goto(site);
 
+  ////////////////////////////////////////////////////////////////////////////////
   // Home Page
   await page
     .waitForXPath('//*[text()="Lead a seder"]', waitOptions)
@@ -78,6 +80,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Lead a seder button', browser);
   });
+  ////////////////////////////////////////////////////////////////////////////////
   await page
     .waitForSelector('[madliberationid="pick-your-script-page"]', waitOptions)
     .catch(async e => {
@@ -113,6 +116,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click About link from menu', browser);
   });
+  ////////////////////////////////////////////////////////////////////////////////
   // Confirm the About page is displayed
   await page
     .waitForSelector('[madliberationid="about-page"]', waitOptions)
@@ -149,6 +153,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click How to Play link from menu', browser);
   });
+  ////////////////////////////////////////////////////////////////////////////////
   // Confirm the How to Play page is displayed
   await page
     .waitForSelector('[madliberationid="how-to-play-page"]', waitOptions)
@@ -185,6 +190,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Home link from menu', browser);
   });
+  ////////////////////////////////////////////////////////////////////////////////
 
   // Lead a seder
   await page
@@ -198,6 +204,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Lead a seder button', browser);
   });
+  ////////////////////////////////////////////////////////////////////////////////
   await page
     .waitForSelector('[madliberationid="pick-your-script-page"]', waitOptions)
     .catch(async e => {
@@ -228,6 +235,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Use This One button, scripts table', browser);
   });
+  ////////////////////////////////////////////////////////////////////////////////
   // Wait for a Room Code to appear
   await page
     .waitForSelector('[madliberationid="your-room-code"]', waitOptions)
@@ -292,6 +300,9 @@ const waitForSelectorOrFail = async ({
     );
   });
 
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
   // Add a second player
   const browser2 = await puppeteer.launch(browserOptions);
   const page2 = await browser2.newPage();
@@ -309,6 +320,7 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Join a seder button', browser2);
   });
+  ////////////////////////////////////////////////////////////////////////////////
   await page2
     .waitForSelector('[madliberationid="enter-room-code-page"]', waitOptions)
     .catch(async e => {
@@ -356,6 +368,9 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Join a seder button', browser2);
   });
+
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
 
   // Leader checks roster
   // Click No, Check Again so Player 2 shows up on the roster
@@ -432,6 +447,149 @@ const waitForSelectorOrFail = async ({
   ]).catch(async e => {
     failTest(e, 'Failed to click Thats Everyone button', browser);
   });
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // Leader: get assignments, complete them, and submit
+  await page
+    .waitForSelector(
+      '[madliberationid="leader-click-this-button"]',
+      waitOptions
+    )
+    .catch(async e => {
+      failTest(e, "Could not find leader's Click This Button");
+    });
+  await Promise.all([
+    page.click('[madliberationid="leader-click-this-button"]', clickOptions),
+    page.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(e, "Failed to click Leader's Button");
+  });
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // Make sure we're on the /play page
+  await page
+    .waitForSelector('[madliberationid="lib-progress"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'lib progres did not appear');
+    });
+
+  const submitAllLibs = async (page, prefix) => {
+    const answers = [];
+    const progressText = await page
+      .$$('[madliberationid="lib-progress"]')
+      .then(a => {
+        if (!Array.isArray(a) || a.length < 1) {
+          throw new Error(`Could not grab progress text for ${prefix}`);
+        }
+        return a[0].getProperty('textContent');
+      })
+      .then(textContent => textContent.jsonValue())
+      .catch(async e => {
+        failTest(e, `Failed to get text from lib progress for ${prefix}`);
+      });
+    const progress = progressText.split('/').map(n => parseInt(n.trim()));
+    if (progress.length < 2) {
+      failTest('/play page', 'did not find X / Y showing lib progress');
+    }
+    const numLibs = progress[1];
+    for (let currentLib = progress[0]; currentLib <= numLibs; currentLib++) {
+      // Enter a lib, save it to answers
+      const ans = `${prefix}-${currentLib}`;
+      await page
+        .waitForSelector(
+          `[madliberationid="answer-${currentLib - 1}"]`,
+          waitOptions
+        )
+        .catch(async e => {
+          failTest(e, `Could not find text box for answer ${currentLib}`);
+        });
+      await page
+        .click(`[madliberationid="answer-${currentLib - 1}"]`, waitOptions)
+        .catch(async e => {
+          failTest(e, `Failed to click answer box ${currentLib}`);
+        });
+      await page
+        .type(`[madliberationid="answer-${currentLib - 1}"]`, ans, typeOptions)
+        .catch(async e => {
+          failTest(e, `Failed to enter answer ${ans}`);
+        });
+      answers.push(ans);
+      // If we're on the last lib, submit and return
+      if (currentLib === numLibs) {
+        await page
+          .waitForSelector('[madliberationid="submit-answers"]')
+          .catch(async e => {
+            failTest(
+              e,
+              `could not find Submit libs button, prompt ${currentLib}`
+            );
+          });
+        await page
+          .click('[madliberationid="submit-answers"]')
+          .catch(async e => {
+            failTest(e, `failed to click Submit libs, prompt ${currentLib}`);
+          });
+        await page
+          .waitForSelector('[madliberationid="yes-submit-libs-button"]')
+          .catch(async e => {
+            failTest(
+              e,
+              `could not find confirm submit button, prompt ${currentLib}`
+            );
+          });
+        await Promise.all([
+          page.click('[madliberationid="yes-submit-libs-button"]'),
+          page.waitForNavigation(waitForNavigationOptions)
+        ]).catch(async e => {
+          failTest(e, `failed to confirm submit, prompt ${currentLib}`);
+        });
+        return answers;
+      }
+      // Click the Next button
+      await page
+        .waitForSelector('[madliberationid="next-prompt"]', waitOptions)
+        .catch(async e => {
+          failTest(e, 'no next prompt button');
+        });
+      await page
+        .click('[madliberationid="next-prompt"]', clickOptions)
+        .catch(async e => {
+          failTest(e, 'could not click next prompt');
+        });
+    }
+    failTest('/play page', 'never found a Submit Answers button');
+  };
+  const leaderAnswers = await submitAllLibs(page, 'leader');
+
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // Player 2: get assignments, complete them, and submit
+  await page2
+    .waitForSelector(
+      '[madliberationid="player-click-this-button"]',
+      waitOptions
+    )
+    .catch(async e => {
+      failTest(e, "Could not find player's Click This Button");
+    });
+  await Promise.all([
+    page2.click('[madliberationid="player-click-this-button"]', clickOptions),
+    page2.waitForNavigation(waitForNavigationOptions)
+  ]).catch(async e => {
+    failTest(e, "Failed to click Player's Button");
+  });
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // Make sure we're on the /play page
+  await page2
+    .waitForSelector('[madliberationid="lib-progress"]', waitOptions)
+    .catch(async e => {
+      failTest(e, 'lib progres did not appear');
+    });
+  const p2Answers = await submitAllLibs(page2, 'p2');
+
+  // Confirm player submissions appeared in the script
 
   // Close browsers
   await browser.close();

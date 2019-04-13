@@ -22,7 +22,7 @@ class YesSubmitLibsButton extends React.Component {
     return (
       <div>
         <Button
-          madliberationid="yes-submit-libs-buttons"
+          madliberationid="yes-submit-libs-button"
           disabled={this.props.disabled}
           onClick={yesSubmitLibsClick}
         >
