@@ -78,7 +78,7 @@ class Script extends React.Component {
         this.state.pageIndex >= this.state.script.pages.length
       ) {
         return (
-          <div>
+          <div madliberationid="seder-ended-successfully" mlnoncontent="true">
             <div>
               <Typography variant="h4" gutterBottom>
                 The seder has ended successfully

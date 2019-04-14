@@ -145,7 +145,7 @@ class Page extends React.Component {
     if (!this.state.readyForContent) {
       const order = pageIndex == 0 ? 'first' : 'next';
       return (
-        <div madliberationid="pass-this-device">
+        <div madliberationid="pass-this-device" mlnoncontent="true">
           <Typography variant="h5" gutterBottom>
             Pass this device to the {order} reader, then click:
           </Typography>
@@ -165,6 +165,7 @@ class Page extends React.Component {
           <div>{lines}</div>
           <div>
             <Button
+              madliberationid="next-page-button"
               variant="contained"
               color="primary"
               onClick={incrementPageIndex}

@@ -36,6 +36,11 @@ const itWait = async ({ page, madliberationid }) => {
       failTest(e, `Could not find ${madliberationid}`);
     });
 };
+const itWaitForAttribute = async (page, attribute) => {
+  await page.waitForSelector(`[${attribute}]`, waitOptions).catch(async e => {
+    failTest(e, `Could not find attribute ${attribute}`);
+  });
+};
 const itClick = async ({ page, madliberationid }) => {
   await itWait({ page: page, madliberationid: madliberationid });
   await page
@@ -97,6 +102,12 @@ const itGetGroupText = async (page, containerMLId, groupName) => {
     });
   return texts;
 };
+const itGetArrayByAttribute = async (page, attribute) => {
+  const handles = await page.$$(`[${attribute}]`).catch(async e => {
+    failTest(e, `Failed getting array of elements with attribute ${attribute}`);
+  });
+  return handles;
+};
 
 const submitAllLibs = async (page, prefix) => {
   const answers = [];
@@ -145,6 +156,7 @@ const submitAllLibs = async (page, prefix) => {
     .catch(async e => {
       failTest(e, 'Lead a seder button not found', browser);
     });
+
   await page
     .waitForXPath('//*[text()="Join a seder"]', waitOptions)
     .catch(async e => {
@@ -315,9 +327,47 @@ const submitAllLibs = async (page, prefix) => {
   // Wait until the Read page shows, then click the button to get to the first
   // reader, then get all the displayed libs
   await itWait({ page: page, madliberationid: 'pass-this-device' });
-  await itClick({ page: page, madliberationid: 'ready-to-read-button' });
-  const libTexts = await itGetGroupText(page, 'page', 'madliberationanswer');
-  console.log(libTexts);
+  const libs = [];
+  // loop through script pages, adding to libs
+  while (true) {
+    await itWaitForAttribute(page, 'mlnoncontent');
+    // Get the value of madliberationid
+    const id = await page
+      .$eval('[mlnoncontent]', el => el.getAttribute('madliberationid'))
+      .catch(async e => {
+        failTest(e, 'failed to get madliberationid');
+      });
+    if (id == 'pass-this-device') {
+      itClick({ page: page, madliberationid: 'ready-to-read-button' });
+      itWait({ page: page, madliberationid: 'page' });
+      const libTexts = await itGetGroupText(
+        page,
+        'page',
+        'madliberationanswer'
+      );
+      libTexts.forEach(t => {
+        libs.push(t);
+      });
+      itClick({ page: page, madliberationid: 'next-page-button' });
+      continue;
+    }
+    if (id == 'seder-ended-successfully') {
+      break;
+    }
+    failTest('/read error', 'failed to loop through script pages');
+  }
+  leaderAnswers.concat(p2Answers).forEach(a => {
+    if (!libs.includes(a)) {
+      failTest('/read failure', `submitted lib not inserted in script: ${a}`);
+    }
+  });
+  if (leaderAnswers.length + p2Answers.length != libs.length) {
+    failTest(
+      '/read failure',
+      `submitted ${leaderAnswers.length + p2Answers.length} answers, ` +
+        `${libs.length} found in script`
+    );
+  }
 
   // Close browsers
   await browser.close();
