@@ -143,11 +143,20 @@ class Page extends React.Component {
     });
 
     if (!this.state.readyForContent) {
-      const order = pageIndex == 0 ? 'first' : 'next';
+      let passTo = 'the next reader';
+      if (pageIndex == 0) passTo = 'the first reader';
+      if (page.youngest == 'to') {
+        passTo = 'the youngest person here';
+      }
+      if (page.youngest == 'from') {
+        passTo =
+          'the person AFTER the person who handed it to you, passing over' +
+          ' yourself if you would be next';
+      }
       return (
         <div madliberationid="pass-this-device" mlnoncontent="true">
           <Typography variant="h5" gutterBottom>
-            Pass this device to the {order} reader, then click:
+            Pass this device to {passTo}, then click:
           </Typography>
           <Button
             madliberationid="ready-to-read-button"
