@@ -15,7 +15,6 @@ import NoAuthHomePage from './components/NoAuthHomePage';
 import history from './history';
 import { joinSeder } from './lib/joinSeder';
 import PickScriptPage from './components/PickScriptPage';
-import EnterRoomCodePage from './components/EnterRoomCodePage';
 import YourRoomCodePage from './components/YourRoomCodePage';
 import RosterPage from './components/RosterPage';
 import { roster } from './lib/roster';
@@ -37,6 +36,7 @@ import YouHaveJoinedPage from './components/YouHaveJoinedPage';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import FetchingPromptsPageWithRouter from './components/FetchingPromptsPageWithRouter';
+import ExplainPage from './components/ExplainPage';
 
 const theme = createMuiTheme({
   palette: {
@@ -125,6 +125,11 @@ class App extends Component {
                 path="(/|/index.html)"
                 exact
                 render={props => <NoAuthHomePage {...props} />}
+              />
+              <Route
+                path="/explain"
+                exact
+                render={props => <ExplainPage {...props} />}
               />
               <Route
                 path="/pick-script"

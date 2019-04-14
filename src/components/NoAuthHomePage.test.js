@@ -20,7 +20,7 @@ describe('<NoAuthHomePage />', () => {
       variant="contained"
       // className={classes.button}
       component={Link}
-      to="/pick-script"
+      to="/explain"
     >
       Lead a seder
     </Button>

@@ -21,10 +21,17 @@ const styles = theme => {
       backgroundColor: '#81181f'
     },
     bg2: {
-      minHeight: '900px',
+      minHeight: '1100px',
       width: 'auto',
       backgroundImage: `url(${RedSeaImage})`,
       backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundColor: '#81181f'
+    },
+    bg3: {
+      minHeight: '900px',
+      backgroundImage: `url(${RedSeaImage})`,
+      backgroundSize: 'auto',
       backgroundPosition: 'center',
       backgroundColor: '#81181f'
     },
@@ -76,7 +83,7 @@ class NoAuthHomePage extends Component {
               variant="contained"
               className={classes.button}
               component={Link}
-              to="/pick-script"
+              to="/explain"
             >
               Lead a seder
             </Button>

@@ -1,8 +1,14 @@
 const madLiberationStyles = {
   red: { color: 'red' },
   italic: { fontStyle: 'italic' },
+  blue: { color: 'blue' },
   blueItalic: { color: 'blue', fontStyle: 'italic' },
   lightGrayBackround: { backgroundColor: 'lightgray' },
+  boldItalicLightBlueBackground: {
+    backgroundColor: 'lightblue',
+    fontStyle: 'italic',
+    fontWeight: 'bold'
+  },
   paper: {
     display: 'inline-block',
     padding: '3px',
