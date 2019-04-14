@@ -12,11 +12,21 @@ import VeryAwesomePassoverLogo from '../very-awesome-passover-logo.png';
 
 const styles = theme => {
   return {
-    paperContainer: {
-      height: '800px',
+    bg1: {
+      height: '900px',
+      minHeight: '100%',
       backgroundImage: `url(${RedSeaImage})`,
       backgroundSize: 'cover',
-      backgroundPosition: 'center'
+      backgroundPosition: 'center',
+      backgroundColor: '#81181f'
+    },
+    bg2: {
+      minHeight: '900px',
+      width: 'auto',
+      backgroundImage: `url(${RedSeaImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundColor: '#81181f'
     },
     madliberationLogo: {
       height: '200px'
@@ -32,8 +42,8 @@ class NoAuthHomePage extends Component {
     const { classes, user } = this.props;
 
     return (
-      <div>
-        <div className={classes.paperContainer}>
+      <div className={classes.bg2}>
+        <div>
           <br />
           <br />
           <div>
