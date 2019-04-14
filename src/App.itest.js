@@ -163,12 +163,12 @@ const submitAllLibs = async (page, prefix) => {
       failTest(e, 'Join a seder button not found', browser);
     });
 
-  // Pick Your Script Page
+  // Explain Page
   await itNavigate({ page: page, madliberationid: 'lead-a-seder-button' });
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  await itWait({ page: page, madliberationid: 'pick-your-script-page' });
+  await itWait({ page: page, madliberationid: 'explain-page' });
   await itClick({ page: page, madliberationid: 'app-bar-menu-icon-button' });
   await itNavigate({ page: page, madliberationid: 'menu-about-link' });
 
@@ -192,6 +192,14 @@ const submitAllLibs = async (page, prefix) => {
 
   // Lead a seder
   await itNavigate({ page: page, madliberationid: 'lead-a-seder-button' });
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  await itWait({ page: page, madliberationid: 'explain-page' });
+  await itNavigate({
+    page: page,
+    madliberationid: 'proceed-from-explanation-button'
+  });
 
   ////////////////////////////////////////////////////////////////////////////////
 
