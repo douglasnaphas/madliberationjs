@@ -99,6 +99,7 @@ class Script extends React.Component {
           incrementPageIndex={this.incrementPageIndex}
           decrementPageIndex={this.decrementPageIndex}
           pageIndex={this.state.pageIndex}
+          pageCount={this.state.script.pages.length}
         />
       );
     }

@@ -32,7 +32,8 @@ class Page extends React.Component {
       page,
       pageIndex,
       incrementPageIndex,
-      decrementPageIndex
+      decrementPageIndex,
+      pageCount
     } = this.props;
     if (!Array.isArray(page.lines) || page.lines.length < 1) {
       return <div />;
@@ -187,6 +188,10 @@ class Page extends React.Component {
             <Button variant="contained" onClick={decrementPageIndex}>
               Previous page
             </Button>
+          </div>
+          <br />
+          <div>
+            {pageIndex + 1} / {pageCount}
           </div>
         </div>
       );
