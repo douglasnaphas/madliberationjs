@@ -22,6 +22,8 @@ phases:
       - aws s3 sync --content-type "application/json" --exclude "*" --include "*.json" --delete build/ s3://staging.madliberationgame.com/
       - aws s3 sync --content-type "image/x-icon" --exclude "*" --include "*.ico" --delete build/ s3://staging.madliberationgame.com/
       - aws s3 sync --content-type "image/svg+xml" --exclude "*" --include "*.svg" --delete build/ s3://staging.madliberationgame.com/
+      - aws s3 sync --content-type "image/png" --exclude "*" --include "*.png" --delete build/ s3://staging.madliberationgame.com/
+      - aws s3 sync --content-type "image/jpeg" --exclude "*" --include "*.jpg" --delete build/ s3://staging.madliberationgame.com/
       # integration test
       - node src/App.itest.js --site https://staging.madliberationgame.com
       # Deploy to prod

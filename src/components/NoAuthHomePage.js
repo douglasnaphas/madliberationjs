@@ -8,7 +8,7 @@ import { madLiberationStyles } from '../madLiberationStyles';
 import { Configs } from '../Configs';
 import RedSeaImage from '../background-red-sea.jpg';
 import MadLiberationLogo from '../mad-liberation-logo.png';
-import VeryAwesomePassoverLogo from '../very-awesome-passover-logo.png';
+import VeryAwesomePassoverLogo from '../VAPLogo-white.png';
 
 const styles = theme => {
   return {
@@ -39,7 +39,7 @@ const styles = theme => {
       height: '200px'
     },
     veryAwesomePassoverLogo: {
-      height: '120px'
+      height: '70px'
     }
   };
 };
