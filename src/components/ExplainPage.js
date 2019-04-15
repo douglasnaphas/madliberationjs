@@ -29,50 +29,39 @@ class ExplainPage extends Component {
           <br />
           <div>
             <Typography component="p" paragraph>
-              <StageDirection text="Read this aloud to everyone at your seder to explain what's about to happen" />
+              <StageDirection text="Read this aloud to everyone at your seder to explain what's about to happen." />
             </Typography>
             <Typography component="p" paragraph>
-              Everyone please listen to me.
+              Everyone please listen to me.{' '}
+              <StageDirection text="You can clink a glass, if that helps." />
             </Typography>
             <Typography component="p" paragraph>
-              We are about to play a game called Mad Liberation, so I am going
-              to explain how to play.
+              Happy Passover! We are about to play a game called Mad Liberation,
+              which is like a seder but fun, so I am going to explain how to
+              play.
             </Typography>
             <Typography component="p" paragraph>
-              We are all going to get prompts on our phones asking us to enter
-              words or phrases. The answers we give will be inserted into our
-              Haggadah, which we'll read from one device, which we'll pass
-              around as we take turns reading.
+              Together, we’re going to create a fill-in-the-blank Haggadah by
+              answering prompts on our phones with words or phrases. We’ll then
+              take turns reading our one-of-a-kind creation from a single device
+              that we'll pass around.
             </Typography>
             <Typography component="p" paragraph>
-              First, I am going to push a few buttons on my phone to get a "Room
-              Code". This "Room Code" is so that all of us here in the same
-              "room" can work on the same Haggadah.
-            </Typography>
-            <Typography component="p" paragraph>
-              I'll tell all of you the Room Code once I get it.
-            </Typography>
-            <Typography component="p" paragraph>
-              After I tell you the Room Code, you'll get out your devices and
-              each go to{' '}
+              First, I need all of you to get out your phones and type{' '}
               <span style={madLiberationStyles.blue}>passover.lol</span> in a
-              browser, and click "Join a Seder." There will be a place for you
-              to enter the code.
+              web browser. When you’re there, click “Join a Seder.” Go ahead,
+              I’ll wait.
             </Typography>
             <Typography component="p" paragraph>
-              Meanwhile, I'll get a list of everyone who has joined, so I can
-              make sure everyone is in. Once I confirm that everyone's in, I'll
-              give you the word, and you'll click the only button your screen,
-              and I'll click the only button on my screen, and we'll all get our
-              fill-in-the-blank assignments.
+              <StageDirection text="Wait for everyone to go to passover.lol and click “join a seder.”" />
             </Typography>
             <Typography component="p" paragraph>
-              Each of these assignments will explain what to do. For example, a
-              prompt might be, "Enter a word or phrase to replace: 'animal',"
-              and I could enter "black bear." Or it might say something like,
-              "Enter a word or phrase to replace: 'professional'," and I could
-              put in, "zoo architect." There will be examples, and even examples
-              showing what part of speech the answer shdould be, so our Haggadah
+              I’ll give you the Room Code to enter when I get it in a few
+              minutes. For now, keep listening to me talk.
+            </Typography>
+            <Typography component="p" paragraph>
+              When you get your prompts, pay attention to how you phrase your
+              answers. There will be examples to guide you, so our Haggadah
               doesn't wind up with something like, "Moses woke up the next day
               feeling extremely{' '}
               <Tooltip title="emotion">
@@ -83,44 +72,27 @@ class ExplainPage extends Component {
               ."
             </Typography>
             <Typography component="p" paragraph>
-              We'll each click through all of our prompts, filling in all of our
-              blanks, then we'll each click "Submit."
+              Make sure you fill in and click through all of your prompts, then
+              hit "Submit” when you’re done.
             </Typography>
             <Typography component="p" paragraph>
-              After we've all submitted, we'll need to nominate one person to
-              use their device to display the Haggadah with all its blanks
-              filled in. That person will click "Yes, I want the script" after
-              they've finished, and they'll get a list showing whether everyone
-              else has submitted. Once everyone's submitted their answers, they
-              can get the populated Haggadah to their device. Then we'll pass
-              that device around the table reading the Haggadah out loud.
+              After we've all submitted, we'll be passing around and reading
+              from a single device. I will choose a volunteer now.
             </Typography>
             <Typography component="p" paragraph>
-              So let's right now figure out who this special person will be.
+              <StageDirection text="Choose the person whose device you’ll use. You may choose yourself." />
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection text="Nominate someone." />
+              Great, thank you!
             </Typography>
             <Typography component="p" paragraph>
-              As we read the script, we'll see people's answers to prompts
-              inserted into the text in gray boxes like{' '}
-              <Tooltip title='a word that rhymes with "quiss"'>
-                <span style={madLiberationStyles.lightGrayBackround}>this</span>
-              </Tooltip>
-              . We can press down and hold on top of the gray box for like two
-              seconds to see what the prompt was.
+              When the time comes, you’ll click "Yes, I want the script" after
+              you’ve finished all your prompts. Then, we read! The app will tell
+              us when it’s time to pass.
             </Typography>
             <Typography component="p" paragraph>
-              The app will tell us when to pass to the next reader, and we'll
-              press a button to display the next page each time we do so. It
-              will even tell us when we need to pass back and forth to the
-              youngest person here. That's pretty much it: we just keep on
-              pressing, passing, and reading, until the end!
-            </Typography>
-            <Typography component="p" paragraph>
-              Keep in mind that this app is in beta mode, which means it's still
-              being tested out, by us, to work out any bugs. So keep the
-              follwing things in mind:
+              One more thing: this app is in beta mode, which means it's still
+              being tested out and improved. Keep these tips in mind:
             </Typography>
             <List>
               <ListItem>
@@ -150,8 +122,8 @@ class ExplainPage extends Component {
             </List>
             <Typography component="p" paragraph>
               If everyone is ready to celebrate Passover, I'm going to click
-              "Proceed" to generate our Room Code, so we can start having some
-              fun!
+              "Proceed" to generate our Room Code and let the Mad Liberation
+              begin!
             </Typography>
           </div>
           <br />
