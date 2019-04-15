@@ -35,6 +35,17 @@ const styles = theme => {
       backgroundPosition: 'center',
       backgroundColor: '#81181f'
     },
+    bg4: {
+      backgroundImage: `url(${RedSeaImage})`,
+      minHeight: '100%',
+      width: '100%',
+      height: 'auto',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover'
+    },
     madliberationLogo: {
       height: '200px'
     },
@@ -49,7 +60,7 @@ class NoAuthHomePage extends Component {
     const { classes, user } = this.props;
 
     return (
-      <div className={classes.bg2}>
+      <div className={classes.bg4}>
         <div>
           <br />
           <br />
