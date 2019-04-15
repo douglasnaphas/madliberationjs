@@ -20,7 +20,7 @@ class Configs {
     if (process && process.env && process.env.REACT_APP_MLJSAPI_URL) {
       return process.env.REACT_APP_MLJSAPI_URL;
     }
-    return 'https://api.madliberationgame.com/';
+    return 'https://api.passover.lol/';
   }
 
   static roomCodeRegex() {
