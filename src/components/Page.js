@@ -4,6 +4,7 @@ import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import Answer from './Answer';
 
 const styles = theme => ({});
 class Page extends React.Component {
@@ -55,23 +56,17 @@ class Page extends React.Component {
         }
         if (segment.type === 'lib') {
           segments.push(
-            <Tooltip
-              key={`tooltip-${lineIndex}-${segmentIndex}`}
-              title={segment.prompt}
+            <Answer
+              mlid={
+                segment.id
+                  ? `answer-${segment.id}`
+                  : `bad-answer-${segmentIndex}`
+              }
+              prompt={segment.prompt}
+              key={`segment-${lineIndex}-${segmentIndex}`}
             >
-              <span
-                madliberationanswer="true"
-                madliberationid={
-                  segment.id
-                    ? `answer-${segment.id}`
-                    : `bad-answer-${segmentIndex}`
-                }
-                key={`segment-${lineIndex}-${segmentIndex}`}
-                style={madLiberationStyles.lightGrayBackround}
-              >
-                {segment.answer}
-              </span>
-            </Tooltip>
+              {segment.answer}
+            </Answer>
           );
         }
       });

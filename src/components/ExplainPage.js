@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import Tooltip from '@material-ui/core/Tooltip';
 import StageDirection from './StageDirection';
+import Answer from './Answer';
 
 const styles = theme => {
   return {};
@@ -29,11 +30,16 @@ class ExplainPage extends Component {
           <br />
           <div>
             <Typography component="p" paragraph>
-              <StageDirection >Read this aloud to everyone at your seder to explain what's about to happen.</StageDirection>
+              <StageDirection>
+                Read this aloud to everyone at your seder to explain what's
+                about to happen.
+              </StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               Everyone please listen to me.{' '}
-              <StageDirection >You can clink a glass, if that helps.</StageDirection>
+              <StageDirection>
+                You can clink a glass, if that helps.
+              </StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               Happy Passover! We are about to play a game called Mad Liberation,
@@ -53,7 +59,10 @@ class ExplainPage extends Component {
               I’ll wait.
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Wait for everyone to go to passover.lol and click “join a seder.”</StageDirection>
+              <StageDirection>
+                Wait for everyone to go to passover.lol and click “join a
+                seder.”
+              </StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               I’ll give you the Room Code to enter when I get it in a few
@@ -63,12 +72,7 @@ class ExplainPage extends Component {
               When you get your prompts, pay attention to how you phrase your
               answers. There will be examples to guide you, so our Haggadah
               doesn't wind up with something like, "Moses woke up the next day
-              feeling extremely{' '}
-              <Tooltip title="emotion">
-                <span style={madLiberationStyles.lightGrayBackround}>
-                  happiness
-                </span>
-              </Tooltip>
+              feeling extremely <Answer prompt="emotion">happiness</Answer>
               ."
             </Typography>
             <Typography component="p" paragraph>
@@ -80,7 +84,10 @@ class ExplainPage extends Component {
               from a single device. I will choose a volunteer now.
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Choose the person whose device you’ll use. You may choose yourself.</StageDirection>
+              <StageDirection>
+                Choose the person whose device you’ll use. You may choose
+                yourself.
+              </StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               Great, thank you!
