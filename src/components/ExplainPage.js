@@ -29,11 +29,11 @@ class ExplainPage extends Component {
           <br />
           <div>
             <Typography component="p" paragraph>
-              <StageDirection text="Read this aloud to everyone at your seder to explain what's about to happen." />
+              <StageDirection >Read this aloud to everyone at your seder to explain what's about to happen.</StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               Everyone please listen to me.{' '}
-              <StageDirection text="You can clink a glass, if that helps." />
+              <StageDirection >You can clink a glass, if that helps.</StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               Happy Passover! We are about to play a game called Mad Liberation,
@@ -53,7 +53,7 @@ class ExplainPage extends Component {
               I’ll wait.
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection text="Wait for everyone to go to passover.lol and click “join a seder.”" />
+              <StageDirection>Wait for everyone to go to passover.lol and click “join a seder.”</StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               I’ll give you the Room Code to enter when I get it in a few
@@ -80,7 +80,7 @@ class ExplainPage extends Component {
               from a single device. I will choose a volunteer now.
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection text="Choose the person whose device you’ll use. You may choose yourself." />
+              <StageDirection>Choose the person whose device you’ll use. You may choose yourself.</StageDirection>
             </Typography>
             <Typography component="p" paragraph>
               Great, thank you!
