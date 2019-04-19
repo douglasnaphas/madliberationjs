@@ -57,8 +57,11 @@ class EnterRoomCodePage extends Component {
             </span>
             . Congratulations.
           </Typography>
+          <Typography variant="h1" gutterBottom>
+            Wait
+          </Typography>
           <Typography component="p" paragraph gutterBottom>
-            Now wait until your Sederator tells you to, and then
+            until your Sederator tells you to, and then
           </Typography>
           <div>
             <Button
