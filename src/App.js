@@ -85,9 +85,11 @@ class App extends Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('visibilitychange', this.handleVisibilityChange);
+    window.addEventListener('pagehide', this.persistState);
   }
   componentWillUnmount() {
     window.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    window.removeEventListener('pagehide', this.persistState);
     this._isMounted = false;
   }
   setConfirmedRoomCode = roomCode => {
@@ -278,6 +280,8 @@ class App extends Component {
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
                     confirmedGameName={this.state.confirmedGameName}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setConfirmedGameName={this.setConfirmedGameName}
                   />
                 )}
               />

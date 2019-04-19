@@ -27,6 +27,21 @@ class SubmittedPage extends Component {
   _isMounted = false;
   componentDidMount() {
     this._isMounted = true;
+    const {
+      confirmedRoomCode,
+      confirmedGameName,
+      setConfirmedGameName,
+      setConfirmedRoomCode
+    } = this.props;
+    if (
+      !confirmedRoomCode &&
+      !confirmedGameName &&
+      localStorage.getItem('roomCode') &&
+      localStorage.getItem('gameName')
+    ) {
+      setConfirmedRoomCode(localStorage.getItem('roomCode'));
+      setConfirmedGameName(localStorage.getItem('gameName'));
+    }
   }
   componentWillUnmount() {
     this._isMounted = false;

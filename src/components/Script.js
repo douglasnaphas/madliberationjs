@@ -57,12 +57,14 @@ class Script extends React.Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('visibilitychange', this.handleVisibilityChange);
+    window.addEventListener('pagehide', this.persistState);
     const { confirmedRoomCode, confirmedGameName } = this.props;
     this.getScript(confirmedRoomCode, confirmedGameName);
   }
   componentWillUnmount() {
     this._isMounted = false;
     window.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    window.removeEventListener('pagehide', this.persistState);
   }
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;

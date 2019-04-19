@@ -42,13 +42,19 @@ class ReadPage extends Component {
     }
   };
   beforeUnload = () => {
-    if (document.hidden && !this.state.readyForScript) {
+    if (!this.state.readyForScript) {
       localStorage.removeItem('pageIndex');
+    }
+  };
+  handleVisibilityChange = () => {
+    if (document.hidden) {
+      this.beforeUnload();
     }
   };
   componentDidMount() {
     this._isMounted = true;
-    window.addEventListener('visibilitychange', this.beforeUnload);
+    window.addEventListener('visibilitychange', this.handleVisibilityChange);
+    window.addEventListener('pagehide', this.beforeUnload);
     const { setConfirmedRoomCode, setConfirmedGameName } = this.props;
     let { confirmedRoomCode, confirmedGameName } = this.props;
     if (
@@ -65,7 +71,8 @@ class ReadPage extends Component {
   }
   componentWillUnmount() {
     this._isMounted = false;
-    window.removeEventListener('visibilitychange', this.beforeUnload);
+    window.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    window.removeEventListener('pagehide', this.beforeUnload);
   }
   render() {
     const { confirmedRoomCode, confirmedGameName, roster, script } = this.props;

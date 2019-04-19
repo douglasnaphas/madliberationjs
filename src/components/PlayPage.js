@@ -143,6 +143,7 @@ class PlayPage extends Component {
   componentDidMount() {
     this._isMounted = true;
     window.addEventListener('visibilitychange', this.handleVisibilityChange);
+    window.addEventListener('pagehide', this.persistState);
     const {
       setConfirmedRoomCode,
       setConfirmedGameName,
@@ -170,6 +171,7 @@ class PlayPage extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener('visibilitychange', this.handleVisibilityChange);
+    window.removeEventListener('pagehide', this.persistState);
     this._isMounted = false;
   }
 
