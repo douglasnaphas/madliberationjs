@@ -148,9 +148,12 @@ class RosterPage extends Component {
         <Typography variant="h3" gutterBottom>
           Seder Roster
         </Typography>
+        <Typography variant="h3" gutterBottom>
+          {this.state.participants.length} people
+        </Typography>
         <div>
           <Typography component="p" paragraph gutterBottom>
-            This flock has joined your seder:
+            have joined your seder:
           </Typography>
         </div>
         <div>{spinnerOrRoster}</div>
