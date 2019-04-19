@@ -31,7 +31,8 @@ class RosterPage extends Component {
     participants: [],
     thatsEveryonePressed: false,
     thatsEveryoneFailed: false,
-    dialogOpen: false
+    dialogOpen: false,
+    dialogButtonClicked: false
   };
   _isMounted = false;
   fetchRoster = (roomCode, gameName) => {
@@ -121,6 +122,9 @@ class RosterPage extends Component {
   };
   openDialog = () => {
     if (this._isMounted) this.setState({ dialogOpen: true });
+  };
+  setDialogButtonClicked = bool => {
+    this.setState({ dialogButtonClicked: bool });
   };
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
@@ -213,14 +217,23 @@ class RosterPage extends Component {
           <DialogTitle id="confirm-thats-everyone">Are you sure?</DialogTitle>
           <DialogContent>
             <DialogContentText id="confirm-get-script-dialog-description">
-              If you click Yes, no one but the {this.state.participants.length}{' '}
-              people listed (including you) will be able to join.
+              If you click Yes, no one but the {paricipantCount}{' '}
+              {paricipantCount === 1
+                ? 'person listed (you)'
+                : 'people listed (including you)'}{' '}
+              will be able to join.
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.onDialogClose}>Cancel</Button>
+            <Button
+              onClick={this.onDialogClose}
+              disabled={this.state.dialogButtonClicked}
+            >
+              Cancel
+            </Button>
             <ThatsEveryoneButtonWithRouter
               closeSederAndPlay={this.closeSederAndPlay}
+              setDialogButtonClicked={this.setDialogButtonClicked}
             />
           </DialogActions>
         </Dialog>

@@ -20,8 +20,14 @@ class ThatsEveryoneButton extends React.Component {
     this.setState({ yesClicked: true });
   };
   render() {
-    const { history, closeSederAndPlay, disabled } = this.props;
+    const {
+      history,
+      closeSederAndPlay,
+      disabled,
+      setDialogButtonClicked = { setDialogButtonClicked }
+    } = this.props;
     const thatsEveryoneClick = event => {
+      setDialogButtonClicked(true);
       this.setYesClicked();
       closeSederAndPlay(history);
     };
