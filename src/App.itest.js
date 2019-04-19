@@ -284,7 +284,12 @@ const submitAllLibs = async (page, prefix) => {
   }
 
   // Click Thats Everyone
-  await itNavigate({ page: page, madliberationid: 'thats-everyone-button' });
+  await itClick({ page: page, madliberationid: 'thats-everyone-button' });
+  // Confirm
+  await itNavigate({
+    page: page,
+    madliberationid: 'confirm-thats-everyone-button'
+  });
 
   ////////////////////////////////////////////////////////////////////////////////
 

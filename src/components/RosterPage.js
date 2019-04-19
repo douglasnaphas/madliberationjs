@@ -10,6 +10,11 @@ import TableRow from '@material-ui/core/TableRow';
 import ThatsEveryoneButtonWithRouter from './ThatsEveryoneButtonWithRouter';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
   button: {
@@ -25,7 +30,8 @@ class RosterPage extends Component {
     rosterLoading: true,
     participants: [],
     thatsEveryonePressed: false,
-    thatsEveryoneFailed: false
+    thatsEveryoneFailed: false,
+    dialogOpen: false
   };
   _isMounted = false;
   fetchRoster = (roomCode, gameName) => {
@@ -76,7 +82,6 @@ class RosterPage extends Component {
       }
     });
   };
-
   componentDidMount() {
     this._isMounted = true;
     const {
@@ -108,15 +113,21 @@ class RosterPage extends Component {
     }
     this.fetchRoster(roomCode, gameName)();
   }
-
   componentWillUnmount() {
     this._isMounted = false;
   }
-
+  onDialogClose = event => {
+    if (this._isMounted) this.setState({ dialogOpen: false });
+  };
+  openDialog = () => {
+    if (this._isMounted) this.setState({ dialogOpen: true });
+  };
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
+    const { rosterLoading } = this.state;
+    const paricipantCount = this.state.participants.length;
     const rosterRows = [];
-    for (let i = 0; i < this.state.participants.length; i++) {
+    for (let i = 0; i < paricipantCount; i++) {
       rosterRows.push(
         <TableRow key={`participantRow${i}`}>
           <TableCell key={`participantCell${i}`} madliberationid={`pc${i}`}>
@@ -126,7 +137,7 @@ class RosterPage extends Component {
       );
     }
     var spinnerOrRoster;
-    if (this.state.rosterLoading) {
+    if (rosterLoading) {
       spinnerOrRoster = <CircularProgress />;
     } else {
       spinnerOrRoster = (
@@ -148,16 +159,20 @@ class RosterPage extends Component {
         <Typography variant="h3" gutterBottom>
           Seder Roster
         </Typography>
-        <Typography variant="h3" gutterBottom>
-          {this.state.participants.length} people
-        </Typography>
-        <div>
-          <Typography component="p" paragraph gutterBottom>
-            have joined your seder:
+        <div hidden={rosterLoading}>
+          <Typography variant="h3" gutterBottom>
+            {paricipantCount} {paricipantCount === 1 ? 'person' : 'people'}
           </Typography>
+          <div>
+            <Typography component="p" paragraph gutterBottom>
+              {paricipantCount === 1
+                ? 'has joined your seder (you):'
+                : 'have joined your seder, including you:'}
+            </Typography>
+          </div>
         </div>
         <div>{spinnerOrRoster}</div>
-        <div>
+        <div hidden={rosterLoading}>
           <Typography component="p" paragraph gutterBottom>
             Is that everyone?
           </Typography>
@@ -176,13 +191,16 @@ class RosterPage extends Component {
         </div>
         <br />
         <div>
-          <ThatsEveryoneButtonWithRouter
-            madliberationid="thats-everyone-button-w-router"
-            closeSederAndPlay={this.closeSederAndPlay}
+          <Button
+            madliberationid="thats-everyone-button"
+            onClick={this.openDialog}
+            variant="contained"
             disabled={
               this.state.thatsEveryonePressed || this.state.rosterLoading
             }
-          />
+          >
+            That's everyone
+          </Button>
         </div>
         <div hidden={!this.state.thatsEveryoneFailed}>
           <Typography component="p" color="secondary">
@@ -191,6 +209,21 @@ class RosterPage extends Component {
           </Typography>
         </div>
         <div />
+        <Dialog open={this.state.dialogOpen} onClose={this.onDialogClose}>
+          <DialogTitle id="confirm-thats-everyone">Are you sure?</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="confirm-get-script-dialog-description">
+              If you click Yes, no one but the {this.state.participants.length}{' '}
+              people listed (including you) will be able to join.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.onDialogClose}>Cancel</Button>
+            <ThatsEveryoneButtonWithRouter
+              closeSederAndPlay={this.closeSederAndPlay}
+            />
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }

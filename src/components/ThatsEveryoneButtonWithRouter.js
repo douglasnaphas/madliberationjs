@@ -13,21 +13,28 @@ const styles = theme => ({
 });
 
 class ThatsEveryoneButton extends React.Component {
+  state = {
+    yesClicked: false
+  };
+  setYesClicked = () => {
+    this.setState({ yesClicked: true });
+  };
   render() {
     const { history, closeSederAndPlay, disabled } = this.props;
     const thatsEveryoneClick = event => {
+      this.setYesClicked();
       closeSederAndPlay(history);
     };
 
     return (
       <div>
         <Button
-          madliberationid="thats-everyone-button"
-          variant="contained"
-          disabled={this.props.disabled}
+          madliberationid="confirm-thats-everyone-button"
+          color="secondary"
           onClick={thatsEveryoneClick}
+          disabled={this.state.yesClicked}
         >
-          That's everyone
+          Yes
         </Button>
       </div>
     );
