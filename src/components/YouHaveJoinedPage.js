@@ -46,7 +46,7 @@ class EnterRoomCodePage extends Component {
         />
         <br />
         <div>
-          <Typography component="p" paragraph gutterBottom>
+          <Typography component="p" paragraph>
             You have joined Seder{' '}
             <span style={madLiberationStyles.lightGrayBackround}>
               {confirmedRoomCode}
@@ -57,9 +57,7 @@ class EnterRoomCodePage extends Component {
             </span>
             . Congratulations.
           </Typography>
-          <Typography variant="h1" gutterBottom>
-            Wait
-          </Typography>
+          <Typography variant="h1">Wait</Typography>
           <Typography component="p" paragraph gutterBottom>
             until your Sederator tells you to, and then
           </Typography>
