@@ -137,6 +137,15 @@ class Page extends React.Component {
           );
         }
       }
+      if (line.type === 'stageDirection') {
+        lines.push(
+          <Typography component="p" key={`line-${lineIndex}`}>
+            <span style={madLiberationStyles.boldItalicLightBlueBackground}>
+              {segments}
+            </span>
+          </Typography>
+        );
+      }
     });
 
     if (!this.state.readyForContent) {
