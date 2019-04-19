@@ -3,6 +3,7 @@ import Page from './Page';
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({});
 class Script extends React.Component {
@@ -40,6 +41,13 @@ class Script extends React.Component {
     if (this._isMounted) {
       this.setState({
         pageIndex: this.state.pageIndex < 2 ? 0 : this.state.pageIndex - 1
+      });
+    }
+  };
+  goToPage0 = () => {
+    if (this._isMounted) {
+      this.setState({
+        pageIndex: 0
       });
     }
   };
@@ -90,6 +98,12 @@ class Script extends React.Component {
             <div>
               <Typography paragraph>לשנה הבאה בירושלים</Typography>
               <Typography paragraph>Next year in Jerusalem!</Typography>
+            </div>
+            <br />
+            <div>
+              <Button variant="contained" onClick={this.goToPage0}>
+                Read the script again
+              </Button>
             </div>
           </div>
         );

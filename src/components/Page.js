@@ -5,6 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Answer from './Answer';
+import StageDirection from './StageDirection';
 
 const styles = theme => ({});
 class Page extends React.Component {
@@ -167,6 +168,11 @@ class Page extends React.Component {
     } else {
       return (
         <div madliberationid="page">
+          <div>
+            <StageDirection>
+              Read this page aloud. Click a gray box to see what the prompt was.
+            </StageDirection>
+          </div>
           <div>{lines}</div>
           <div>
             <Button
