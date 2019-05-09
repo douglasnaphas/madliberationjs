@@ -118,7 +118,7 @@ class EnterRoomCodePage extends Component {
             <Typography component="p" paragraph gutterBottom>
               Prove it. Enter the{' '}
               <label htmlFor="player-room-code">Room Code</label> that your
-              sedermaker gave you orally.
+              sedermaker gave you verbally.
             </Typography>
           </div>
           <div>
