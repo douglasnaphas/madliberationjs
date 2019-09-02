@@ -4,14 +4,12 @@ import MenuAppBar from './MenuAppBar';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { madLiberationStyles } from '../madLiberationStyles';
-import { Configs } from '../Configs';
 import { Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRight from '@material-ui/icons/ChevronRight';
-import Tooltip from '@material-ui/core/Tooltip';
 import StageDirection from './StageDirection';
 import Answer from './Answer';
 

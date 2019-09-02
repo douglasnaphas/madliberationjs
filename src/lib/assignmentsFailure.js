@@ -1,5 +1,3 @@
-import { Configs } from '../Configs';
-
 /**
  * @return {Object} An object with:
  *   status: the response status, like 200,
@@ -10,7 +8,7 @@ import { Configs } from '../Configs';
  */
 async function assignmentsFailure(roomCode, gameName) {
   return {
-    data: { err: 'Server error' },
+    data: { err: "Server error" },
     status: 500
   };
 }

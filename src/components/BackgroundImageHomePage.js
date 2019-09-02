@@ -4,8 +4,6 @@ import MenuAppBar from './MenuAppBar';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-import { Configs } from '../Configs';
-
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit

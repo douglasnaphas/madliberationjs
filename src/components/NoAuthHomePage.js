@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import MenuAppBar from './MenuAppBar';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { madLiberationStyles } from '../madLiberationStyles';
-import { Configs } from '../Configs';
 import RedSeaImage from '../background-red-sea.jpg';
 import MadLiberationLogo from '../mad-liberation-logo.png';
 import VeryAwesomePassoverLogo from '../VAPLogo-white.png';

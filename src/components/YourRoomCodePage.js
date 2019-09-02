@@ -1,11 +1,9 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import Divider from '@material-ui/core/Divider';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
-import { withRouter } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
 
 import ThatsMyNameButtonWithRouter from './ThatsMyNameButtonWithRouter';

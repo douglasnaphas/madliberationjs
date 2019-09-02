@@ -4,9 +4,7 @@ import { configure } from 'enzyme';
 import { createMount } from '@material-ui/core/test-utils';
 import { Link } from 'react-router-dom';
 import { MemoryRouter } from 'react-router';
-import PickScriptPage from './PickScriptPage';
 import React from 'react';
-import { wrap } from 'module';
 
 import NoAuthHomePage from './NoAuthHomePage';
 

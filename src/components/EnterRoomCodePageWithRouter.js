@@ -1,5 +1,4 @@
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
 import MenuAppBar from './MenuAppBar';
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
 
 import { Configs } from '../Configs';
-import { madLiberationStyles } from '../madLiberationStyles';
 
 const styles = theme => ({
   button: {

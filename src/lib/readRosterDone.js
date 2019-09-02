@@ -1,5 +1,3 @@
-import { Configs } from '../Configs';
-
 /**
  * @return {Object} An object with:
  *   status: the response status, like 200,
@@ -14,7 +12,7 @@ import { Configs } from '../Configs';
 async function readRosterDone(roomCode) {
   return {
     data: {
-      done: ['abba', 'babba', 'cabs'],
+      done: ["abba", "babba", "cabs"],
       notDone: []
     },
     status: 200

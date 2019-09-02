@@ -1,9 +1,5 @@
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import { madLiberationStyles } from '../madLiberationStyles';
-import MenuAppBar from './MenuAppBar';
-import NavigateBefore from '@material-ui/icons/NavigateBefore';
-import NavigateNext from '@material-ui/icons/NavigateNext';
 import Paper from '@material-ui/core/Paper';
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';

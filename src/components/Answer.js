@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { madLiberationStyles } from '../madLiberationStyles';
 import Popover from '@material-ui/core/Popover';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';

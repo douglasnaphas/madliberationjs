@@ -2,14 +2,8 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Button } from '@material-ui/core';
 import { configure } from 'enzyme';
 import { createMount } from '@material-ui/core/test-utils';
-import { createShallow } from '@material-ui/core/test-utils';
-import { Link } from 'react-router-dom';
-import { MemoryRouter } from 'react-router';
 import Page from './Page';
 import React from 'react';
-import { wrap } from 'module';
-
-import NoAuthHomePage from './NoAuthHomePage';
 
 configure({ adapter: new Adapter() });
 

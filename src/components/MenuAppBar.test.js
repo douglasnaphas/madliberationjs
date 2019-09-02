@@ -1,10 +1,8 @@
 import Adapter from 'enzyme-adapter-react-16';
-import { Button } from '@material-ui/core';
 import { configure } from 'enzyme';
 import { createMount } from '@material-ui/core/test-utils';
 import { MemoryRouter } from 'react-router';
 import React from 'react';
-import { wrap } from 'module';
 
 import MenuAppBar from './MenuAppBar';
 

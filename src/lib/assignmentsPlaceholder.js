@@ -1,5 +1,3 @@
-import { Configs } from '../Configs';
-
 /**
  * @return {Object} An object with:
  *   status: the response status, like 200,
@@ -11,16 +9,16 @@ import { Configs } from '../Configs';
 async function assignmentsPlaceholder(roomCode, gameName) {
   return {
     data: [
-      { id: 3, sentence: 'This is a _', prompt: 'long thing' },
-      { id: 1, sentence: 'She _', prompt: 'does something disruptive' },
-      { id: 4, sentence: 'I like to _', prompt: 'verb' },
+      { id: 3, sentence: "This is a _", prompt: "long thing" },
+      { id: 1, sentence: "She _", prompt: "does something disruptive" },
+      { id: 4, sentence: "I like to _", prompt: "verb" },
       {
         id: 5,
-        sentence: 'I will smile _',
-        prompt: 'adverbial phrase that rhymes with “day”',
-        example: 'in this way'
+        sentence: "I will smile _",
+        prompt: "adverbial phrase that rhymes with “day”",
+        example: "in this way"
       },
-      { id: 2, sentence: 'This is _', prompt: 'something fast and heavy' }
+      { id: 2, sentence: "This is _", prompt: "something fast and heavy" }
     ],
     status: 200
   };
