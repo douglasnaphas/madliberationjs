@@ -12,7 +12,7 @@
 async function readRosterDone(roomCode) {
   return {
     data: {
-      done: ["abba", "babba", "cabs"],
+      done: ['abba', 'babba', 'cabs'],
       notDone: []
     },
     status: 200

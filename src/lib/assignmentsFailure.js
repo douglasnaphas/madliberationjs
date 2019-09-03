@@ -8,7 +8,7 @@
  */
 async function assignmentsFailure(roomCode, gameName) {
   return {
-    data: { err: "Server error" },
+    data: { err: 'Server error' },
     status: 500
   };
 }

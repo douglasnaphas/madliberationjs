@@ -12,8 +12,8 @@
 async function readRosterSplit(roomCode) {
   return {
     data: {
-      done: ["abba", "babba", "cabs"],
-      notDone: ["labba", "later", "tardy"]
+      done: ['abba', 'babba', 'cabs'],
+      notDone: ['labba', 'later', 'tardy']
     },
     status: 200
   };
