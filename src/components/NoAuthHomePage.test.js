@@ -1,7 +1,7 @@
 import Adapter from 'enzyme-adapter-react-16';
 import { Button } from '@material-ui/core';
 import { configure } from 'enzyme';
-import { createMount, createShallow } from '@material-ui/core/test-utils';
+import { createMount } from '@material-ui/core/test-utils';
 import { Link } from 'react-router-dom';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
@@ -12,7 +12,6 @@ configure({ adapter: new Adapter() });
 
 describe('<NoAuthHomePage />', () => {
   let mount;
-  let shallow;
   const leadSederButton = (
     <Button
       title="Lead a seder"
@@ -28,16 +27,12 @@ describe('<NoAuthHomePage />', () => {
     <Button
       title="Join a seder"
       variant="contained"
-      // className={classes.button}
       component={Link}
       to="/enter-room-code"
     >
       Join a seder
     </Button>
   );
-  beforeAll(() => {
-    shallow = createShallow();
-  });
   beforeEach(() => {
     mount = createMount();
   });
