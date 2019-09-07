@@ -5,14 +5,7 @@ import ScriptTable from './ScriptTable';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  },
-  input: {
-    display: 'none'
-  }
-});
+const styles = theme => ({});
 
 class PickScriptPage extends Component {
   state = { isMounting: true };

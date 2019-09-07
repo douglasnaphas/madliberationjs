@@ -32,8 +32,7 @@ import ExplainPage from './components/ExplainPage';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#81181f' } // Purple and green play nicely together.
-    // secondary: { main: '#11cb5f' }, // This is just green.A700 as hex.
+    primary: { main: '#81181f' }
   },
   typography: { useNextVariants: true }
 });
