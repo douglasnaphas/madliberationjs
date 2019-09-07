@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import MenuAppBar from './MenuAppBar';
 import { Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
 import { madLiberationStyles } from '../madLiberationStyles';
 import { Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
@@ -10,23 +9,30 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronRight from '@material-ui/icons/ChevronRight';
+import { withStyles } from '@material-ui/core/styles';
 import StageDirection from './StageDirection';
 import Answer from './Answer';
 
-const styles = theme => {
-  return {};
+const styles = () => {
+  return {
+    bordered: {
+      paddingRight: '20px',
+      paddingLeft: '20px',
+      paddingTop: '10px',
+      paddingBottom: '10px'
+    }
+  };
 };
 
 class ExplainPage extends Component {
   render() {
-    const {} = this.props;
-
+    const { classes } = this.props;
     return (
       <div madliberationid="explain-page">
         <MenuAppBar />
         <div>
           <br />
-          <div>
+          <div className={classes.bordered}>
             <Typography component="p" paragraph>
               <StageDirection>
                 Read this aloud to everyone at your seder to explain what's
