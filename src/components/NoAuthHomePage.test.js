@@ -16,7 +16,6 @@ describe('<NoAuthHomePage />', () => {
     <Button
       title="Lead a seder"
       variant="contained"
-      // className={classes.button}
       component={Link}
       to="/explain"
     >

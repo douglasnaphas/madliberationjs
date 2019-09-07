@@ -6,32 +6,9 @@ import RedSeaImage from '../background-red-sea.jpg';
 import MadLiberationLogo from '../mad-liberation-logo.png';
 import VeryAwesomePassoverLogo from '../VAPLogo-white.png';
 
-const styles = theme => {
+const styles = () => {
   return {
-    bg1: {
-      height: '900px',
-      minHeight: '100%',
-      backgroundImage: `url(${RedSeaImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundColor: '#81181f'
-    },
-    bg2: {
-      minHeight: '1100px',
-      width: 'auto',
-      backgroundImage: `url(${RedSeaImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundColor: '#81181f'
-    },
-    bg3: {
-      minHeight: '900px',
-      backgroundImage: `url(${RedSeaImage})`,
-      backgroundSize: 'auto',
-      backgroundPosition: 'center',
-      backgroundColor: '#81181f'
-    },
-    bg4: {
+    homePageBackground: {
       backgroundImage: `url(${RedSeaImage})`,
       minHeight: '100%',
       width: '100%',
@@ -53,10 +30,10 @@ const styles = theme => {
 
 class NoAuthHomePage extends Component {
   render() {
-    const { classes, user } = this.props;
+    const { classes } = this.props;
 
     return (
-      <div className={classes.bg4}>
+      <div className={classes.homePageBackground}>
         <div>
           <br />
           <br />
@@ -75,7 +52,6 @@ class NoAuthHomePage extends Component {
               variant="contained"
               color="primary"
               size="large"
-              className={classes.button}
               component={Link}
               to="/enter-room-code"
             >
@@ -88,7 +64,6 @@ class NoAuthHomePage extends Component {
               madliberationid="lead-a-seder-button"
               title="Lead a seder"
               variant="contained"
-              className={classes.button}
               component={Link}
               to="/explain"
             >
