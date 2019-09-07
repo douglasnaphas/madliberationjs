@@ -1,13 +1,9 @@
-import Adapter from 'enzyme-adapter-react-16';
-import { configure } from 'enzyme';
 import { createMount } from '@material-ui/core/test-utils';
 import { MemoryRouter } from 'react-router';
 import React from 'react';
 
 import PickScriptPage from './PickScriptPage';
 import ScriptTable from './ScriptTable';
-
-configure({ adapter: new Adapter() });
 
 describe('<PickScriptPage />', () => {
   let mount;

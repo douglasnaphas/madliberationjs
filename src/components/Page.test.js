@@ -1,11 +1,7 @@
-import Adapter from 'enzyme-adapter-react-16';
 import { Button } from '@material-ui/core';
-import { configure } from 'enzyme';
 import { createMount } from '@material-ui/core/test-utils';
 import Page from './Page';
 import React from 'react';
-
-configure({ adapter: new Adapter() });
 
 describe('<Page />', () => {
   let mount;
