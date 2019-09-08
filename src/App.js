@@ -1,6 +1,6 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import React, { Component } from 'react';
-import Route from 'react-router-dom/Route';
+import { Route } from 'react-router-dom';
 import { HashRouter as Router } from 'react-router-dom';
 
 import About from './components/About';
