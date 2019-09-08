@@ -1,5 +1,5 @@
 import { createMount } from '@material-ui/core/test-utils';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 
 import MenuAppBar from './MenuAppBar';

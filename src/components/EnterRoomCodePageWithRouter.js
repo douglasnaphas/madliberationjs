@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import { Configs } from '../Configs';
 

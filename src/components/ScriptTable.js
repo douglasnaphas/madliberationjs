@@ -78,9 +78,7 @@ class ScriptTable extends React.Component {
             onClick={e => {
               setChosenPath(this.state.selectedScript.path);
             }}
-            to={{
-              pathname: '/generating-room-code'
-            }}
+            to="/generating-room-code"
           >
             Use this one
           </Button>
