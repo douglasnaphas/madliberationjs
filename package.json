@@ -23,12 +23,24 @@
     "browserslist": "^4.7.0",
     "commander": "^2.20.0",
     "enzyme": "^3.10.0",
-    "eslint": "^5.16.0",
+    "eslint": "^6.3.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.1.1",
     "typescript": "^3.6.2",
     "webpack": "4.39.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

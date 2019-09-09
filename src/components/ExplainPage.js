@@ -137,7 +137,6 @@ class ExplainPage extends Component {
               begin!
             </Typography>
           </div>
-          <br />
           <div>
             <Button
               madliberationid="proceed-from-explanation-button"
@@ -148,6 +147,7 @@ class ExplainPage extends Component {
             >
               Proceed
             </Button>
+            <br />
           </div>
         </div>
       </div>
