@@ -6,7 +6,6 @@
   "homepage": ".",
   "devDependencies": {
     "enzyme-adapter-react-16": "^1.14.0",
-    "mocha": "5.0.0",
     "puppeteer": "^1.19.0",
     "react-test-renderer": "^16.9.0",
     "unit.js": "^2.1.0"
