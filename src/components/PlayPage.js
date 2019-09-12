@@ -198,15 +198,16 @@ class PlayPage extends Component {
             />
           </div>
           <div>
-            <Button
-              madliberationid="submit-answers"
-              hidden={this.state.libIndex != assignmentsData.length - 1}
-              color="primary"
-              variant="contained"
-              onClick={this.submitAllClick}
-            >
-              Submit all of these
-            </Button>
+            {this.state.libIndex === assignmentsData.length - 1 && (
+              <Button
+                madliberationid="submit-answers"
+                color="primary"
+                variant="contained"
+                onClick={this.submitAllClick}
+              >
+                Submit all of these
+              </Button>
+            )}
             <Dialog open={this.state.dialogOpen} onClose={this.onDialogClose}>
               <DialogTitle id="submit-your-answers-dialog">
                 Submit your answers?
