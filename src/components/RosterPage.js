@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
+import PropTypes from 'prop-types';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -88,7 +89,6 @@ class RosterPage extends Component {
       confirmedRoomCode,
       confirmedGameName,
       chosenPath,
-      hydrateRoomCodeAndGameName,
       setConfirmedRoomCode,
       setConfirmedGameName,
       setChosenPath
@@ -127,14 +127,17 @@ class RosterPage extends Component {
   };
   render() {
     const { confirmedRoomCode, confirmedGameName } = this.props;
-    const { rosterLoading } = this.state;
+    const { participants, rosterLoading } = this.state;
     const paricipantCount = this.state.participants.length;
     const rosterRows = [];
     for (let i = 0; i < paricipantCount; i++) {
       rosterRows.push(
-        <TableRow key={`participantRow${i}`}>
-          <TableCell key={`participantCell${i}`} madliberationid={`pc${i}`}>
-            {this.state.participants[i]}
+        <TableRow key={`participantRow${participants[i]}`}>
+          <TableCell
+            key={`participantCell${participants[i]}`}
+            madliberationid={`pc${i}`}
+          >
+            {participants[i]}
           </TableCell>
         </TableRow>
       );
@@ -240,5 +243,16 @@ class RosterPage extends Component {
     );
   }
 }
+
+RosterPage.propTypes = {
+  confirmedRoomCode: PropTypes.string,
+  confirmedGameName: PropTypes.string,
+  chosenPath: PropTypes.string,
+  roster: PropTypes.func.isRequired,
+  closeSeder: PropTypes.func.isRequired,
+  setConfirmedRoomCode: PropTypes.func.isRequired,
+  setConfirmedGameName: PropTypes.func.isRequired,
+  setChosenPath: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(RosterPage);

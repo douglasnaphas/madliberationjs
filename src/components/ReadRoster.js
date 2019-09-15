@@ -61,6 +61,7 @@ class ReadRoster extends React.Component {
   }
   render() {
     const { requestScript, confirmedRoomCode, confirmedGameName } = this.props;
+    const { done, notDone } = this.state;
     if (!confirmedRoomCode || !confirmedGameName) {
       return <div />;
     }
@@ -68,18 +69,18 @@ class ReadRoster extends React.Component {
       return <CircularProgress />;
     }
     const doneRows = [];
-    for (let i = 0; i < this.state.done.length; i++) {
+    for (let i = 0; i < done.length; i++) {
       doneRows.push(
-        <TableRow key={`doneRow${i}`}>
-          <TableCell key={`doneCell${i}`}>{this.state.done[i]}</TableCell>
+        <TableRow key={`doneRow${done[i]}`}>
+          <TableCell key={`doneCell${done[i]}`}>{done[i]}</TableCell>
         </TableRow>
       );
     }
     const notDoneRows = [];
-    for (let i = 0; i < this.state.notDone.length; i++) {
+    for (let i = 0; i < notDone.length; i++) {
       notDoneRows.push(
-        <TableRow key={`notDoneRow${i}`}>
-          <TableCell key={`notDoneCell${i}`}>{this.state.notDone[i]}</TableCell>
+        <TableRow key={`notDoneRow${notDone[i]}`}>
+          <TableCell key={`notDoneCell${notDone[i]}`}>{notDone[i]}</TableCell>
         </TableRow>
       );
     }

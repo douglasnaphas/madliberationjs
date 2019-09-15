@@ -212,7 +212,6 @@ class App extends Component {
                     roster={roster}
                     closeSeder={closeSeder}
                     chosenPath={this.state.chosenPath}
-                    hydrateRoomCodeAndGameName={this.hydrateRoomCodeAndGameName}
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
                     setConfirmedGameName={this.setConfirmedGameName}
                     setChosenPath={this.setChosenPath}
