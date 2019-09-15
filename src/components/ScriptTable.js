@@ -42,18 +42,19 @@ class ScriptTable extends React.Component {
     const { classes, scripts, setChosenPath } = this.props;
     const scriptRows = [];
     for (let i = 0; i < scripts.length; i++) {
+      const scriptUid = `${scripts[i].room_code}-${scripts[i].lib_id}`;
       scriptRows[i] = (
-        <TableRow key={`row${i}`}>
-          <TableCell key={`row${i}-select`}>
+        <TableRow key={`row${scriptUid}`}>
+          <TableCell key={`${scriptUid}-select`}>
             <Radio
-              key={`row${i}-radio`}
+              key={`${scriptUid}-radio`}
               checked={this.state.selectedValue === `${i}`}
               onChange={this.handleChange}
               value={`${i}`}
               id={`script-${i}`}
             />
           </TableCell>
-          <TableCell key={`row${i}-short_desc`}>
+          <TableCell key={`${scriptUid}-short_desc`}>
             <label
               htmlFor={`script-${i}`}
               madliberationid={`${scripts[i].haggadah_short_desc}`}
@@ -61,7 +62,7 @@ class ScriptTable extends React.Component {
               {scripts[i].haggadah_short_desc}
             </label>
           </TableCell>
-          <TableCell key={`row${i}-description`}>
+          <TableCell key={`${scriptUid}-description`}>
             {scripts[i].haggadah_description}
           </TableCell>
         </TableRow>

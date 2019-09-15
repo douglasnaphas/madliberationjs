@@ -125,8 +125,8 @@ describe('<ScriptTable />', () => {
     );
     wrapper.update();
     const expectedScriptTable = (
-      <TableCell key={`row0-select`}>
-        <Radio key={`row0-radio`} checked={true} value={`0`} id={`script-0`} />
+      <TableCell>
+        <Radio checked={true} value={`0`} id={`script-0`} />
       </TableCell>
     );
     expect(wrapper.containsMatchingElement(expectedScriptTable)).toBe(true);
