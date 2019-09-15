@@ -128,7 +128,7 @@ describe('<PickScriptPage />', () => {
   test('JSON from getScripts should be displayed in a table', async () => {
     const wrapper = await mount(
       <MemoryRouter>
-        <PickScriptPage getScripts={getFourScripts} />
+        <PickScriptPage getScripts={getFourScripts} setChosenPath={jest.fn()} />
       </MemoryRouter>
     );
     wrapper.update();

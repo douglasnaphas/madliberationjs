@@ -1,12 +1,13 @@
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Radio from '@material-ui/core/Radio';
+import { withStyles } from '@material-ui/core/styles';
 
 // takes in JSON collection of scripts, and a function it will call to set
 // its parent's state when a selection is made
@@ -98,5 +99,18 @@ class ScriptTable extends React.Component {
     );
   }
 }
+
+ScriptTable.propTypes = {
+  setChosenPath: PropTypes.func.isRequired,
+  scripts: PropTypes.arrayOf(
+    PropTypes.shape({
+      room_code: PropTypes.string.isRequired,
+      lib_id: PropTypes.string.isRequired,
+      haggadah_description: PropTypes.string.isRequired,
+      haggadah_short_desc: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired
+    })
+  ).isRequired
+};
 
 export default withStyles(styles)(ScriptTable);
