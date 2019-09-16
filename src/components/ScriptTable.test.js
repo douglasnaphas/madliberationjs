@@ -144,5 +144,6 @@ describe('<ScriptTable />', () => {
       ' script, after others have been clicked',
     () => {}
   );
+  test('Rows, Cells, and Radios should have unique keys', () => {});
   test('scripts should be ordered by...', () => {});
 });
