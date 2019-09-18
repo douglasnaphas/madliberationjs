@@ -10,7 +10,7 @@ import ThatsMyNameButtonWithRouter from './ThatsMyNameButtonWithRouter';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   },
   input: {
     display: 'none'

@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   typography: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   },
   answer: {
     paddingLeft: '4px',
