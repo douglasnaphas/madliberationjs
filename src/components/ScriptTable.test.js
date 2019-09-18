@@ -114,6 +114,8 @@ function getProps({ scripts }) {
     setChosenPath: jest.fn()
   };
 }
+function expectedTable(scripts) {}
+function findExpectedKeys(scripts) {}
 
 describe('<ScriptTable />', () => {
   test('scripts in props should appear in a table', async () => {
@@ -125,10 +127,19 @@ describe('<ScriptTable />', () => {
     );
     wrapper.update();
     const expectedScriptTable = (
-      <TableCell>
-        <Radio checked={true} value={`0`} id={`script-0`} />
-      </TableCell>
+      <TableRow>
+        <TableCell>
+          <Radio value={'0'} id={`script-0`} />
+        </TableCell>
+        <TableCell>
+          <label htmlFor={`script-0`} madliberationid={`Family Script`}>
+            {'Family Script'}
+          </label>
+        </TableCell>
+        <TableCell>{'An unoffensive script for the whole family'}</TableCell>
+      </TableRow>
     );
+    // console.log(wrapper.debug());
     expect(wrapper.containsMatchingElement(expectedScriptTable)).toBe(true);
   });
   test('script table should have three columns', () => {});
@@ -146,4 +157,8 @@ describe('<ScriptTable />', () => {
   );
   test('Rows, Cells, and Radios should have unique keys', () => {});
   test('scripts should be ordered by...', () => {});
+  test('the first script should be checked', () => {});
+  test('empty array of scripts', () => {
+    // How should the "pick this one" button behave?
+  });
 });
