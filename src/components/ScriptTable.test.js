@@ -163,23 +163,10 @@ describe('<ScriptTable />', () => {
       wrapper.containsMatchingElement(expectedTable(fourScripts(), 0))
     ).toBe(true);
   });
-  test('script table should have three columns', () => {});
-  test('do not display scripts with missing short desc ', () => {});
-  test('each row should have a radio button', () => {});
-  test(
-    'the Use This One button should call setChosenPath with the selected' +
-      ' script',
-    () => {}
-  );
   test(
     'the Use This One button should call setChosenPath with the selected' +
       ' script, after others have been clicked',
     () => {}
   );
   test('Rows, Cells, and Radios should have unique keys', () => {});
-  test('scripts should be ordered by...', () => {});
-  test('the first script should be checked', () => {});
-  test('empty array of scripts', () => {
-    // How should the "pick this one" button behave?
-  });
 });
