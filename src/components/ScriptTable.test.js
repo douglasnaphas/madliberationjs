@@ -114,8 +114,39 @@ function getProps({ scripts }) {
     setChosenPath: jest.fn()
   };
 }
-function expectedTable(scripts) {
-  scripts.map((script, index) => {});
+function expectedTable(scripts, selectedIndex) {
+  return (
+    <Table>
+      <TableBody>
+        {scripts.map((script, index) => {
+          const scriptUid = `${script.room_code}-${script.lib_id}`;
+          return (
+            <TableRow key={`row${scriptUid}`}>
+              <TableCell key={`${scriptUid}-select`}>
+                <Radio
+                  key={`${scriptUid}-radio`}
+                  checked={`${selectedIndex}` === `${index}`}
+                  value={`${index}`}
+                  id={`script-${index}`}
+                />
+              </TableCell>
+              <TableCell key={`${scriptUid}-short_desc`}>
+                <label
+                  htmlFor={`script-${index}`}
+                  madliberationid={`${script.haggadah_short_desc}`}
+                >
+                  {script.haggadah_short_desc}
+                </label>
+              </TableCell>
+              <TableCell key={`${scriptUid}-description`}>
+                {script.haggadah_description}
+              </TableCell>
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
 }
 function findExpectedKeys(scripts) {}
 
@@ -128,21 +159,9 @@ describe('<ScriptTable />', () => {
       </MemoryRouter>
     );
     wrapper.update();
-    const expectedScriptTable = (
-      <TableRow>
-        <TableCell>
-          <Radio value={'0'} id={`script-0`} />
-        </TableCell>
-        <TableCell>
-          <label htmlFor={`script-0`} madliberationid={`Family Script`}>
-            {'Family Script'}
-          </label>
-        </TableCell>
-        <TableCell>{'An unoffensive script for the whole family'}</TableCell>
-      </TableRow>
-    );
-    // console.log(wrapper.debug());
-    expect(wrapper.containsMatchingElement(expectedScriptTable)).toBe(true);
+    expect(
+      wrapper.containsMatchingElement(expectedTable(fourScripts(), 0))
+    ).toBe(true);
   });
   test('script table should have three columns', () => {});
   test('do not display scripts with missing short desc ', () => {});
