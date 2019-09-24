@@ -114,7 +114,9 @@ function getProps({ scripts }) {
     setChosenPath: jest.fn()
   };
 }
-function expectedTable(scripts) {}
+function expectedTable(scripts) {
+  scripts.map((script, index) => {});
+}
 function findExpectedKeys(scripts) {}
 
 describe('<ScriptTable />', () => {
