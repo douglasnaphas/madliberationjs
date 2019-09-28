@@ -151,7 +151,7 @@ function expectedTable(scripts, selectedIndex) {
 function findExpectedKeys(scripts) {}
 
 describe('<ScriptTable />', () => {
-  test('scripts in props should appear in a table', async () => {
+  test('scripts in props should appear in a table 1', async () => {
     const props = getProps({ scripts: fourScripts() });
     const wrapper = await mount(
       <MemoryRouter>
@@ -161,6 +161,18 @@ describe('<ScriptTable />', () => {
     wrapper.update();
     expect(
       wrapper.containsMatchingElement(expectedTable(fourScripts(), 0))
+    ).toBe(true);
+  });
+  test('scripts in props should appear in a table 2', async () => {
+    const props = getProps({ scripts: differentScripts() });
+    const wrapper = await mount(
+      <MemoryRouter>
+        <ScriptTable {...props} />
+      </MemoryRouter>
+    );
+    wrapper.update();
+    expect(
+      wrapper.containsMatchingElement(expectedTable(differentScripts(), 0))
     ).toBe(true);
   });
   test(
