@@ -51,7 +51,6 @@ describe('testUtils', () => {
           <div foo="bar"></div>
         </div>
       );
-      console.log(w.find({ foo: 'baz' }).debug());
       tu.fewerThanNOfSelector(w, { foo: 'baz' }, 1);
       expect(tu.fewerThanNOfSelector(w, { foo: 'baz' }, 1)).toBe(false);
       expect(tu.fewerThanNOfSelector(w, { foo: 'baz' }, 2)).toBe(true);
