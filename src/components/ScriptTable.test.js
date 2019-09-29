@@ -8,6 +8,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Radio from '@material-ui/core/Radio';
 
 import ScriptTable from './ScriptTable';
+import {
+  testUtils,
+  expectSelectorCount,
+  expectFewerThanNOfSelector
+} from '../test/testUtils';
 
 let mount;
 beforeEach(() => {
@@ -20,7 +25,7 @@ afterEach(() => {
 /**
  * Click the radio button next to script number scriptNumber
  * @param {ReactWrapper} wrapper The wrapper to search
- * @param {*} scriptNumber The id of the script in the table
+ * @param {Number} scriptNumber The id of the script in the table
  */
 function selectScript(wrapper, scriptNumber) {
   wrapper
@@ -35,7 +40,7 @@ function selectScript(wrapper, scriptNumber) {
  * @returns {boolean} true if script number scriptNumber is present and
  * selected, false otherwise
  * @param {ReactWrapper} wrapper The wrapper to search
- * @param {*} scriptNumber The id of the script in the table
+ * @param {Number} scriptNumber The id of the script in the table
  */
 function scriptChecked(wrapper, scriptNumber) {
   return wrapper
@@ -68,6 +73,13 @@ function scriptCheckedOnly(wrapper, selectedScriptNumber, scriptCount) {
   }
   return true;
 }
+
+/**
+ * expect that there are fewer than n Radios in wrapper
+ * @param {ReactWrapper} wrapper
+ * @param {Number} n
+ */
+function expectFewerRadiosThanN(wrapper, n) {}
 
 function fourScripts() {
   return [
@@ -235,39 +247,26 @@ describe('<ScriptTable />', () => {
           <ScriptTable {...props} />
         </MemoryRouter>
       );
-      expect(
-        wrapper
-          .findWhere(
-            n => n.is(Radio) && n.is('#script-0') && n.is('[checked=true]')
-          )
-          .exists()
-      ).toBe(true);
+      expect(scriptChecked(wrapper, 0)).toBe(true);
       // click the 3rd script
-      const script2Button = wrapper
-        .findWhere(n => n.is(Radio) && n.is('#script-2'))
-        .prop('onChange')({
-        target: { value: '2' }
-      });
-      wrapper.update();
-      expect(
-        wrapper
-          .findWhere(
-            n => n.is(Radio) && n.is('#script-0') && n.is('[checked=true]')
-          )
-          .exists()
-      ).toBe(false);
-      expect(
-        wrapper
-          .findWhere(
-            n => n.is(Radio) && n.is('#script-2') && n.is('[checked=true]')
-          )
-          .exists()
-      ).toEqual(true);
+      selectScript(wrapper, 2);
+      expect(scriptChecked(wrapper, 0)).toBe(false);
+      expect(scriptChecked(wrapper, 2)).toBe(true);
       const x = wrapper.findWhere(n => n.is(Radio)).at(0);
-      // console.log(x.debug());
       expect(x).toEqual({});
       console.log(x.props());
       expect({}).toBeTruthy();
+      // expectFewerThanNOfSelector(wrapper, Radio, 3);
+      // expectSelectorCount(wrapper, Radio, 3); // should fail
+      // expectFewerThanNOfSelector(wrapper, Radio, 4); // should fail
+      expectSelectorCount(wrapper, Radio, 4);
+      // let y = wrapper.find(Radio);
+      // console.log(y.debug());
+      // for (let i = 0; i < 4; i++) {
+      //   console.log(`${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}`);
+      //   console.log(y.at(i).debug());
+      // }
+
       expect(() => {
         wrapper
           .findWhere(n => n.is(Radio))
