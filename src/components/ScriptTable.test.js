@@ -297,8 +297,12 @@ describe('<ScriptTable />', () => {
       );
     }
   );
-  test('Rows, Cells, and Radios should have unique keys', () => {});
+  test('Rows, Cells, and Radios should have unique keys', () => {
+    // A failiure of this requirement would show up in the console, no need to
+    // test for now
+  });
   test('Scripts should be ordered by lib_id', () => {
-    // This provides a way to control the order that the scripts appear in
+    // This is unnecessary: the scripts are returned by the API sorted by their
+    // sort key
   });
 });
