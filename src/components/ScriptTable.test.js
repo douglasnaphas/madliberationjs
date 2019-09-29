@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
 import { createMount } from '@material-ui/core/test-utils';
+import { Link } from 'react-router-dom';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 import Table from '@material-ui/core/Table';
@@ -297,6 +298,25 @@ describe('<ScriptTable />', () => {
       );
     }
   );
+  test('The Pick This One button should be a link to /generating-room-code', () => {
+    const expectedButton = (
+      <Button
+        madliberationid="pick-this-script-button"
+        variant="contained"
+        component={Link}
+        to="/generating-room-code"
+      >
+        Use this one
+      </Button>
+    );
+    const props = getProps({ scripts: fourScripts() });
+    const wrapper = mount(
+      <MemoryRouter>
+        <ScriptTable {...props} />
+      </MemoryRouter>
+    );
+    expect(wrapper.containsMatchingElement(expectedButton)).toBe(true);
+  });
   test('Rows, Cells, and Radios should have unique keys', () => {
     // A failiure of this requirement would show up in the console, no need to
     // test for now
