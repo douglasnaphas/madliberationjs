@@ -22,9 +22,8 @@ export const expectFewerThanNOfSelector = (wrapper, selector, n) => {
  */
 export const fewerThanNOfSelector = (wrapper, selector, n) => {
   if (n < 1) return false;
-  let p;
   try {
-    p = wrapper
+    wrapper
       .find(selector)
       .at(n - 1)
       .props();

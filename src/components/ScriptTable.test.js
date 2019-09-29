@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import { createMount } from '@material-ui/core/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
@@ -68,7 +69,7 @@ function scriptsUnchecked(wrapper, scriptNumbers) {}
  */
 function scriptCheckedOnly(wrapper, selectedScriptNumber, scriptCount) {
   if (!scriptChecked(wrapper, selectedScriptNumber)) return false;
-  for (i = 0; i < scriptCount; i++) {
+  for (let i = 0; i < scriptCount; i++) {
     if (i != selectedScriptNumber && scriptChecked(i)) return false;
   }
   return true;
@@ -252,35 +253,48 @@ describe('<ScriptTable />', () => {
       selectScript(wrapper, 2);
       expect(scriptChecked(wrapper, 0)).toBe(false);
       expect(scriptChecked(wrapper, 2)).toBe(true);
-      const x = wrapper.findWhere(n => n.is(Radio)).at(0);
-      expect(x).toEqual({});
-      console.log(x.props());
-      expect({}).toBeTruthy();
-      // expectFewerThanNOfSelector(wrapper, Radio, 3);
-      // expectSelectorCount(wrapper, Radio, 3); // should fail
-      // expectFewerThanNOfSelector(wrapper, Radio, 4); // should fail
       expectSelectorCount(wrapper, Radio, 4);
-      // let y = wrapper.find(Radio);
-      // console.log(y.debug());
-      // for (let i = 0; i < 4; i++) {
-      //   console.log(`${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}${i}`);
-      //   console.log(y.at(i).debug());
-      // }
-
-      expect(() => {
-        wrapper
-          .findWhere(n => n.is(Radio))
-          .at(10)
-          .props();
-      }).toThrow();
-      // expect(x.props())
-      // console.log(x);
-      // expect(wrapper.findWhere(n => n.is(Radio)).at(0)).not.toEqual({});
-      // expect(
-      //   wrapper.findWhere(n => n.is(Radio) && n.is('[checked=true]')).at(1)
-      // ).toEqual({});
+      expect(scriptCheckedOnly(wrapper, 2)).toBe(true);
       // click the 2nd script
+      selectScript(wrapper, 1);
+      expect(scriptCheckedOnly(wrapper, 1)).toBe(true);
+      // submit
+      wrapper
+        .findWhere(
+          n =>
+            n.is(Button) && n.is({ madliberationid: 'pick-this-script-button' })
+        )
+        .prop('onClick')();
       // verify setChosenPath was called once with the 2nd script
+      expect(props.setChosenPath).toHaveBeenCalled();
+      expect(props.setChosenPath).toHaveBeenCalledTimes(1);
+      expect(props.setChosenPath).toHaveBeenCalledWith(
+        'madliberation-scripts/002-Dirty_Script'
+      );
+    }
+  );
+  test(
+    'the Use This One button should call setChosenPath with the selected' +
+      ' script 2',
+    () => {
+      const props = getProps({ scripts: differentScripts() });
+      const wrapper = mount(
+        <MemoryRouter>
+          <ScriptTable {...props} />
+        </MemoryRouter>
+      );
+      wrapper
+        .findWhere(
+          n =>
+            n.is(Button) && n.is({ madliberationid: 'pick-this-script-button' })
+        )
+        .prop('onClick')();
+      // verify setChosenPath was called once with the 1st script
+      expect(props.setChosenPath).toHaveBeenCalled();
+      expect(props.setChosenPath).toHaveBeenCalledTimes(1);
+      expect(props.setChosenPath).toHaveBeenCalledWith(
+        'madliberation-scripts/005-Family_Script'
+      );
     }
   );
   test('Rows, Cells, and Radios should have unique keys', () => {});
