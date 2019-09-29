@@ -17,6 +17,58 @@ afterEach(() => {
   mount.cleanUp();
 });
 
+/**
+ * Click the radio button next to script number scriptNumber
+ * @param {ReactWrapper} wrapper The wrapper to search
+ * @param {*} scriptNumber The id of the script in the table
+ */
+function selectScript(wrapper, scriptNumber) {
+  wrapper
+    .findWhere(n => n.is(Radio) && n.is(`#script-${scriptNumber}`))
+    .prop('onChange')({
+    target: { value: `${scriptNumber}` }
+  });
+  wrapper.update();
+}
+
+/**
+ * @returns {boolean} true if script number scriptNumber is present and
+ * selected, false otherwise
+ * @param {ReactWrapper} wrapper The wrapper to search
+ * @param {*} scriptNumber The id of the script in the table
+ */
+function scriptChecked(wrapper, scriptNumber) {
+  return wrapper
+    .findWhere(
+      n =>
+        n.is(Radio) && n.is(`#script-${scriptNumber}`) && n.is('[checked=true]')
+    )
+    .exists();
+}
+
+/**
+ * @returns {boolean} true if every script number in scriptNumbers is present
+ * and unchecked, false otherwise
+ * @param {ReactWrapper} wrapper
+ * @param {Array[Number]} scriptNumbers
+ */
+function scriptsUnchecked(wrapper, scriptNumbers) {}
+
+/**
+ * @returns {boolean} true if every index in {0, 1, ..., scriptCount - 1} is
+ * unchecked and selectedScriptNumber is checked, false otherwise
+ * @param {ReactWrapper} wrapper
+ * @param {Number} selectedScriptNumber
+ * @param {Number} scriptCount
+ */
+function scriptCheckedOnly(wrapper, selectedScriptNumber, scriptCount) {
+  if (!scriptChecked(wrapper, selectedScriptNumber)) return false;
+  for (i = 0; i < scriptCount; i++) {
+    if (i != selectedScriptNumber && scriptChecked(i)) return false;
+  }
+  return true;
+}
+
 function fourScripts() {
   return [
     {
@@ -151,26 +203,24 @@ function expectedTable(scripts, selectedIndex) {
 function findExpectedKeys(scripts) {}
 
 describe('<ScriptTable />', () => {
-  test('scripts in props should appear in a table 1', async () => {
+  test('scripts in props should appear in a table 1', () => {
     const props = getProps({ scripts: fourScripts() });
-    const wrapper = await mount(
+    const wrapper = mount(
       <MemoryRouter>
         <ScriptTable {...props} />
       </MemoryRouter>
     );
-    wrapper.update();
     expect(
       wrapper.containsMatchingElement(expectedTable(fourScripts(), 0))
     ).toBe(true);
   });
-  test('scripts in props should appear in a table 2', async () => {
+  test('scripts in props should appear in a table 2', () => {
     const props = getProps({ scripts: differentScripts() });
-    const wrapper = await mount(
+    const wrapper = mount(
       <MemoryRouter>
         <ScriptTable {...props} />
       </MemoryRouter>
     );
-    wrapper.update();
     expect(
       wrapper.containsMatchingElement(expectedTable(differentScripts(), 0))
     ).toBe(true);
@@ -178,7 +228,64 @@ describe('<ScriptTable />', () => {
   test(
     'the Use This One button should call setChosenPath with the selected' +
       ' script, after others have been clicked',
-    () => {}
+    () => {
+      const props = getProps({ scripts: fourScripts() });
+      const wrapper = mount(
+        <MemoryRouter>
+          <ScriptTable {...props} />
+        </MemoryRouter>
+      );
+      expect(
+        wrapper
+          .findWhere(
+            n => n.is(Radio) && n.is('#script-0') && n.is('[checked=true]')
+          )
+          .exists()
+      ).toBe(true);
+      // click the 3rd script
+      const script2Button = wrapper
+        .findWhere(n => n.is(Radio) && n.is('#script-2'))
+        .prop('onChange')({
+        target: { value: '2' }
+      });
+      wrapper.update();
+      expect(
+        wrapper
+          .findWhere(
+            n => n.is(Radio) && n.is('#script-0') && n.is('[checked=true]')
+          )
+          .exists()
+      ).toBe(false);
+      expect(
+        wrapper
+          .findWhere(
+            n => n.is(Radio) && n.is('#script-2') && n.is('[checked=true]')
+          )
+          .exists()
+      ).toEqual(true);
+      const x = wrapper.findWhere(n => n.is(Radio)).at(0);
+      // console.log(x.debug());
+      expect(x).toEqual({});
+      console.log(x.props());
+      expect({}).toBeTruthy();
+      expect(() => {
+        wrapper
+          .findWhere(n => n.is(Radio))
+          .at(10)
+          .props();
+      }).toThrow();
+      // expect(x.props())
+      // console.log(x);
+      // expect(wrapper.findWhere(n => n.is(Radio)).at(0)).not.toEqual({});
+      // expect(
+      //   wrapper.findWhere(n => n.is(Radio) && n.is('[checked=true]')).at(1)
+      // ).toEqual({});
+      // click the 2nd script
+      // verify setChosenPath was called once with the 2nd script
+    }
   );
   test('Rows, Cells, and Radios should have unique keys', () => {});
+  test('Scripts should be ordered by lib_id', () => {
+    // This provides a way to control the order that the scripts appear in
+  });
 });
