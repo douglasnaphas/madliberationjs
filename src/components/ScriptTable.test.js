@@ -76,13 +76,6 @@ function scriptCheckedOnly(wrapper, selectedScriptNumber, scriptCount) {
   return true;
 }
 
-/**
- * expect that there are fewer than n Radios in wrapper
- * @param {ReactWrapper} wrapper
- * @param {Number} n
- */
-function expectFewerRadiosThanN(wrapper, n) {}
-
 function fourScripts() {
   return [
     {
