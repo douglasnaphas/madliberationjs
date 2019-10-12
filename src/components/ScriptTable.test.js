@@ -207,7 +207,6 @@ function expectedTable(scripts, selectedIndex) {
     </Table>
   );
 }
-function findExpectedKeys(scripts) {}
 
 describe('<ScriptTable />', () => {
   test('scripts in props should appear in a table 1', () => {
