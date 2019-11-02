@@ -10,17 +10,13 @@ const styles = theme => ({});
 class GeneratingRoomCodePage extends Component {
   componentDidMount() {
     let { chosenPath } = this.props;
-    const {
-      history,
-      setChosenPath,
-      setConfirmedRoomCode,
-      goToYourRoomCodePage
-    } = this.props;
+    const { history, setChosenPath, setConfirmedRoomCode } = this.props;
     if (!chosenPath && localStorage.getItem('chosenPath')) {
       chosenPath = localStorage.getItem('chosenPath');
       setChosenPath(chosenPath);
     }
     const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
+
     fetch(roomCodeUrl, {
       method: 'POST',
       body: JSON.stringify({
