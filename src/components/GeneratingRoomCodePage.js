@@ -2,6 +2,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Configs } from '../Configs';
 import MenuAppBar from './MenuAppBar';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -48,5 +49,12 @@ class GeneratingRoomCodePage extends Component {
     );
   }
 }
+
+GeneratingRoomCodePage.propTypes = {
+  chosenPath: PropTypes.string,
+  history: PropTypes.shape({ push: PropTypes.func }).isRequired,
+  setChosenPath: PropTypes.func.isRequired,
+  setConfirmedRoomCode: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(GeneratingRoomCodePage);
