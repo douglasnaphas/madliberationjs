@@ -247,4 +247,7 @@ describe('GeneratingRoomCodePageWithRouter', () => {
       done();
     });
   });
+  test('chosenPath not received or in localStorage', done => {
+    done();
+  });
 });
