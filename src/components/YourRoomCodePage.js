@@ -57,7 +57,6 @@ class YourRoomCodePage extends Component {
     joinSeder(confirmedRoomCode, this.state.tentativeGameName).then(d => {
       if (!this._isMounted) return;
       if (d.status === 200) {
-        this.setState({ confirmedGameName: d.data.gameName });
         setConfirmedGameName(d.data.gameName);
         history.push('/roster');
       } else {
@@ -163,8 +162,7 @@ YourRoomCodePage.propTypes = {
   joinSeder: PropTypes.func.isRequired,
   setConfirmedRoomCode: PropTypes.func.isRequired,
   setConfirmedGameName: PropTypes.func.isRequired,
-  confirmedRoomCode: PropTypes.string,
-  confirmedGameName: PropTypes.string
+  confirmedRoomCode: PropTypes.string
 };
 
 export default withStyles(styles)(YourRoomCodePage);

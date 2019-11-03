@@ -195,7 +195,6 @@ class App extends Component {
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
                     setConfirmedGameName={this.setConfirmedGameName}
                     confirmedRoomCode={this.state.confirmedRoomCode}
-                    confirmedGameName={this.state.confirmedGameName}
                   />
                 )}
               />
