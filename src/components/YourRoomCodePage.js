@@ -160,8 +160,13 @@ class YourRoomCodePage extends Component {
 }
 
 YourRoomCodePage.propTypes = {
+  joinSeder: PropTypes.func.isRequired,
+  setConfirmedRoomCode: PropTypes.func.isRequired,
+  setConfirmedGameName: PropTypes.func.isRequired,
   confirmedRoomCode: PropTypes.string,
-  setConfirmedRoomCode: PropTypes.func.isRequired
+  confirmedGameName: PropTypes.string,
+  chosenPath: PropTypes.string,
+  setChosenPath: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(YourRoomCodePage);
