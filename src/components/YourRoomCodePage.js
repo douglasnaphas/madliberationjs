@@ -164,9 +164,7 @@ YourRoomCodePage.propTypes = {
   setConfirmedRoomCode: PropTypes.func.isRequired,
   setConfirmedGameName: PropTypes.func.isRequired,
   confirmedRoomCode: PropTypes.string,
-  confirmedGameName: PropTypes.string,
-  chosenPath: PropTypes.string,
-  setChosenPath: PropTypes.func.isRequired
+  confirmedGameName: PropTypes.string
 };
 
 export default withStyles(styles)(YourRoomCodePage);
