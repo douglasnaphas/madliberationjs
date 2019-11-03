@@ -214,17 +214,10 @@ describe('GeneratingRoomCodePageWithRouter', () => {
     const setChosenPath = jest.fn();
     const setConfirmedRoomCode = jest.fn();
     const chosenPath = undefined;
-    // global.localStorage.getItem = jest.fn(() => 'un/supp/lied');
-
-    // global.localStorage.getItem = () => {
-    //   console.log('localStorage called!!!!');
-    //   return 'gotten';
-    // };
     const spy = jest
       .spyOn(Storage.prototype, 'getItem')
       .mockImplementation(() => {
-        // console.log('getItem .... calllllled');
-        return 'gottttt';
+        return 'script/path/from/storage';
       });
 
     const wrapper = mount(
@@ -238,25 +231,18 @@ describe('GeneratingRoomCodePageWithRouter', () => {
       </MemoryRouter>
     );
     expect(global.fetch).toHaveBeenCalledTimes(1);
-    console.log(global.localStorage.getItem('hi'));
-
-    // expect(global.fetch).toHaveBeenCalledWith(
-    //   new URL('/room-code', Configs.apiUrl()),
-    //   {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       path: 'gotten'
-    //     }),
-    //     headers: { 'Content-Type': 'application/json' }
-    //   }
-    // );
-
+    expect(global.fetch).toHaveBeenCalledWith(
+      new URL('/room-code', Configs.apiUrl()),
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          path: 'script/path/from/storage'
+        }),
+        headers: { 'Content-Type': 'application/json' }
+      }
+    );
+    Storage.prototype.getItem.mockClear();
     process.nextTick(() => {
-      expect(history.push).toHaveBeenCalled();
-      expect(history.push).toHaveBeenCalledTimes(1);
-      expect(history.push).toHaveBeenCalledWith('/your-room-code');
-      // expect(global.localStorage.getItem).toHaveBeenCalled();
-
       global.fetch.mockClear();
       done();
     });
