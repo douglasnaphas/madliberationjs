@@ -2,6 +2,7 @@ import { Configs } from '../Configs';
 import Divider from '@material-ui/core/Divider';
 import React, { Component } from 'react';
 import MenuAppBar from './MenuAppBar';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -157,5 +158,10 @@ class YourRoomCodePage extends Component {
     );
   }
 }
+
+YourRoomCodePage.propTypes = {
+  confirmedRoomCode: PropTypes.string,
+  setConfirmedRoomCode: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(YourRoomCodePage);
