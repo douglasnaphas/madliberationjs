@@ -34,6 +34,18 @@ describe('YourRoomCodePage', () => {
         <YourRoomCodePage {...props}></YourRoomCodePage>
       </MemoryRouter>
     );
+    expect(
+      wrapper.find("[madliberationid='thats-my-name-button']").exists()
+    ).toBe(true);
+    let button = wrapper.find("[madliberationid='thats-my-name-button']");
+    let realButton = button.find('button');
+    expect(realButton.exists()).toBe(true);
+    console.log(realButton.prop('onClick'));
+    realButton.prop('onClick')();
+    // console.log(button.prop('onClick'));
+    // click button, then:
+    wrapper.update();
+    expect(props.joinSeder).toHaveBeenCalled();
   });
   test('chosenPath not received', () => {});
   test('confirmedRoomCode should be present in top bar', () => {});
