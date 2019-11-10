@@ -29,6 +29,8 @@ class YourRoomCodePage extends Component {
   componentDidMount() {
     this._isMounted = true;
     const { confirmedRoomCode, setConfirmedRoomCode } = this.props;
+    console.log(localStorage);
+    console.log(localStorage.getItem('roomCode'));
     if (!confirmedRoomCode && localStorage.getItem('roomCode')) {
       setConfirmedRoomCode(localStorage.getItem('roomCode'));
     }
@@ -51,9 +53,6 @@ class YourRoomCodePage extends Component {
     const { joinSeder, setConfirmedGameName } = this.props;
     let { confirmedRoomCode } = this.props;
     this.setState({ thatsMyNameButtonPressed: true });
-    if (!confirmedRoomCode && this.localStorage.getItem('roomCode')) {
-      confirmedRoomCode = this.localStorage.getItem('roomCode');
-    }
     joinSeder(confirmedRoomCode, this.state.tentativeGameName).then(d => {
       if (!this._isMounted) return;
       if (d.status === 200) {
