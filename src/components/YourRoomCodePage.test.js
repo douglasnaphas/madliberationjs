@@ -44,7 +44,6 @@ describe('YourRoomCodePage', () => {
         <YourRoomCodePage {...props}></YourRoomCodePage>
       </MemoryRouter>
     );
-    wrapper.update();
     expect(props.setConfirmedRoomCode).toHaveBeenCalled();
     expect(props.setConfirmedRoomCode).toHaveBeenCalledWith('STORCO');
     expect(
@@ -57,7 +56,7 @@ describe('YourRoomCodePage', () => {
     realButton.prop('onClick')();
     // console.log(button.prop('onClick'));
     // click button, then:
-    wrapper.update();
+    // wrapper.update();
     expect(props.joinSeder).toHaveBeenCalled();
     // expect(props.joinSeder).toHaveBeenCalledWith('STORCO', 'Good Name');
     Storage.prototype.getItem.mockClear();
