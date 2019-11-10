@@ -27,10 +27,12 @@ const getProps = ({ joinSeder, roomCode }) => {
 
 describe('YourRoomCodePage', () => {
   test('confirmedRoomCode not received, should be pulled from storage', () => {
-    const joinSeder = () =>
-      new Promise(resolve => {
-        resolve({ data: { gameName: 'Good Name' } });
-      });
+    const joinSeder = jest.fn(
+      () =>
+        new Promise(resolve => {
+          resolve({ data: { gameName: 'Good Name' } });
+        })
+    );
     const spy = jest
       .spyOn(Storage.prototype, 'getItem')
       .mockImplementation(() => {
@@ -42,6 +44,9 @@ describe('YourRoomCodePage', () => {
         <YourRoomCodePage {...props}></YourRoomCodePage>
       </MemoryRouter>
     );
+    wrapper.update();
+    expect(props.setConfirmedRoomCode).toHaveBeenCalled();
+    expect(props.setConfirmedRoomCode).toHaveBeenCalledWith('STORCO');
     expect(
       wrapper.find("[madliberationid='thats-my-name-button']").exists()
     ).toBe(true);
@@ -54,6 +59,7 @@ describe('YourRoomCodePage', () => {
     // click button, then:
     wrapper.update();
     expect(props.joinSeder).toHaveBeenCalled();
+    // expect(props.joinSeder).toHaveBeenCalledWith('STORCO', 'Good Name');
     Storage.prototype.getItem.mockClear();
   });
   test(
