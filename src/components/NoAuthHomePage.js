@@ -55,6 +55,18 @@ class NoAuthHomePage extends Component {
               component={Link}
               to="/enter-room-code"
             >
+              Log in
+            </Button>
+          </div>
+          <br />
+          <div>
+            <Button
+              madliberationid="join-a-seder-button"
+              title="Join a seder"
+              variant="contained"
+              component={Link}
+              to="/enter-room-code"
+            >
               Join a seder
             </Button>
           </div>
