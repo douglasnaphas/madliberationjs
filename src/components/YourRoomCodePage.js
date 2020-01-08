@@ -79,12 +79,7 @@ class YourRoomCodePage extends Component {
   };
 
   render() {
-    const {
-      classes,
-      joinSeder,
-      setConfirmedGameName,
-      confirmedRoomCode
-    } = this.props;
+    const { confirmedRoomCode } = this.props;
     let spinnerOrRoomCode = (
       <div>
         <Typography variant="h3" gutterBottom>
@@ -97,7 +92,11 @@ class YourRoomCodePage extends Component {
         <br />
         <Typography component="p">
           Tell everyone physically at your seder to go to{' '}
-          <a target="_blank" href="https://passover.lol">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://passover.lol"
+          >
             passover.lol
           </a>{' '}
           (opens in a new tab) on their computer or mini-computer, click "Join a

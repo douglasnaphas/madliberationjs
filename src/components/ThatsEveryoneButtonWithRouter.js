@@ -23,7 +23,6 @@ class ThatsEveryoneButton extends React.Component {
     const {
       history,
       closeSederAndPlay,
-      disabled,
       setDialogButtonClicked = { setDialogButtonClicked }
     } = this.props;
     const thatsEveryoneClick = event => {

@@ -68,13 +68,13 @@ class EnterRoomCodePage extends Component {
     joinSeder(this.state.tentativeRoomCode, this.state.tentativeGameName).then(
       d => {
         this.setState({ joinSederResponse: d });
-        if (d.status == 200) {
+        if (d.status === 200) {
           setConfirmedRoomCode(d.data.roomCode);
           setConfirmedGameName(d.data.gameName);
           history.push('/you-have-joined');
         } else {
           this.setState({ failedAttempt: true });
-          if (d.data.err == Configs.generic400ErrorMessage) {
+          if (d.data.err === Configs.generic400ErrorMessage) {
             this.setState({
               failureMessage: this.joinSederCatchAllErrorMessage
             });
@@ -94,13 +94,6 @@ class EnterRoomCodePage extends Component {
   }
 
   render() {
-    const {
-      classes,
-      joinSeder,
-      setConfirmedRoomCode,
-      setConfirmedGameName
-    } = this.props;
-
     return (
       <div madliberationid="enter-room-code-page">
         <MenuAppBar />

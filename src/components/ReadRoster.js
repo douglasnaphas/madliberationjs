@@ -56,7 +56,8 @@ class ReadRoster extends React.Component {
       confirmedRoomCode: prevCode,
       confirmedGameName: prevName
     } = prevProps;
-    if (confirmedRoomCode == prevCode && confirmedGameName == prevName) return;
+    if (confirmedRoomCode === prevCode && confirmedGameName === prevName)
+      return;
     this.fetchRoster(confirmedRoomCode, confirmedGameName)();
   }
   render() {

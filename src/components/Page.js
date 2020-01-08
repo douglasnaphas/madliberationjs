@@ -24,7 +24,7 @@ class Page extends React.Component {
     this._isMounted = false;
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.pageIndex != this.props.pageIndex) {
+    if (prevProps.pageIndex !== this.props.pageIndex) {
       this.setState({ readyForContent: false });
     }
   }
@@ -39,7 +39,6 @@ class Page extends React.Component {
     if (!Array.isArray(page.lines) || page.lines.length < 1) {
       return <div />;
     }
-    const linesExample = [];
     const lines = [];
     page.lines.forEach((line, lineIndex) => {
       const segments = [];
@@ -127,7 +126,7 @@ class Page extends React.Component {
         );
         if (
           lineIndex < page.lines.length - 1 &&
-          page.lines[lineIndex + 1].type != 'indent'
+          page.lines[lineIndex + 1].type !== 'indent'
         ) {
           lines.push(
             <div key={`br-after-line-${lineIndex}`}>
@@ -149,11 +148,11 @@ class Page extends React.Component {
 
     if (!this.state.readyForContent) {
       let passTo = 'the next reader';
-      if (pageIndex == 0) passTo = 'the first reader';
-      if (page.youngest == 'to') {
+      if (pageIndex === 0) passTo = 'the first reader';
+      if (page.youngest === 'to') {
         passTo = 'the youngest person here';
       }
-      if (page.youngest == 'from') {
+      if (page.youngest === 'from') {
         passTo =
           'the person AFTER the person who handed it to you, passing over' +
           ' yourself if you would be next';

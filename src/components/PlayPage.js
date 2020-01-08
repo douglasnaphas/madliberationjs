@@ -70,7 +70,7 @@ class PlayPage extends Component {
   };
   decrementLibIndex = () => {
     if (this._isMounted) {
-      if (this.state.libIndex == 0) {
+      if (this.state.libIndex === 0) {
         this.setState({ libIndex: this.state.assignmentsData.length - 1 });
       } else {
         this.setState({ libIndex: this.state.libIndex - 1 });

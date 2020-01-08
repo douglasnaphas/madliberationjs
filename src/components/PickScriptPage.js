@@ -24,7 +24,7 @@ class PickScriptPage extends Component {
   }
 
   render() {
-    const { classes, user, setChosenPath } = this.props;
+    const { user, setChosenPath } = this.props;
     var spinnerOrScriptMenu;
     if (this.state.isMounting) {
       spinnerOrScriptMenu = <CircularProgress />;
