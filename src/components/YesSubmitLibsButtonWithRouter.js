@@ -14,7 +14,7 @@ const styles = theme => ({
 
 class YesSubmitLibsButton extends React.Component {
   render() {
-    const { history, submitLibsAndGoToSubmittedPage, disabled } = this.props;
+    const { history, submitLibsAndGoToSubmittedPage } = this.props;
     const yesSubmitLibsClick = event => {
       submitLibsAndGoToSubmittedPage(history);
     };

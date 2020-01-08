@@ -14,8 +14,6 @@ const styles = theme => ({
 
 class About extends Component {
   render() {
-    const { classes } = this.props;
-
     return (
       <div>
         <MenuAppBar />
@@ -32,6 +30,7 @@ class About extends Component {
             issue on{' '}
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/douglasnaphas/madliberation-issues/issues"
             >
               GitHub

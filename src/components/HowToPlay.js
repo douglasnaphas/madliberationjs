@@ -14,8 +14,6 @@ const styles = theme => ({
 
 class HowToPlay extends Component {
   render() {
-    const { classes } = this.props;
-
     return (
       <div>
         <MenuAppBar />

@@ -107,7 +107,7 @@ class Lib extends Component {
           )}
         </div>
         <div>
-          {libIndex == 0 ? (
+          {libIndex === 0 ? (
             <div>
               <br />
             </div>
