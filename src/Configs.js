@@ -9,6 +9,8 @@ class Configs {
     return 'https://madliberationgame.com/index.html';
   }
 
+  // https://madliberationfederated.auth.us-east-1.amazoncognito.com/login?client_id=25h54vd0cundt7iaeon1rn8a02&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http://localhost:3000/index.html
+
   static loginUrl() {
     return (
       'https://madliberationfederated.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=25h54vd0cundt7iaeon1rn8a02&redirect_uri=' +

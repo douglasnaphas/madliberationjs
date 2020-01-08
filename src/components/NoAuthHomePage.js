@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import RedSeaImage from '../background-red-sea.jpg';
 import MadLiberationLogo from '../mad-liberation-logo.png';
 import VeryAwesomePassoverLogo from '../VAPLogo-white.png';
+import { Configs } from '../Configs';
 
 const styles = () => {
   return {
@@ -52,10 +53,11 @@ class NoAuthHomePage extends Component {
               variant="contained"
               color="primary"
               size="large"
-              component={Link}
-              to="/enter-room-code"
+              // component={Link}
+              // to={Configs.loginUrl()}
+              // href={Configs.loginUrl()}
             >
-              Log in
+              <a href={Configs.loginUrl()}>Log in</a>
             </Button>
           </div>
           <br />
