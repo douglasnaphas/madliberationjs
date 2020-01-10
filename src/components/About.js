@@ -25,7 +25,7 @@ class About extends Component {
           <Typography component="p" paragraph gutterBottom>
             Mad Liberation is a game of mad lib haggadahs.
           </Typography>
-          <Typography component="p" paragraph gutterBottom>
+          <Typography id="about-text" component="p" paragraph gutterBottom>
             Try it out and let us know what you think. Feel free to raise an
             issue on{' '}
             <a
