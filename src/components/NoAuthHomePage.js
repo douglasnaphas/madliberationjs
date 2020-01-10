@@ -25,6 +25,10 @@ const styles = () => {
     },
     veryAwesomePassoverLogo: {
       height: '70px'
+    },
+    loginLink: {
+      textDecoration: 'none',
+      color: 'black'
     }
   };
 };
@@ -51,22 +55,8 @@ class NoAuthHomePage extends Component {
               madliberationid="join-a-seder-button"
               title="Join a seder"
               variant="contained"
-              color="primary"
-              size="large"
-              // component={Link}
-              // to={Configs.loginUrl()}
-              // href={Configs.loginUrl()}
-            >
-              <a href={Configs.loginUrl()}>Log in</a>
-            </Button>
-          </div>
-          <br />
-          <div>
-            <Button
-              madliberationid="join-a-seder-button"
-              title="Join a seder"
-              variant="contained"
               component={Link}
+              color="primary"
               to="/enter-room-code"
             >
               Join a seder
@@ -82,6 +72,18 @@ class NoAuthHomePage extends Component {
               to="/explain"
             >
               Lead a seder
+            </Button>
+          </div>
+          <br />
+          <div id="login-container">
+            <Button
+              madliberationid="login-button"
+              title="Log in"
+              variant="contained"
+            >
+              <a href={Configs.loginUrl()} className={classes.loginLink}>
+                Log in
+              </a>
             </Button>
           </div>
           <br />
