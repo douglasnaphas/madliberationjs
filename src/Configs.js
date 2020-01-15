@@ -2,7 +2,7 @@ class Configs {
   static redirectUri() {
     if (process && process.env && process.env.NODE_ENV) {
       if (process.env.NODE_ENV === 'development') {
-        return 'http://localhost:3000/index.html';
+        return 'http://localhost:4001/get-cookies';
       }
       // if test env, return test env value
     }
