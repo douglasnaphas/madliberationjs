@@ -10,7 +10,7 @@ import DoneNotReadingPage from './components/DoneNotReadingPage';
 import { getScriptsFromApi } from './lib/getScriptsFromApi';
 import HowToPlay from './components/HowToPlay';
 import LetThemPressButtonPage from './components/LetThemPressButtonPage';
-import NoAuthHomePage from './components/NoAuthHomePage';
+import HomePage from './components/HomePage';
 import { joinSeder } from './lib/joinSeder';
 import PickScriptPage from './components/PickScriptPage';
 import YourRoomCodePage from './components/YourRoomCodePage';
@@ -29,6 +29,7 @@ import YouHaveJoinedPage from './components/YouHaveJoinedPage';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import FetchingPromptsPageWithRouter from './components/FetchingPromptsPageWithRouter';
 import ExplainPage from './components/ExplainPage';
+import LoggingInPageWithRouter from './components/LoggingInPageWithRouter';
 
 const theme = createMuiTheme({
   palette: {
@@ -109,6 +110,9 @@ class App extends Component {
       this.setState({ confirmedGameName: localStorage.getItem('gameName') });
     }
   };
+  setUser = user => {
+    this.setState({ user });
+  };
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -119,8 +123,13 @@ class App extends Component {
               <Route
                 path="(/|/index.html)"
                 exact
-                render={props => <NoAuthHomePage {...props} />}
+                render={props => <HomePage {...props} />}
               />
+              <Route
+                path="/logging-in"
+                exact
+                render={props => <LoggingInPageWithRouter />}
+              ></Route>
               <Route
                 path="/explain"
                 exact

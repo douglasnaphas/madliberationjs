@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 
-import NoAuthHomePage from './NoAuthHomePage';
+import HomePage from './HomePage';
 
-describe('<NoAuthHomePage />', () => {
+describe('<HomePage />', () => {
   let mount;
   const leadSederButton = (
     <Button
@@ -36,18 +36,18 @@ describe('<NoAuthHomePage />', () => {
     mount.cleanUp();
   });
 
-  test('Should render a NoAuthHomePage', () => {
+  test('Should render a HomePage', () => {
     const wrapper = mount(
       <MemoryRouter>
-        <NoAuthHomePage />
+        <HomePage />
       </MemoryRouter>
     );
-    expect(wrapper.containsMatchingElement(<NoAuthHomePage />)).toBe(true);
+    expect(wrapper.containsMatchingElement(<HomePage />)).toBe(true);
   });
   test('Should render buttons with the right links', () => {
     const wrapper = mount(
       <MemoryRouter>
-        <NoAuthHomePage />
+        <HomePage />
       </MemoryRouter>
     );
     expect(wrapper.containsMatchingElement(leadSederButton)).toBe(true);

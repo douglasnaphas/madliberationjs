@@ -33,7 +33,7 @@ const styles = () => {
   };
 };
 
-class NoAuthHomePage extends Component {
+class HomePage extends Component {
   render() {
     const { classes } = this.props;
 
@@ -100,4 +100,4 @@ class NoAuthHomePage extends Component {
   }
 }
 
-export default withStyles(styles)(NoAuthHomePage);
+export default withStyles(styles)(HomePage);
