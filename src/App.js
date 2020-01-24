@@ -123,12 +123,20 @@ class App extends Component {
               <Route
                 path="(/|/index.html)"
                 exact
-                render={props => <HomePage {...props} />}
+                render={props => (
+                  <HomePage
+                    {...props}
+                    user={this.state.user}
+                    setUser={this.setUser}
+                  />
+                )}
               />
               <Route
                 path="/logging-in"
                 exact
-                render={props => <LoggingInPageWithRouter />}
+                render={props => (
+                  <LoggingInPageWithRouter setUser={this.setUser} />
+                )}
               ></Route>
               <Route
                 path="/explain"

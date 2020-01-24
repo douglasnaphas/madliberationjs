@@ -14,6 +14,11 @@ const madLiberationStyles = {
     padding: '3px',
     margin: '2px'
   },
+  whitePaper: {
+    backgroundColor: 'white',
+    color: 'black',
+    padding: '20px'
+  },
   input: {
     display: 'none'
   },

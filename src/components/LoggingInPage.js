@@ -13,9 +13,9 @@ const styles = theme => ({
   }
 });
 
-function LoggingInPage({ history }) {
-  const idUrl = new URL('/id', Configs.apiUrl());
+function LoggingInPage({ history, setUser }) {
   useEffect(() => {
+    const idUrl = new URL('/id', Configs.apiUrl());
     fetch(idUrl, {
       method: 'GET',
       credentials: 'include'
@@ -23,9 +23,11 @@ function LoggingInPage({ history }) {
       .then(r => {
         return r.json();
       })
-      .then(j => {
+      .then(user => {
         console.log('id called');
-        console.log(j);
+        console.log(user);
+        // if(user && )
+        setUser(user);
         const uri = window.location.toString();
         if (uri.indexOf('?') > 0) {
           const clean_uri = uri.substring(0, uri.indexOf('?'));
@@ -33,7 +35,7 @@ function LoggingInPage({ history }) {
         }
         history.push('/');
       });
-  }, []);
+  }, [history, setUser]);
   return (
     <>
       <MenuAppBar></MenuAppBar>

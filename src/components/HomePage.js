@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import RedSeaImage from '../background-red-sea.jpg';
 import MadLiberationLogo from '../mad-liberation-logo.png';
 import VeryAwesomePassoverLogo from '../VAPLogo-white.png';
 import { Configs } from '../Configs';
+import { madLiberationStyles } from '../madLiberationStyles';
+import Paper from '@material-ui/core/Paper';
 
 const styles = () => {
   return {
+    ...madLiberationStyles,
     homePageBackground: {
       backgroundImage: `url(${RedSeaImage})`,
       minHeight: '100%',
@@ -35,7 +38,7 @@ const styles = () => {
 
 class HomePage extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, user, setUser } = this.props;
 
     return (
       <div className={classes.homePageBackground}>
@@ -75,17 +78,19 @@ class HomePage extends Component {
             </Button>
           </div>
           <br />
-          <div id="login-container">
-            <Button
-              madliberationid="login-button"
-              title="Log in"
-              variant="contained"
-            >
-              <a href={Configs.loginUrl()} className={classes.loginLink}>
-                Log in
-              </a>
-            </Button>
-          </div>
+          {!user && (
+            <div id="login-container">
+              <Button
+                madliberationid="login-button"
+                title="Log in"
+                variant="contained"
+              >
+                <a href={Configs.loginUrl()} className={classes.loginLink}>
+                  Log in
+                </a>
+              </Button>
+            </div>
+          )}
           <br />
           <br />
           <br />
@@ -94,6 +99,33 @@ class HomePage extends Component {
             src={VeryAwesomePassoverLogo}
             className={classes.veryAwesomePassoverLogo}
           />
+          {user && (
+            <>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center'
+                }}
+                id="logout-container"
+              >
+                <br />
+                <Paper style={{ padding: '8px' }}>
+                  <Typography component="p">
+                    Logged in as {user.nickname}
+                  </Typography>
+                  <Typography component="p">
+                    <Button
+                      onClick={() => {
+                        setUser(false);
+                      }}
+                    >
+                      Log out
+                    </Button>
+                  </Typography>
+                </Paper>
+              </div>
+            </>
+          )}
         </div>
       </div>
     );
