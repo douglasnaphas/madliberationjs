@@ -118,6 +118,7 @@ class HomePage extends Component {
                       onClick={() => {
                         setUser(false);
                       }}
+                      madliberationid="logout-button"
                     >
                       Log out
                     </Button>

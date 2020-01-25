@@ -28,6 +28,12 @@ describe('<HomePage />', () => {
       Join a seder
     </Button>
   );
+  const loginButton = (
+    <Button>
+      <a href={Configs.loginUrl()}>Log in</a>
+    </Button>
+  );
+  const logoutButton = <Button>Log out</Button>;
   beforeEach(() => {
     mount = createMount();
   });
@@ -66,13 +72,45 @@ describe('<HomePage />', () => {
         </Button>
       )
     ).toBe(true);
-    expect(
-      wrapper.containsMatchingElement(
-        <Button>
-          <a href={Configs.loginUrl()}>Log in</a>
-        </Button>
-      )
-    ).toBe(true);
+    expect(wrapper.containsMatchingElement(loginButton)).toBe(true);
+    expect(wrapper.containsMatchingElement(logoutButton)).toBe(false);
   });
-  test('The Log Out button should...', () => {});
+  test('There should be no Log Out button with an undefined user', () => {});
+  test(
+    'When a user is passed in as a prop, the Log Out panel should show' +
+      ', instead of the Log In button',
+    () => {
+      const user = { nickname: 'My Nick Name', email: 'myemail@mail.com' };
+      const wrapper = mount(
+        <MemoryRouter>
+          <HomePage user={user}></HomePage>
+        </MemoryRouter>
+      );
+      expect(wrapper.containsMatchingElement(loginButton)).toBe(false);
+      expect(wrapper.findWhere(n => n.text() === 'Log out').exists()).toBe(
+        true
+      );
+      expect(
+        wrapper
+          .findWhere(n => n.text() === 'Logged in as My Nick Name')
+          .exists()
+      ).toBe(true);
+      expect(wrapper.containsMatchingElement(logoutButton)).toBe(true);
+    }
+  );
+  test('Clicking Log Out should unset the user', () => {
+    const user = { nickname: 'My Other Nick Name', email: 'other@gmail.com' };
+    const setUser = jest.fn();
+    const wrapper = mount(
+      <MemoryRouter>
+        <HomePage user={user} setUser={setUser}></HomePage>
+      </MemoryRouter>
+    );
+    const clickLogout = wrapper
+      .findWhere(n => n.matchesElement(logoutButton))
+      .prop('onClick');
+    clickLogout();
+    expect(setUser).toHaveBeenCalled();
+    expect(setUser).toHaveBeenCalledWith(false);
+  });
 });
