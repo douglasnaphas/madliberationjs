@@ -24,7 +24,9 @@ function LoggingInPage({ history, setUser }) {
         return r.json();
       })
       .then(user => {
+        console.log('setting user...');
         setUser(user);
+        console.log('user set');
         const uri = window.location.toString();
         if (uri.indexOf('?') > 0) {
           const clean_uri = uri.substring(0, uri.indexOf('?'));
