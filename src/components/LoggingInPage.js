@@ -24,9 +24,6 @@ function LoggingInPage({ history, setUser }) {
         return r.json();
       })
       .then(user => {
-        console.log('id called');
-        console.log(user);
-        // if(user && )
         setUser(user);
         const uri = window.location.toString();
         if (uri.indexOf('?') > 0) {
@@ -34,6 +31,9 @@ function LoggingInPage({ history, setUser }) {
           window.history.replaceState({}, document.title, clean_uri);
         }
         history.push('/');
+      })
+      .catch(err => {
+        console.log(err);
       });
   }, [history, setUser]);
   return (
