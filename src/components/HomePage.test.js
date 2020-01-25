@@ -3,7 +3,7 @@ import { createMount } from '@material-ui/core/test-utils';
 import { Link } from 'react-router-dom';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
-
+import { Configs } from '../Configs';
 import HomePage from './HomePage';
 
 describe('<HomePage />', () => {
@@ -53,4 +53,26 @@ describe('<HomePage />', () => {
     expect(wrapper.containsMatchingElement(leadSederButton)).toBe(true);
     expect(wrapper.containsMatchingElement(joinSederButton)).toBe(true);
   });
+  test('The Log In button should have an href to the login page', () => {
+    const wrapper = mount(
+      <MemoryRouter>
+        <HomePage></HomePage>
+      </MemoryRouter>
+    );
+    expect(
+      wrapper.containsMatchingElement(
+        <Button>
+          <a>Log in</a>
+        </Button>
+      )
+    ).toBe(true);
+    expect(
+      wrapper.containsMatchingElement(
+        <Button>
+          <a href={Configs.loginUrl()}>Log in</a>
+        </Button>
+      )
+    ).toBe(true);
+  });
+  test('The Log Out button should...', () => {});
 });
