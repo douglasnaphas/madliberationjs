@@ -13,7 +13,7 @@ const styles = theme => ({
   }
 });
 
-function LoggingInPage({ history, setUser }) {
+function LoggingInPage({ history, setUser, browserWindow }) {
   useEffect(() => {
     const idUrl = new URL('/id', Configs.apiUrl());
     fetch(idUrl, {
@@ -24,13 +24,12 @@ function LoggingInPage({ history, setUser }) {
         return r.json();
       })
       .then(user => {
-        console.log('setting user...');
         setUser(user);
-        console.log('user set');
-        const uri = window.location.toString();
+        const uri = browserWindow.location.toString();
+        console.log(uri);
         if (uri.indexOf('?') > 0) {
           const clean_uri = uri.substring(0, uri.indexOf('?'));
-          window.history.replaceState({}, document.title, clean_uri);
+          browserWindow.history.replaceState({}, document.title, clean_uri);
         }
         history.push('/');
       })

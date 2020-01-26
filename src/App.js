@@ -135,7 +135,10 @@ class App extends Component {
                 path="/logging-in"
                 exact
                 render={props => (
-                  <LoggingInPageWithRouter setUser={this.setUser} />
+                  <LoggingInPageWithRouter
+                    setUser={this.setUser}
+                    browserWindow={window}
+                  />
                 )}
               ></Route>
               <Route

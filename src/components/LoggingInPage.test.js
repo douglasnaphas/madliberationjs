@@ -6,12 +6,14 @@ import { Configs } from '../Configs';
 import { act } from 'react-dom/test-utils';
 
 describe('Logging In Page', () => {
+  const { location } = window;
   let mount;
   beforeEach(() => {
     mount = createMount();
   });
   afterEach(() => {
     mount.cleanUp();
+    window.location = location;
   });
   test('...', async () => {
     const expectedUser = {
@@ -19,9 +21,13 @@ describe('Logging In Page', () => {
       email: 'fetched@user.com'
     };
     const history = { push: jest.fn() };
-    const setUser = jest.fn().mockImplementation(() => {
-      console.log('called setUser');
-    });
+    const setUser = jest.fn().mockImplementation(() => {});
+    delete window.location;
+    const browserWindow = {};
+    browserWindow.location = {
+      toString: () => 'https://passover.lol?abc=123/#/'
+    };
+    browserWindow.history = { replaceState: jest.fn() };
     global.fetch = jest.fn().mockImplementation(() => {
       return new Promise((resolve, reject) => {
         resolve({ json: jest.fn().mockImplementation(() => expectedUser) });
@@ -31,7 +37,11 @@ describe('Logging In Page', () => {
     await act(async () => {
       wrapper = await mount(
         <MemoryRouter>
-          <LoggingInPage history={history} setUser={setUser}></LoggingInPage>
+          <LoggingInPage
+            history={history}
+            setUser={setUser}
+            browserWindow={browserWindow}
+          ></LoggingInPage>
         </MemoryRouter>
       );
     });
@@ -44,5 +54,7 @@ describe('Logging In Page', () => {
     expect(global.fetch).toHaveBeenCalledWith(expectedIdUrl, expectedInit);
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(setUser).toHaveBeenCalled();
+    expect(history.push).toHaveBeenCalled();
+    expect(browserWindow.history.replaceState).toHaveBeenCalled();
   });
 });
