@@ -29,9 +29,9 @@ describe('<HomePage />', () => {
     </Button>
   );
   const loginButton = (
-    <Button>
-      <a href={Configs.loginUrl()}>Log in</a>
-    </Button>
+    <a href={Configs.loginUrl()}>
+      <Button>Log in</Button>
+    </a>
   );
   const logoutButton = <Button>Log out</Button>;
   beforeEach(() => {
@@ -67,9 +67,9 @@ describe('<HomePage />', () => {
     );
     expect(
       wrapper.containsMatchingElement(
-        <Button>
-          <a>Log in</a>
-        </Button>
+        <a>
+          <Button>Log in</Button>
+        </a>
       )
     ).toBe(true);
     expect(wrapper.containsMatchingElement(loginButton)).toBe(true);

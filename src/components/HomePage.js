@@ -80,15 +80,15 @@ class HomePage extends Component {
           <br />
           {!user && (
             <div id="login-container">
-              <Button
-                madliberationid="login-button"
-                title="Log in"
-                variant="contained"
-              >
-                <a href={Configs.loginUrl()} className={classes.loginLink}>
+              <a href={Configs.loginUrl()} className={classes.loginLink}>
+                <Button
+                  madliberationid="login-button"
+                  title="Log in"
+                  variant="contained"
+                >
                   Log in
-                </a>
-              </Button>
+                </Button>
+              </a>
             </div>
           )}
           <br />
