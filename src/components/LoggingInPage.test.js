@@ -13,18 +13,28 @@ describe('Logging In Page', () => {
   afterEach(() => {
     mount.cleanUp();
   });
-  test('login should strip URL query, fetch and set user', async () => {
+  test.each`
+    desc                   | nickname      | email                   | url                                      | expectedUrl                   | query
+    ${'strip query'}       | ${'Should'}   | ${'strip@urlquery.com'} | ${'https://passover.lol?ab=cd'}          | ${'https://passover.lol'}     | ${true}
+    ${'query, hash'}       | ${'Hash Too'} | ${'clean@theurl.net'}   | ${'http://localhost?qu=ery#/logging-in'} | ${'http://localhost'}         | ${true}
+    ${'no query, no hash'} | ${'No query'} | ${'abc@123a.org'}       | ${'https://MLG.mlg'}                     | ${'https://MLG.mlg'}          | ${false}
+    ${'hash, no query'}    | ${'Hash'}     | ${'thishas@noq.co'}     | ${'https://xyz.com/#/log-in'}            | ${'https://xyz.com/$/log-in'} | ${false}
+  `('$desc', async ({ nickname, email, url, expectedUrl, query }) => {
     const expectedUser = {
-      nickname: 'Fetched User',
-      email: 'fetched@user.com'
+      nickname,
+      email
     };
     const history = { push: jest.fn() };
-    const setUser = jest.fn().mockImplementation(() => {});
+    const setUser = jest.fn();
     const browserWindow = {};
     browserWindow.location = {
-      toString: () => 'https://passover.lol?abc=123/#/'
+      toString: () => url
     };
-    browserWindow.history = { replaceState: jest.fn() };
+    browserWindow.history = {
+      replaceState: jest.fn().mockImplementation(() => {
+        expect(history.push).not.toHaveBeenCalled();
+      })
+    };
     global.fetch = jest.fn().mockImplementation(() => {
       return new Promise((resolve, reject) => {
         resolve({ json: jest.fn().mockImplementation(() => expectedUser) });
@@ -56,108 +66,16 @@ describe('Logging In Page', () => {
     expect(history.push).toHaveBeenCalled();
     expect(history.push).toHaveBeenCalledWith('/');
     expect(history.push).toHaveBeenCalledTimes(1);
-    expect(browserWindow.history.replaceState).toHaveBeenCalled();
-    expect(browserWindow.history.replaceState).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.anything(),
-      'https://passover.lol'
-    );
-    expect(browserWindow.history.replaceState).toHaveBeenCalledTimes(1);
-  });
-  test('login should strip URL query (no hash), fetch and set user', async () => {
-    const expectedUser = {
-      nickname: 'Different User',
-      email: 'diff@erent.net'
-    };
-    const history = { push: jest.fn() };
-    const setUser = jest.fn().mockImplementation(() => {});
-    const browserWindow = {};
-    browserWindow.location = {
-      toString: () => 'http://localhost?abc=123'
-    };
-    browserWindow.history = { replaceState: jest.fn() };
-    global.fetch = jest.fn().mockImplementation(() => {
-      return new Promise((resolve, reject) => {
-        resolve({ json: jest.fn().mockImplementation(() => expectedUser) });
-      });
-    });
-    let wrapper;
-    await act(async () => {
-      wrapper = await mount(
-        <MemoryRouter>
-          <LoggingInPage
-            history={history}
-            setUser={setUser}
-            browserWindow={browserWindow}
-          ></LoggingInPage>
-        </MemoryRouter>
+    if (query) {
+      expect(browserWindow.history.replaceState).toHaveBeenCalled();
+      expect(browserWindow.history.replaceState).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        expectedUrl
       );
-    });
-    const expectedIdUrl = new URL('/id', Configs.apiUrl());
-    const expectedInit = {
-      method: 'GET',
-      credentials: 'include'
-    };
-    expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledWith(expectedIdUrl, expectedInit);
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(setUser).toHaveBeenCalled();
-    expect(setUser).toHaveBeenCalledWith(expectedUser);
-    expect(setUser).toHaveBeenCalledTimes(1);
-    expect(history.push).toHaveBeenCalled();
-    expect(history.push).toHaveBeenCalledWith('/');
-    expect(history.push).toHaveBeenCalledTimes(1);
-    expect(browserWindow.history.replaceState).toHaveBeenCalled();
-    expect(browserWindow.history.replaceState).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.anything(),
-      'http://localhost'
-    );
-    expect(browserWindow.history.replaceState).toHaveBeenCalledTimes(1);
-  });
-  test('no query', async () => {
-    const expectedUser = {
-      nickname: 'NoQuery',
-      email: 'some@thing.org'
-    };
-    const history = { push: jest.fn() };
-    const setUser = jest.fn().mockImplementation(() => {});
-    const browserWindow = {};
-    browserWindow.location = {
-      toString: () => 'https://madliberationgame.com/#/logging-in'
-    };
-    browserWindow.history = { replaceState: jest.fn() };
-    global.fetch = jest.fn().mockImplementation(() => {
-      return new Promise((resolve, reject) => {
-        resolve({ json: jest.fn().mockImplementation(() => expectedUser) });
-      });
-    });
-    let wrapper;
-    await act(async () => {
-      wrapper = await mount(
-        <MemoryRouter>
-          <LoggingInPage
-            history={history}
-            setUser={setUser}
-            browserWindow={browserWindow}
-          ></LoggingInPage>
-        </MemoryRouter>
-      );
-    });
-    const expectedIdUrl = new URL('/id', Configs.apiUrl());
-    const expectedInit = {
-      method: 'GET',
-      credentials: 'include'
-    };
-    expect(global.fetch).toHaveBeenCalled();
-    expect(global.fetch).toHaveBeenCalledWith(expectedIdUrl, expectedInit);
-    expect(global.fetch).toHaveBeenCalledTimes(1);
-    expect(setUser).toHaveBeenCalled();
-    expect(setUser).toHaveBeenCalledWith(expectedUser);
-    expect(setUser).toHaveBeenCalledTimes(1);
-    expect(history.push).toHaveBeenCalled();
-    expect(history.push).toHaveBeenCalledWith('/');
-    expect(history.push).toHaveBeenCalledTimes(1);
-    expect(browserWindow.history.replaceState).not.toHaveBeenCalled();
+      expect(browserWindow.history.replaceState).toHaveBeenCalledTimes(1);
+    } else {
+      expect(browserWindow.history.replaceState).not.toHaveBeenCalled();
+    }
   });
 });

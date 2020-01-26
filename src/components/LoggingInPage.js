@@ -13,7 +13,7 @@ const styles = theme => ({
   }
 });
 
-function LoggingInPage({ history, setUser, browserWindow }) {
+function LoggingInPage({ history, setUser, browserWindow, storage }) {
   useEffect(() => {
     const idUrl = new URL('/id', Configs.apiUrl());
     fetch(idUrl, {
@@ -35,7 +35,7 @@ function LoggingInPage({ history, setUser, browserWindow }) {
       .catch(err => {
         console.log(err);
       });
-  }, [history, setUser]);
+  }, [history, setUser, browserWindow, storage]);
   return (
     <>
       <MenuAppBar></MenuAppBar>

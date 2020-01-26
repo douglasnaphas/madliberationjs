@@ -138,6 +138,7 @@ class App extends Component {
                   <LoggingInPageWithRouter
                     setUser={this.setUser}
                     browserWindow={window}
+                    storage={localStorage}
                   />
                 )}
               ></Route>
