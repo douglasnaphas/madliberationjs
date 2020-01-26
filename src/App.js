@@ -128,6 +128,7 @@ class App extends Component {
                     {...props}
                     user={this.state.user}
                     setUser={this.setUser}
+                    storage={localStorage}
                   />
                 )}
               />

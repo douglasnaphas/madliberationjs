@@ -25,6 +25,8 @@ function LoggingInPage({ history, setUser, browserWindow, storage }) {
       })
       .then(user => {
         setUser(user);
+        storage.setItem('user-nickname', user.nickname);
+        storage.setItem('user-email', user.email);
         const uri = browserWindow.location.toString();
         if (uri.indexOf('?') > 0) {
           const clean_uri = uri.substring(0, uri.indexOf('?'));

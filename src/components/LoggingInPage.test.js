@@ -40,6 +40,9 @@ describe('Logging In Page', () => {
         resolve({ json: jest.fn().mockImplementation(() => expectedUser) });
       });
     });
+    const storage = {
+      setItem: jest.fn()
+    };
     let wrapper;
     await act(async () => {
       wrapper = await mount(
@@ -48,6 +51,7 @@ describe('Logging In Page', () => {
             history={history}
             setUser={setUser}
             browserWindow={browserWindow}
+            storage={storage}
           ></LoggingInPage>
         </MemoryRouter>
       );
@@ -77,5 +81,19 @@ describe('Logging In Page', () => {
     } else {
       expect(browserWindow.history.replaceState).not.toHaveBeenCalled();
     }
+    expect(storage.setItem).toHaveBeenCalled();
+    expect(storage.setItem).toHaveBeenCalledWith(
+      'user-nickname',
+      expectedUser.nickname
+    );
+    expect(storage.setItem).toHaveBeenCalledWith(
+      'user-email',
+      expectedUser.email
+    );
+    expect(storage.setItem).toHaveBeenCalledTimes(2);
   });
+  test('fetch returns nickname only', () => {});
+  test('fetch returns email only', () => {});
+  test('fetch returns no nickname, no email (but succeeds)', () => {});
+  test('fetch fails', () => {});
 });

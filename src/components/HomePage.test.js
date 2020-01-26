@@ -43,26 +43,29 @@ describe('<HomePage />', () => {
   });
 
   test('Should render a HomePage', () => {
+    const storage = { removeItem: jest.fn() };
     const wrapper = mount(
       <MemoryRouter>
-        <HomePage />
+        <HomePage storage={storage} />
       </MemoryRouter>
     );
     expect(wrapper.containsMatchingElement(<HomePage />)).toBe(true);
   });
   test('Should render buttons with the right links', () => {
+    const storage = { removeItem: jest.fn() };
     const wrapper = mount(
       <MemoryRouter>
-        <HomePage />
+        <HomePage storage={storage} />
       </MemoryRouter>
     );
     expect(wrapper.containsMatchingElement(leadSederButton)).toBe(true);
     expect(wrapper.containsMatchingElement(joinSederButton)).toBe(true);
   });
   test('The Log In button should have an href to the login page', () => {
+    const storage = { removeItem: jest.fn() };
     const wrapper = mount(
       <MemoryRouter>
-        <HomePage></HomePage>
+        <HomePage storage={storage}></HomePage>
       </MemoryRouter>
     );
     expect(
@@ -81,9 +84,10 @@ describe('<HomePage />', () => {
       ', instead of the Log In button',
     () => {
       const user = { nickname: 'My Nick Name', email: 'myemail@mail.com' };
+      const storage = { removeItem: jest.fn() };
       const wrapper = mount(
         <MemoryRouter>
-          <HomePage user={user}></HomePage>
+          <HomePage user={user} storage={storage}></HomePage>
         </MemoryRouter>
       );
       expect(wrapper.containsMatchingElement(loginButton)).toBe(false);
@@ -98,12 +102,13 @@ describe('<HomePage />', () => {
       expect(wrapper.containsMatchingElement(logoutButton)).toBe(true);
     }
   );
-  test('Clicking Log Out should unset the user', () => {
+  test('Clicking Log Out should unset the user, clear storage', () => {
     const user = { nickname: 'My Other Nick Name', email: 'other@gmail.com' };
     const setUser = jest.fn();
+    const storage = { removeItem: jest.fn() };
     const wrapper = mount(
       <MemoryRouter>
-        <HomePage user={user} setUser={setUser}></HomePage>
+        <HomePage user={user} setUser={setUser} storage={storage}></HomePage>
       </MemoryRouter>
     );
     const clickLogout = wrapper
@@ -112,5 +117,9 @@ describe('<HomePage />', () => {
     clickLogout();
     expect(setUser).toHaveBeenCalled();
     expect(setUser).toHaveBeenCalledWith(false);
+    expect(storage.removeItem).toHaveBeenCalled();
+    expect(storage.removeItem).toHaveBeenCalledWith('user-nickname');
+    expect(storage.removeItem).toHaveBeenCalledWith('user-email');
+    expect(storage.removeItem).toHaveBeenCalledTimes(2);
   });
 });

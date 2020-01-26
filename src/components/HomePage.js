@@ -8,6 +8,7 @@ import VeryAwesomePassoverLogo from '../VAPLogo-white.png';
 import { Configs } from '../Configs';
 import { madLiberationStyles } from '../madLiberationStyles';
 import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
 
 const styles = () => {
   return {
@@ -38,7 +39,7 @@ const styles = () => {
 
 class HomePage extends Component {
   render() {
-    const { classes, user, setUser } = this.props;
+    const { classes, user, setUser, storage } = this.props;
 
     return (
       <div className={classes.homePageBackground}>
@@ -117,6 +118,8 @@ class HomePage extends Component {
                     <Button
                       onClick={() => {
                         setUser(false);
+                        storage.removeItem('user-nickname');
+                        storage.removeItem('user-email');
                       }}
                       madliberationid="logout-button"
                     >
@@ -132,5 +135,9 @@ class HomePage extends Component {
     );
   }
 }
+
+HomePage.propTypes = {
+  storage: PropTypes.shape({ removeItem: PropTypes.func }).isRequired
+};
 
 export default withStyles(styles)(HomePage);
