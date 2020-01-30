@@ -161,7 +161,8 @@ YourRoomCodePage.propTypes = {
   joinSeder: PropTypes.func.isRequired,
   setConfirmedRoomCode: PropTypes.func.isRequired,
   setConfirmedGameName: PropTypes.func.isRequired,
-  confirmedRoomCode: PropTypes.string
+  confirmedRoomCode: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+    .isRequired
 };
 
 export default withStyles(styles)(YourRoomCodePage);

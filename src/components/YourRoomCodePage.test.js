@@ -17,7 +17,7 @@ const getProps = ({ joinSeder, roomCode, gameName }) => {
     joinSeder: jest.fn(),
     setConfirmedRoomCode: jest.fn(),
     setConfirmedGameName: jest.fn(),
-    confirmedRoomCode: roomCode,
+    confirmedRoomCode: roomCode || false,
     confirmedGameName: gameName
   };
   if (typeof joinSeder === 'function') {
