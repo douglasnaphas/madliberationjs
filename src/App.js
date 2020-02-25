@@ -31,6 +31,7 @@ import FetchingPromptsPageWithRouter from './components/FetchingPromptsPageWithR
 import ExplainPage from './components/ExplainPage';
 import LoggingInPageWithRouter from './components/LoggingInPageWithRouter';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import ContactUs from './components/ContactUs';
 
 const theme = createMuiTheme({
   palette: {
@@ -113,8 +114,9 @@ class App extends Component {
               <Route
                 path="/privacy-policy"
                 exact
-                render={props => <PrivacyPolicy></PrivacyPolicy>}
-              ></Route>
+                render={() => <PrivacyPolicy />}
+              />
+              <Route path="/contact-us" exact render={() => <ContactUs />} />
               <Route
                 path="(/|/index.html)"
                 exact

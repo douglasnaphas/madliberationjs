@@ -88,6 +88,11 @@ class MenuAppBar extends React.Component {
               Privacy policy
             </Link>
           </MenuItem>
+          <MenuItem onClick={this.handleLeftClose}>
+            <Link madliberationid="menu-contact-us" to="/contact-us">
+              Contact us
+            </Link>
+          </MenuItem>
         </Menu>
       </div>
     );
