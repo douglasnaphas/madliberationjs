@@ -25,6 +25,10 @@ class About extends Component {
           <Typography component="p" paragraph gutterBottom>
             Mad Liberation is a game of mad lib haggadahs.
           </Typography>
+          <Typography component="p" paragraph gutterBottom>
+            That means that you use it to read a script for the Jewish holiday
+            Passover, with blanks filled in by you and your friends.
+          </Typography>
           <Typography id="about-text" component="p" paragraph gutterBottom>
             Try it out and let us know what you think. Feel free to raise an
             issue on{' '}
