@@ -30,6 +30,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import FetchingPromptsPageWithRouter from './components/FetchingPromptsPageWithRouter';
 import ExplainPage from './components/ExplainPage';
 import LoggingInPageWithRouter from './components/LoggingInPageWithRouter';
+import PrivacyPolicy from './components/PrivacyPolicy';
 
 const theme = createMuiTheme({
   palette: {
@@ -109,6 +110,11 @@ class App extends Component {
           <CssBaseline />
           <Router>
             <div className="App">
+              <Route
+                path="/privacy-policy"
+                exact
+                render={props => <PrivacyPolicy></PrivacyPolicy>}
+              ></Route>
               <Route
                 path="(/|/index.html)"
                 exact

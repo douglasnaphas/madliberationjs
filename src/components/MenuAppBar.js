@@ -83,6 +83,11 @@ class MenuAppBar extends React.Component {
               How to play
             </Link>
           </MenuItem>
+          <MenuItem onClick={this.handleLeftClose}>
+            <Link madliberationid="menu-privacy-policy" to="/privacy-policy">
+              Privacy policy
+            </Link>
+          </MenuItem>
         </Menu>
       </div>
     );
