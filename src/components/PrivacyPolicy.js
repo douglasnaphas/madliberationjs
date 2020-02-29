@@ -3374,6 +3374,7 @@ class PrivacyPolicy extends Component {
                                                         data-custom-class="link"
                                                         href="http://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm"
                                                         target="_blank"
+                                                        rel="noopener noreferrer"
                                                       >
                                                         http://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm
                                                       </a>
@@ -4605,17 +4606,16 @@ class PrivacyPolicy extends Component {
                                                 some circumstances. To request
                                                 to review, update, or delete
                                                 your personal information,
-                                                please submit a request form by
-                                                clicking{' '}
+                                                please submit a request by
+                                                emailing{' '}
                                                 <a
                                                   style={{
                                                     color:
                                                       'rgb(48, 48, 241) !important'
                                                   }}
-                                                  href="https://app.termly.io/notify/0614c472-36ea-4f82-b9ff-d938227d0479"
-                                                  target="_blank"
+                                                  href="mailto:admin@passover.lol"
                                                 >
-                                                  here
+                                                  admin@passover.lol
                                                 </a>
                                                 . We will respond to your
                                                 request within 30 days.
