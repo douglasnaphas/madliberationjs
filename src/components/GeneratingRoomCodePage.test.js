@@ -101,7 +101,8 @@ describe('GeneratingRoomCodePageWithRouter', () => {
     const mockSuccessResponse = { roomCode: 'SUCCES' };
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
-      json: () => mockJsonPromise
+      json: () => mockJsonPromise,
+      ok: true
     });
     jest.spyOn(global, 'fetch').mockImplementation(() => {
       return mockFetchPromise;
@@ -135,7 +136,8 @@ describe('GeneratingRoomCodePageWithRouter', () => {
     const mockSuccessResponse = { roomCode: 'SECOND' };
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
-      json: () => mockJsonPromise
+      json: () => mockJsonPromise,
+      ok: true
     });
     jest.spyOn(global, 'fetch').mockImplementation(() => {
       return mockFetchPromise;
@@ -169,7 +171,8 @@ describe('GeneratingRoomCodePageWithRouter', () => {
     const mockSuccessResponse = { roomCode: 'HISTOR' };
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
-      json: () => mockJsonPromise
+      json: () => mockJsonPromise,
+      ok: true
     });
     jest.spyOn(global, 'fetch').mockImplementation(() => {
       return mockFetchPromise;
@@ -249,5 +252,39 @@ describe('GeneratingRoomCodePageWithRouter', () => {
   });
   test('chosenPath not received or in localStorage', done => {
     done();
+  });
+  test('fetch resolves to failed response -- should display error message', done => {
+    const mockJsonPromise = Promise.resolve({ error: 'there was an error' });
+    const mockFetchPromise = Promise.resolve({
+      json: () => mockJsonPromise,
+      ok: false
+    });
+    jest.spyOn(global, 'fetch').mockImplementation(() => {
+      return mockFetchPromise;
+    });
+    const history = {
+      push: jest.fn()
+    };
+    const setChosenPath = jest.fn();
+    const setConfirmedRoomCode = jest.fn();
+    const chosenPath = 'a/b/c';
+    const wrapper = mount(
+      <MemoryRouter>
+        <GeneratingRoomCodePage
+          history={history}
+          setChosenPath={setChosenPath}
+          chosenPath={chosenPath}
+          setConfirmedRoomCode={setConfirmedRoomCode}
+        ></GeneratingRoomCodePage>
+      </MemoryRouter>
+    );
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    process.nextTick(() => {
+      expect(history.push).toHaveBeenCalled();
+      expect(history.push).toHaveBeenCalledTimes(1);
+      expect(history.push).toHaveBeenCalledWith('hi');
+      global.fetch.mockClear();
+      done();
+    });
   });
 });

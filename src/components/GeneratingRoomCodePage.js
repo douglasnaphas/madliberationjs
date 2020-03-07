@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({});
 
@@ -26,11 +27,17 @@ class GeneratingRoomCodePage extends Component {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(r => {
+        if (!r.ok) {
+          throw r.status;
+        }
         return r.json();
       })
       .then(j => {
         setConfirmedRoomCode(j.roomCode);
         history.push('/your-room-code');
+      })
+      .catch(s => {
+        history.push('hi');
       });
   }
   render() {
