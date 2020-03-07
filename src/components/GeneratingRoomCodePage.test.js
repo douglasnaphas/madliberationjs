@@ -280,9 +280,18 @@ describe('GeneratingRoomCodePageWithRouter', () => {
     );
     expect(global.fetch).toHaveBeenCalledTimes(1);
     process.nextTick(() => {
-      expect(history.push).toHaveBeenCalled();
-      expect(history.push).toHaveBeenCalledTimes(1);
-      expect(history.push).toHaveBeenCalledWith('hi');
+      wrapper.update();
+      // check for the expected failure message
+      expect(
+        wrapper
+          .findWhere(
+            n =>
+              n.text() ===
+              'So sorry, but a Room Code could not' +
+                ' be generated. Please start over.'
+          )
+          .exists()
+      ).toBe(true);
       global.fetch.mockClear();
       done();
     });

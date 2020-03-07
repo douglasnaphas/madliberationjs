@@ -10,6 +10,12 @@ import { Link } from 'react-router-dom';
 const styles = theme => ({});
 
 class GeneratingRoomCodePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      failedToGetRoomCode: false
+    };
+  }
   componentDidMount() {
     let { chosenPath } = this.props;
     const { history, setChosenPath, setConfirmedRoomCode } = this.props;
@@ -37,7 +43,7 @@ class GeneratingRoomCodePage extends Component {
         history.push('/your-room-code');
       })
       .catch(s => {
-        history.push('hi');
+        this.setState({ failedToGetRoomCode: true });
       });
   }
   render() {
@@ -45,13 +51,27 @@ class GeneratingRoomCodePage extends Component {
       <div>
         <MenuAppBar />
         <br />
-        <div>
-          <Typography variant="h3">Generating a Room Code...</Typography>
-        </div>
-        <br />
-        <div>
-          <CircularProgress />
-        </div>
+        {!this.state.failedToGetRoomCode && (
+          <>
+            <div>
+              <Typography variant="h3">Generating a Room Code...</Typography>
+            </div>
+            <br />
+            <div>
+              <CircularProgress />
+            </div>{' '}
+          </>
+        )}
+        {this.state.failedToGetRoomCode && (
+          <>
+            <div>
+              <Typography variant="h4">
+                So sorry, but a Room Code could not be generated. Please start
+                over.
+              </Typography>
+            </div>
+          </>
+        )}
       </div>
     );
   }
