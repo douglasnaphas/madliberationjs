@@ -3,6 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 import { Configs } from '../Configs';
 import GeneratingRoomCodePage from './GeneratingRoomCodePage';
@@ -281,15 +282,32 @@ describe('GeneratingRoomCodePageWithRouter', () => {
     expect(global.fetch).toHaveBeenCalledTimes(1);
     process.nextTick(() => {
       wrapper.update();
-      // check for the expected failure message
+      const expectedFailureMessage1 = (
+        <Typography variant="h5">
+          So sorry, but a Room Code could not be generated. Please start over by
+          clicking{' '}
+          <Link
+            madliberationid="room-code-error-pick-script-link"
+            to="/pick-script"
+          >
+            here
+          </Link>
+          , or refreshing the page.
+        </Typography>
+      );
+      const expectedFailureMessage2 = (
+        <Typography variant="h5">
+          If this keeps happening, try a different browser or device.
+        </Typography>
+      );
       expect(
         wrapper
-          .findWhere(
-            n =>
-              n.text() ===
-              'So sorry, but a Room Code could not' +
-                ' be generated. Please start over.'
-          )
+          .findWhere(n => n.matchesElement(expectedFailureMessage1))
+          .exists()
+      ).toBe(true);
+      expect(
+        wrapper
+          .findWhere(n => n.matchesElement(expectedFailureMessage2))
           .exists()
       ).toBe(true);
       global.fetch.mockClear();

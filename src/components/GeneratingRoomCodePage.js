@@ -65,10 +65,25 @@ class GeneratingRoomCodePage extends Component {
         {this.state.failedToGetRoomCode && (
           <>
             <div>
-              <Typography variant="h4">
-                So sorry, but a Room Code could not be generated. Please start
-                over.
-              </Typography>
+              <div>
+                <Typography variant="h5">
+                  So sorry, but a Room Code could not be generated. Please start
+                  over by clicking{' '}
+                  <Link
+                    madliberationid="room-code-error-pick-script-link"
+                    to="/pick-script"
+                  >
+                    here
+                  </Link>
+                  , or refreshing the page.
+                </Typography>
+              </div>
+              <br />
+              <div>
+                <Typography variant="h5">
+                  If this keeps happening, try a different browser or device.
+                </Typography>
+              </div>
             </div>
           </>
         )}
