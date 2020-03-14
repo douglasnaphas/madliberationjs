@@ -27,7 +27,7 @@ phases:
       - aws s3 sync --content-type "image/jpeg" --exclude "*" --include "*.jpg" --delete build/ s3://staging.madliberationgame.com/
       # integration test
       - bash --version
-      - aws dynamodb query --table-name seders --key-condition-expression "room_code = :rc" --expression-attribute-values '{":rc":{"S":"YADBFY"}}' | jq '.["Items"] | length'
+      - aws dynamodb query --table-name seders --key-condition-expression "room_code = :rc" --expression-attribute-values '{":rc":{"S":"YADBFY"}}'
       - bash itest.sh
       # Deploy to prod
       - aws s3 sync --content-type "text/html" --exclude "*" --include "*.html" --delete build/ s3://madliberationgame.com/

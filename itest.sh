@@ -11,10 +11,9 @@ aws sts get-caller-identity
 aws dynamodb query \
   --table-name seders \
   --key-condition-expression "room_code = :rc" \
-  --expression-attribute-values '{":rc":{"S":"YADBFY"}}' \
-  | \
-  jq '.["Items"] | length'
+  --expression-attribute-values '{":rc":{"S":"YADBFY"}}'
 # that should print 3
+exit 3 # no need to deploy
 
 # one should be a seder, the other two should start with participant#
 
