@@ -11,7 +11,7 @@ aws sts get-caller-identity
 aws dynamodb query \
   --table-name seders \
   --key-condition-expression "room_code = :rc" \
-  --expression-attribute-values '{":rc":{"S":"'${IT_ROOM_CODE}'"}}' \
+  --expression-attribute-values '{":rc":{"S":"YADBFY"}}' \
   | \
   jq '.["Items"] | length'
 # that should print 3
