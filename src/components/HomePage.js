@@ -69,7 +69,7 @@ class HomePage extends Component {
           <div>
             <br />
             <Button
-              madliberationid="lead-seder-button"
+              madliberationid="lead-a-seder-button"
               title="Lead a seder"
               variant="contained"
               component={Link}
