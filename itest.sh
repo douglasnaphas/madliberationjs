@@ -8,14 +8,15 @@ echo "created room code ${IT_ROOM_CODE}"
 aws sts get-caller-identity
 
 # there should be 3 items
-aws dynamodb query \
+NUM_ITEMS=$(aws dynamodb query \
   --table-name seders \
   --key-condition-expression "room_code = :rc" \
   --expression-attribute-values '{":rc":{"S":"'${IT_ROOM_CODE}'"}}' \
   --projection-expression 'room_code, lib_id' \
   | \
-  jq '.["Items"] | length'
+  jq '.["Items"] | length')
 # that should print 3
+[[ "${NUM_ITEMS}" -eq "4" ]]
 
 # one should be a seder, the other two should start with participant#
 
