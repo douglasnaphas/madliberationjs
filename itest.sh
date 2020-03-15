@@ -19,8 +19,8 @@ NUM_ITEMS=$(aws dynamodb query \
   --projection-expression 'room_code, lib_id' \
   | \
   jq '.["Items"] | length')
-if [[ "${NUM_ITEMS}" -ne "4" ]] # made 4 to test error path in the build
-then                            # it will actually be 3
+if [[ "${NUM_ITEMS}" -ne "3" ]]
+then
   echo "wrong NUM_ITEMS: ${NUM_ITEMS}"
   exit 1
 fi
