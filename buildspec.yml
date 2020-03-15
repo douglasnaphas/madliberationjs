@@ -6,7 +6,7 @@ phases:
       # Install dependencies needed for running tests
       - npx cowsay hi
       - npm install
-      - npm install --global puppeteer
+      # - npm install --global puppeteer
 
       # Upgrade AWS CLI to the latest version
       - pip install --upgrade awscli
@@ -28,6 +28,7 @@ phases:
       - aws s3 sync --content-type "image/png" --exclude "*" --include "*.png" --delete build/ s3://staging.madliberationgame.com/
       - aws s3 sync --content-type "image/jpeg" --exclude "*" --include "*.jpg" --delete build/ s3://staging.madliberationgame.com/
       # integration test
+      - npx madliberation-itest --site https://staging.madliberationgame.com
       - bash itest.sh
       # Deploy to prod
       - aws s3 sync --content-type "text/html" --exclude "*" --include "*.html" --delete build/ s3://madliberationgame.com/
