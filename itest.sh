@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# IT_ROOM_CODE=$(npx madliberation-itest --site https://staging.madliberationgame.com | awk '{print $3}')
-# [[ -n ${IT_ROOM_CODE} ]]
-# echo "created room code ${IT_ROOM_CODE}"
+IT_ROOM_CODE=$(npx madliberation-itest --site https://staging.madliberationgame.com | awk '{print $3}')
+[[ -n ${IT_ROOM_CODE} ]]
+echo "created room code ${IT_ROOM_CODE}"
 
 # cleanup
 aws sts get-caller-identity
@@ -11,9 +11,11 @@ aws sts get-caller-identity
 aws dynamodb query \
   --table-name seders \
   --key-condition-expression "room_code = :rc" \
-  --expression-attribute-values '{":rc":{"S":"YADBFY"}}'
+  --expression-attribute-values '{":rc":{"S":"'${IT_ROOM_CODE}'"}}' \
+  --projection-expression 'room_code, lib_id'
+  | \
+  jq '.["Items"] | length'
 # that should print 3
-exit 3 # no need to deploy
 
 # one should be a seder, the other two should start with participant#
 
