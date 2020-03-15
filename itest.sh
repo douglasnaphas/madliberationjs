@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 IT_ROOM_CODE=$(npx madliberation-itest --site https://staging.madliberationgame.com | awk '{print $3}')
-[[ -n ${IT_ROOM_CODE} ]] || echo "empty IT_ROOM_CODE: ${IT_ROOM_CODE}" && false
+[[ -n ${IT_ROOM_CODE} ]] || echo "empty IT_ROOM_CODE: ${IT_ROOM_CODE}" && exit 1
 echo "created room code ${IT_ROOM_CODE}"
 
 # cleanup
@@ -15,8 +15,7 @@ NUM_ITEMS=$(aws dynamodb query \
   --projection-expression 'room_code, lib_id' \
   | \
   jq '.["Items"] | length')
-# that should print 3
-[[ "${NUM_ITEMS}" -eq "4" ]] || echo "wrong NUM_ITEMS: ${NUM_ITEMS}" && false
+[[ "${NUM_ITEMS}" -eq "4" ]] || echo "wrong NUM_ITEMS: ${NUM_ITEMS}" && exit 1
 
 # one should be a seder, the other two should start with participant#
 
