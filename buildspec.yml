@@ -28,9 +28,7 @@ phases:
       - aws s3 sync --content-type "image/png" --exclude "*" --include "*.png" --delete build/ s3://staging.madliberationgame.com/
       - aws s3 sync --content-type "image/jpeg" --exclude "*" --include "*.jpg" --delete build/ s3://staging.madliberationgame.com/
       # integration test
-      - node --version
-      - type nvm
-      - npx madliberation-itest --site https://staging.madliberationgame.com
+      - sudo npx madliberation-itest --site https://staging.madliberationgame.com
       - bash itest.sh
       # Deploy to prod
       - aws s3 sync --content-type "text/html" --exclude "*" --include "*.html" --delete build/ s3://madliberationgame.com/
