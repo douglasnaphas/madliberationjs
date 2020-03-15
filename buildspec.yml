@@ -4,6 +4,7 @@ phases:
   install:
     commands:
       # Install dependencies needed for running tests
+      - npx cowsay hi
       - npm install
       - npm install --global puppeteer
 
