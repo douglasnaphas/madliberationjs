@@ -12,7 +12,7 @@ aws dynamodb query \
   --table-name seders \
   --key-condition-expression "room_code = :rc" \
   --expression-attribute-values '{":rc":{"S":"'${IT_ROOM_CODE}'"}}' \
-  --projection-expression 'room_code, lib_id'
+  --projection-expression 'room_code, lib_id' \
   | \
   jq '.["Items"] | length'
 # that should print 3
