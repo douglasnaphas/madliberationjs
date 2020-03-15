@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-IT_ROOM_CODE=$(npx madliberation-itest --site https://staging.madliberationgame.com | awk '{print $3}')
+git clone https://github.com/douglasnaphas/madliberation-itest.git
+cd madliberation-itest
+npm install
+
+IT_ROOM_CODE=$(npx . --site https://staging.madliberationgame.com | awk '{print $3}')
 if [[ -z ${IT_ROOM_CODE} ]]
 then
   echo "empty IT_ROOM_CODE: ${IT_ROOM_CODE}"
