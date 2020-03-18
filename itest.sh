@@ -21,7 +21,7 @@ ITEMS=$(aws dynamodb query \
   --table-name seders \
   --key-condition-expression "room_code = :rc" \
   --expression-attribute-values '{":rc":{"S":"'${IT_ROOM_CODE}'"}}' \
-  --projection-expression 'room_code, lib_id' \
+  --projection-expression 'room_code, lib_id, game_name, closed' \
   | \
   jq '.["Items"]')
 
@@ -45,7 +45,7 @@ then
 fi
 
 # there should be a participant in this seder with the name "ITestP2 <room code>"
-P2_NAME="ITestLdr ${IT_ROOM_CODE}"
+P2_NAME="ITestP2 ${IT_ROOM_CODE}"
 P2_COUNT=$(echo "${ITEMS}" | \
   jq '[.[] | select((.["lib_id"]["S"] | startswith("participant#")) and (.["game_name"]["S"] == "'"${P2_NAME}"'"))] | length')
 if [[ "${P2_COUNT}" -ne "1" ]]
