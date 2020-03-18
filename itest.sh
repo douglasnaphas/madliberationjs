@@ -67,10 +67,14 @@ fi
 
 # delete participants (because deleting the seder marks it as available)
 # figure out exact participant lib_ids
+echo "LDR_NAME: ${LDR_NAME}"
+echo ${LDR_NAME}
+echo "P2_NAME: ${P2_NAME}"
+echo ${P2_NAME}
 LDR_LIB_ID=$(echo "${ITEMS}" | \
-  jq '.[] | select((.["game_name"]["S"] == "'${LDR_NAME}'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]')
-P2_LIB_ID=$(echo "${ITEMS}" | \
-  jq '.[] | select((.["game_name"]["S"] == "'${P2_NAME}'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]')
+  jq '.[] | select((.["game_name"]["S"] == "'"${LDR_NAME}"'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]')
+P2_LIB_ID="$(echo "${ITEMS}" | \
+  jq '.[] | select((.["game_name"]["S"] == "'"${P2_NAME}"'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]')"
 # delete leader
 aws dynamodb delete-item \
   --table-name seders \
@@ -82,9 +86,9 @@ aws dynamodb delete-item \
   --key \
     '{"room_code":{"S":"'${IT_ROOM_CODE}'"},"lib_id":{"S":"'${P2_LIB_ID}'"}}'
 # delete seder
-aws dynamodb delete-item \
-  --table-name seders \
-  --key \
-    '{"room_code":{"S":"'${IT_ROOM_CODE}'"},"lib_id":{"S":"seder"}}' \
-  --condition-expression 'closed = :t' \
-  --expression-attribute-values '{":t":{"BOOL":true}}'
+# aws dynamodb delete-item \
+#   --table-name seders \
+#   --key \
+#     '{"room_code":{"S":"'${IT_ROOM_CODE}'"},"lib_id":{"S":"seder"}}' \
+#   --condition-expression 'closed = :t' \
+#   --expression-attribute-values '{":t":{"BOOL":true}}'
