@@ -72,14 +72,14 @@ echo ${LDR_NAME}
 echo "P2_NAME: ${P2_NAME}"
 echo ${P2_NAME}
 LDR_LIB_ID=$(echo "${ITEMS}" | \
-  jq '.[] | select((.["game_name"]["S"] == "'"${LDR_NAME}"'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]')
+  jq '.[] | select((.["game_name"]["S"] == "'"${LDR_NAME}"'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]' | tr -d '"')
 if [[ -z ${LDR_LIB_ID} ]]
 then
   echo "empty LDR_LIB_ID: ${LDR_LIB_ID}"
   exit 1
 fi
-P2_LIB_ID="$(echo "${ITEMS}" | \
-  jq '.[] | select((.["game_name"]["S"] == "'"${P2_NAME}"'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]')"
+P2_LIB_ID=$(echo "${ITEMS}" | \
+  jq '.[] | select((.["game_name"]["S"] == "'"${P2_NAME}"'") and (.["lib_id"]["S"] | startswith("participant#"))) | .["lib_id"]["S"]' | tr -d '"')
 if [[ -z ${P2_LIB_ID} ]]
 then
   echo "empty P2_LIB_ID: ${P2_LIB_ID}"
