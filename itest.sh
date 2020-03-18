@@ -37,7 +37,7 @@ fi
 # there should be a participant in this seder with the name "ITestLdr <room code>"
 LDR_NAME="ITestLdr ${IT_ROOM_CODE}"
 LDR_COUNT=$(echo "${ITEMS}" | \
-  jq '[.[] | select((.["lib_id"]["S"] | startswith("participant#")) and (.["game_name"]["S"] == '"${LDR_NAME}"'))] | length')
+  jq '[.[] | select((.["lib_id"]["S"] | startswith("participant#")) and (.["game_name"]["S"] == "'"${LDR_NAME}"'"))] | length')
 if [[ "${LDR_COUNT}" -ne "1" ]]
 then
   echo "wrong LDR_COUNT: ${LDR_COUNT}, should be 1"
@@ -47,7 +47,7 @@ fi
 # there should be a participant in this seder with the name "ITestP2 <room code>"
 P2_NAME="ITestLdr ${IT_ROOM_CODE}"
 P2_COUNT=$(echo "${ITEMS}" | \
-  jq '[.[] | select((.["lib_id"]["S"] | startswith("participant#")) and (.["game_name"]["S"] == '"${P2_NAME}"'))] | length')
+  jq '[.[] | select((.["lib_id"]["S"] | startswith("participant#")) and (.["game_name"]["S"] == "'"${P2_NAME}"'"))] | length')
 if [[ "${P2_COUNT}" -ne "1" ]]
 then
   echo "wrong P2_COUNT: ${P2_COUNT}, should be 1"
