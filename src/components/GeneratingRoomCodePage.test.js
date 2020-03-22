@@ -90,7 +90,8 @@ describe('GeneratingRoomCodePageWithRouter', () => {
         body: JSON.stringify({
           path: chosenPath
         }),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       }
     );
     process.nextTick(() => {
@@ -242,7 +243,8 @@ describe('GeneratingRoomCodePageWithRouter', () => {
         body: JSON.stringify({
           path: 'script/path/from/storage'
         }),
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
       }
     );
     Storage.prototype.getItem.mockClear();

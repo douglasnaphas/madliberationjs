@@ -30,7 +30,8 @@ class GeneratingRoomCodePage extends Component {
       body: JSON.stringify({
         path: chosenPath
       }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include'
     })
       .then(r => {
         if (!r.ok) {
