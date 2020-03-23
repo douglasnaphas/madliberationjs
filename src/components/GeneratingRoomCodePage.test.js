@@ -56,7 +56,51 @@ describe('GeneratingRoomCodePageWithRouter', () => {
       done();
     });
   });
-  test('should fetch /room-code', done => {
+  test('should fetch /room-code, user present', done => {
+    const mockSuccessResponse = {};
+    const mockJsonPromise = Promise.resolve(mockSuccessResponse);
+    const mockFetchPromise = Promise.resolve({
+      json: () => mockJsonPromise
+    });
+    jest.spyOn(global, 'fetch').mockImplementation(() => {
+      return mockFetchPromise;
+    });
+    const history = {
+      push: jest.fn()
+    };
+    const setChosenPath = jest.fn();
+    const setConfirmedRoomCode = jest.fn();
+    const chosenPath = 'a/b/c';
+    const wrapper = mount(
+      <MemoryRouter>
+        <GeneratingRoomCodePage
+          history={history}
+          setChosenPath={setChosenPath}
+          chosenPath={chosenPath}
+          setConfirmedRoomCode={setConfirmedRoomCode}
+          user={{ email: 'mrseff@f.com', nickname: 'Mrs. F' }}
+        ></GeneratingRoomCodePage>
+      </MemoryRouter>
+    );
+    expect(global.fetch).toHaveBeenCalled();
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    expect(global.fetch).toHaveBeenCalledWith(
+      new URL('/room-code', Configs.apiUrl()),
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          path: chosenPath
+        }),
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+      }
+    );
+    process.nextTick(() => {
+      global.fetch.mockClear();
+      done();
+    });
+  });
+  test('should fetch /room-code, no user present', done => {
     const mockSuccessResponse = {};
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
@@ -90,8 +134,7 @@ describe('GeneratingRoomCodePageWithRouter', () => {
         body: JSON.stringify({
           path: chosenPath
         }),
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
+        headers: { 'Content-Type': 'application/json' }
       }
     );
     process.nextTick(() => {
@@ -204,7 +247,7 @@ describe('GeneratingRoomCodePageWithRouter', () => {
       done();
     });
   });
-  test('chosenPath should be hydrated if not supplied, but present in storage', done => {
+  test('chosenPath should be hydrated if not supplied, but present in storage, user present', done => {
     const mockSuccessResponse = { roomCode: 'LOCALS' };
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
@@ -232,6 +275,7 @@ describe('GeneratingRoomCodePageWithRouter', () => {
           setChosenPath={setChosenPath}
           chosenPath={chosenPath}
           setConfirmedRoomCode={setConfirmedRoomCode}
+          user={{ nickname: 'God of Fun', email: 'sumslummy@raw.raw' }}
         ></GeneratingRoomCodePage>
       </MemoryRouter>
     );
@@ -316,4 +360,12 @@ describe('GeneratingRoomCodePageWithRouter', () => {
       done();
     });
   });
+  test('should fetch with ?user=<user email> if there is a logged-in user', () => {});
+  test(
+    'should redirect to a "try logging in again" page if a logged-in ' +
+      'request fails for identity reasons',
+    () => {}
+  );
+  test('(fix above tests) should not credentials: include when there is no user', () => {}); // maybe add a new test covering the above tests in the logged-in case,
+  // then revert the recent changes to the earlier tests
 });

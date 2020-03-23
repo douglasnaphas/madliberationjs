@@ -24,15 +24,15 @@ class GeneratingRoomCodePage extends Component {
       setChosenPath(chosenPath);
     }
     const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
-
-    fetch(roomCodeUrl, {
+    const fetchInit = {
       method: 'POST',
       body: JSON.stringify({
         path: chosenPath
       }),
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include'
-    })
+      headers: { 'Content-Type': 'application/json' }
+    };
+    if (this.props.user) fetchInit.credentials = 'include';
+    fetch(roomCodeUrl, fetchInit)
       .then(r => {
         if (!r.ok) {
           throw r.status;
@@ -97,7 +97,8 @@ GeneratingRoomCodePage.propTypes = {
   chosenPath: PropTypes.string,
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   setChosenPath: PropTypes.func.isRequired,
-  setConfirmedRoomCode: PropTypes.func.isRequired
+  setConfirmedRoomCode: PropTypes.func.isRequired,
+  user: PropTypes.shape({ nickname: PropTypes.string, email: PropTypes.string })
 };
 
 export default withStyles(styles)(GeneratingRoomCodePage);
