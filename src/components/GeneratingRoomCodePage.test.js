@@ -281,7 +281,7 @@ describe('GeneratingRoomCodePageWithRouter', () => {
     );
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(
-      new URL('/room-code', Configs.apiUrl()),
+      new URL('/room-code', Configs.apiUrl()), // deviations here are not failing the tests
       {
         method: 'POST',
         body: JSON.stringify({
@@ -360,12 +360,10 @@ describe('GeneratingRoomCodePageWithRouter', () => {
       done();
     });
   });
-  test('should fetch with ?user=<user email> if there is a logged-in user', () => {});
+  test('should fetch with user=<user sub> in body if there is a logged-in user', () => {});
   test(
-    'should redirect to a "try logging in again" page if a logged-in ' +
-      'request fails for identity reasons',
+    'should show a "try logging in again" message if a logged-in ' +
+      'request fails for identity reasons, with option to not be logged in',
     () => {}
   );
-  test('(fix above tests) should not credentials: include when there is no user', () => {}); // maybe add a new test covering the above tests in the logged-in case,
-  // then revert the recent changes to the earlier tests
 });

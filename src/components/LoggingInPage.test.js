@@ -14,15 +14,16 @@ describe('Logging In Page', () => {
     mount.cleanUp();
   });
   test.each`
-    desc                   | nickname      | email                   | url                                      | expectedUrl                   | query
-    ${'strip query'}       | ${'Should'}   | ${'strip@urlquery.com'} | ${'https://passover.lol?ab=cd'}          | ${'https://passover.lol'}     | ${true}
-    ${'query, hash'}       | ${'Hash Too'} | ${'clean@theurl.net'}   | ${'http://localhost?qu=ery#/logging-in'} | ${'http://localhost'}         | ${true}
-    ${'no query, no hash'} | ${'No query'} | ${'abc@123a.org'}       | ${'https://MLG.mlg'}                     | ${'https://MLG.mlg'}          | ${false}
-    ${'hash, no query'}    | ${'Hash'}     | ${'thishas@noq.co'}     | ${'https://xyz.com/#/log-in'}            | ${'https://xyz.com/$/log-in'} | ${false}
-  `('$desc', async ({ nickname, email, url, expectedUrl, query }) => {
+    desc                   | nickname      | email                   | url                                      | expectedUrl                   | query    | sub
+    ${'strip query'}       | ${'Should'}   | ${'strip@urlquery.com'} | ${'https://passover.lol?ab=cd'}          | ${'https://passover.lol'}     | ${true}  | ${'ab-cd-23-fsaf-f'}
+    ${'query, hash'}       | ${'Hash Too'} | ${'clean@theurl.net'}   | ${'http://localhost?qu=ery#/logging-in'} | ${'http://localhost'}         | ${true}  | ${'mla-fajkd-23-fa-d3234189v'}
+    ${'no query, no hash'} | ${'No query'} | ${'abc@123a.org'}       | ${'https://MLG.mlg'}                     | ${'https://MLG.mlg'}          | ${false} | ${'823mva-32jf0-324uj'}
+    ${'hash, no query'}    | ${'Hash'}     | ${'thishas@noq.co'}     | ${'https://xyz.com/#/log-in'}            | ${'https://xyz.com/$/log-in'} | ${false} | ${'unusualsub'}
+  `('$desc', async ({ nickname, email, url, expectedUrl, query, sub }) => {
     const expectedUser = {
       nickname,
-      email
+      email,
+      sub
     };
     const history = { push: jest.fn() };
     const setUser = jest.fn();
@@ -90,7 +91,8 @@ describe('Logging In Page', () => {
       'user-email',
       expectedUser.email
     );
-    expect(storage.setItem).toHaveBeenCalledTimes(2);
+    expect(storage.setItem).toHaveBeenCalledWith('user-sub', expectedUser.sub);
+    expect(storage.setItem).toHaveBeenCalledTimes(3);
   });
   test('fetch returns nickname only', () => {});
   test('fetch returns email only', () => {});
