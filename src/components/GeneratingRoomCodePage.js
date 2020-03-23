@@ -18,17 +18,17 @@ class GeneratingRoomCodePage extends Component {
   }
   componentDidMount() {
     let { chosenPath } = this.props;
-    const { history, setChosenPath, setConfirmedRoomCode } = this.props;
+    const { history, setChosenPath, setConfirmedRoomCode, user } = this.props;
     if (!chosenPath && localStorage.getItem('chosenPath')) {
       chosenPath = localStorage.getItem('chosenPath');
       setChosenPath(chosenPath);
     }
     const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
+    const body = { path: chosenPath };
+    if (this.props.user) body.user = user.sub;
     const fetchInit = {
       method: 'POST',
-      body: JSON.stringify({
-        path: chosenPath
-      }),
+      body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' }
     };
     if (this.props.user) fetchInit.credentials = 'include';
@@ -98,7 +98,11 @@ GeneratingRoomCodePage.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func }).isRequired,
   setChosenPath: PropTypes.func.isRequired,
   setConfirmedRoomCode: PropTypes.func.isRequired,
-  user: PropTypes.shape({ nickname: PropTypes.string, email: PropTypes.string })
+  user: PropTypes.shape({
+    nickname: PropTypes.string,
+    email: PropTypes.string,
+    sub: PropTypes.string
+  })
 };
 
 export default withStyles(styles)(GeneratingRoomCodePage);
