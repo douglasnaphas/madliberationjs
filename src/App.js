@@ -166,6 +166,7 @@ class App extends Component {
                     setChosenPath={this.setChosenPath}
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
                     chosenPath={this.state.chosenPath}
+                    user={this.state.user}
                   />
                 )}
               />
