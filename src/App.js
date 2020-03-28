@@ -32,6 +32,7 @@ import ExplainPage from './components/ExplainPage';
 import LoggingInPageWithRouter from './components/LoggingInPageWithRouter';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ContactUs from './components/ContactUs';
+import ExplainVideoPage from './components/ExplainVideoPage';
 
 const theme = createMuiTheme({
   palette: {
@@ -144,6 +145,11 @@ class App extends Component {
                 path="/explain"
                 exact
                 render={props => <ExplainPage {...props} />}
+              />
+              <Route
+                path="/explain-video"
+                exact
+                render={props => <ExplainVideoPage {...props} />}
               />
               <Route
                 path="/pick-script"

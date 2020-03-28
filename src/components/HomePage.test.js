@@ -8,14 +8,24 @@ import HomePage from './HomePage';
 
 describe('<HomePage />', () => {
   let mount;
-  const leadSederButton = (
+  const leadSederInPersonButton = (
     <Button
-      title="Lead a seder"
+      title="Lead a seder - in person"
       variant="contained"
       component={Link}
       to="/explain"
     >
-      Lead a seder
+      Lead a seder - in person
+    </Button>
+  );
+  const leadSederByVideoButton = (
+    <Button
+      title="Lead a seder - by video"
+      variant="contained"
+      component={Link}
+      to="/explain-video"
+    >
+      Lead a seder - by video
     </Button>
   );
   const joinSederButton = (
@@ -58,7 +68,8 @@ describe('<HomePage />', () => {
         <HomePage storage={storage} />
       </MemoryRouter>
     );
-    expect(wrapper.containsMatchingElement(leadSederButton)).toBe(true);
+    expect(wrapper.containsMatchingElement(leadSederInPersonButton)).toBe(true);
+    expect(wrapper.containsMatchingElement(leadSederByVideoButton)).toBe(true);
     expect(wrapper.containsMatchingElement(joinSederButton)).toBe(true);
   });
   test('The Log In button should have an href to the login page', () => {

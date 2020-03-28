@@ -70,12 +70,24 @@ class HomePage extends Component {
             <br />
             <Button
               madliberationid="lead-a-seder-button"
-              title="Lead a seder"
+              title="Lead a seder - in person"
               variant="contained"
               component={Link}
               to="/explain"
             >
-              Lead a seder
+              Lead a seder - in person
+            </Button>
+          </div>
+          <div>
+            <br />
+            <Button
+              madliberationid="lead-a-seder-by-video-button"
+              title="Lead a seder - by video"
+              variant="contained"
+              component={Link}
+              to="/explain-video"
+            >
+              Lead a seder - by video
             </Button>
           </div>
           <br />
