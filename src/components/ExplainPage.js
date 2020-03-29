@@ -102,7 +102,7 @@ class ExplainPage extends Component {
               us when it’s time to pass.
             </Typography>
             <Typography component="p" paragraph>
-              One more thing: this app is in beta mode, which means it's still
+              One more thing: this app is in gamma mode, which means it's still
               being tested out and improved. Keep these tips in mind:
             </Typography>
             <List>

@@ -134,7 +134,7 @@ class ExplainVideoPage extends Component {
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>Say</StageDirection>: One more thing: this app is
-              in beta mode, which means it's still being tested out and
+              in gamma mode, which means it's still being tested out and
               improved. Keep this in mind: Once you've joined the seder, don't
               close the tab or go to any other web sites in the tab in which you
               have the game open. Right now, the only person who can re-join
