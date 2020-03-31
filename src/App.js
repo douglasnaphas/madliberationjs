@@ -45,7 +45,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: undefined,
+      user:
+        localStorage &&
+        localStorage.getItem &&
+        localStorage.getItem('user-email') &&
+        localStorage.getItem('user-nickname') &&
+        localStorage.getItem('user-sub')
+          ? {
+              email: localStorage.getItem('user-email'),
+              nickname: localStorage.getItem('user-nickname'),
+              sub: localStorage.getItem('user-sub')
+            }
+          : false,
       isSigningIn: true,
       confirmedRoomCode: false,
       confirmedGameName: false,

@@ -131,6 +131,7 @@ describe('<HomePage />', () => {
     expect(storage.removeItem).toHaveBeenCalled();
     expect(storage.removeItem).toHaveBeenCalledWith('user-nickname');
     expect(storage.removeItem).toHaveBeenCalledWith('user-email');
-    expect(storage.removeItem).toHaveBeenCalledTimes(2);
+    expect(storage.removeItem).toHaveBeenCalledWith('user-sub');
+    expect(storage.removeItem).toHaveBeenCalledTimes(3);
   });
 });
