@@ -126,19 +126,33 @@ class HomePage extends Component {
                   <Typography component="p">
                     Logged in as {user.nickname}
                   </Typography>
-                  <Typography component="p">
-                    <Button
-                      onClick={() => {
-                        setUser(false);
-                        storage.removeItem('user-nickname');
-                        storage.removeItem('user-email');
-                        storage.removeItem('user-sub');
-                      }}
-                      madliberationid="logout-button"
-                    >
-                      Log out
-                    </Button>
-                  </Typography>
+                  <div>
+                    <Typography component="p">
+                      <Button
+                        component={Link}
+                        to="/seders"
+                        title="resume-seder-button"
+                        madliberationid="resume-seder-button"
+                      >
+                        Resume a seder (that you were leading)
+                      </Button>
+                    </Typography>
+                  </div>
+                  <div>
+                    <Typography component="p">
+                      <Button
+                        onClick={() => {
+                          setUser(false);
+                          storage.removeItem('user-nickname');
+                          storage.removeItem('user-email');
+                          storage.removeItem('user-sub');
+                        }}
+                        madliberationid="logout-button"
+                      >
+                        Log out
+                      </Button>
+                    </Typography>
+                  </div>
                 </Paper>
               </div>
             </>

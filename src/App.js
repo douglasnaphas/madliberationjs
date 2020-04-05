@@ -33,6 +33,7 @@ import LoggingInPageWithRouter from './components/LoggingInPageWithRouter';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ContactUs from './components/ContactUs';
 import ExplainVideoPage from './components/ExplainVideoPage';
+import SedersPage from './components/SedersPage';
 
 const theme = createMuiTheme({
   palette: {
@@ -151,6 +152,11 @@ class App extends Component {
                     storage={localStorage}
                   />
                 )}
+              ></Route>
+              <Route
+                path="/seders"
+                exact
+                render={props => <SedersPage user={this.state.user} />}
               ></Route>
               <Route
                 path="/explain"
