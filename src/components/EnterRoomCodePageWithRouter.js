@@ -124,8 +124,7 @@ class EnterRoomCodePage extends Component {
           <br />
           <div>
             <Typography component="p" paragraph>
-              Also, what is your{' '}
-              <label htmlFor="player-game-name">game name</label>?
+              Also, what is your <label htmlFor="player-game-name">name</label>?
             </Typography>
           </div>
           <div>

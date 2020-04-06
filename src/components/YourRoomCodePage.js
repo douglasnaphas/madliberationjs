@@ -113,8 +113,8 @@ class YourRoomCodePage extends Component {
         </div>
         <div>
           <Typography component="p" paragraph gutterBottom>
-            What's your <label htmlFor="leader-game-name">Game Name</label>?
-            It's how you, personally, will be known throughout this seder.
+            What's your <label htmlFor="leader-game-name">name</label>? It's how
+            you, personally, will be known throughout this seder.
           </Typography>
         </div>
         <div>
