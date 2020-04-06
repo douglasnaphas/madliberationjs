@@ -48,13 +48,13 @@ class YourRoomCodePage extends Component {
     }
   };
   joinSederAndGoToRoster = history => {
-    const { joinSeder, setConfirmedGameName } = this.props;
+    const { joinSeder, setConfirmedGameName, user } = this.props;
     let { confirmedRoomCode } = this.props;
     this.setState({ thatsMyNameButtonPressed: true });
     if (!confirmedRoomCode && this.localStorage.getItem('roomCode')) {
       confirmedRoomCode = this.localStorage.getItem('roomCode');
     }
-    joinSeder(confirmedRoomCode, this.state.tentativeGameName).then(d => {
+    joinSeder(confirmedRoomCode, this.state.tentativeGameName, user).then(d => {
       if (!this._isMounted) return;
       if (d.status === 200) {
         setConfirmedGameName(d.data.gameName);

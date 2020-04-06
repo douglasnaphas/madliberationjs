@@ -218,6 +218,7 @@ class App extends Component {
                     joinSeder={joinSeder}
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
                     setConfirmedGameName={this.setConfirmedGameName}
+                    user={this.state.user}
                   />
                 )}
               />
@@ -244,6 +245,7 @@ class App extends Component {
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
                     setConfirmedGameName={this.setConfirmedGameName}
                     confirmedRoomCode={this.state.confirmedRoomCode}
+                    user={this.state.user}
                   />
                 )}
               />

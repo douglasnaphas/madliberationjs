@@ -62,29 +62,32 @@ class EnterRoomCodePage extends Component {
       setConfirmedRoomCode,
       setConfirmedGameName,
       joinSeder,
-      history
+      history,
+      user
     } = this.props;
     this.setState({ joinButtonPressed: true });
-    joinSeder(this.state.tentativeRoomCode, this.state.tentativeGameName).then(
-      d => {
-        this.setState({ joinSederResponse: d });
-        if (d.status === 200) {
-          setConfirmedRoomCode(d.data.roomCode);
-          setConfirmedGameName(d.data.gameName);
-          history.push('/you-have-joined');
+    joinSeder(
+      this.state.tentativeRoomCode,
+      this.state.tentativeGameName,
+      user
+    ).then(d => {
+      this.setState({ joinSederResponse: d });
+      if (d.status === 200) {
+        setConfirmedRoomCode(d.data.roomCode);
+        setConfirmedGameName(d.data.gameName);
+        history.push('/you-have-joined');
+      } else {
+        this.setState({ failedAttempt: true });
+        if (d.data.err === Configs.generic400ErrorMessage) {
+          this.setState({
+            failureMessage: this.joinSederCatchAllErrorMessage
+          });
         } else {
-          this.setState({ failedAttempt: true });
-          if (d.data.err === Configs.generic400ErrorMessage) {
-            this.setState({
-              failureMessage: this.joinSederCatchAllErrorMessage
-            });
-          } else {
-            this.setState({ failureMessage: d.data.err });
-          }
+          this.setState({ failureMessage: d.data.err });
         }
-        if (this._isMounted) this.setState({ joinButtonPressed: false });
       }
-    );
+      if (this._isMounted) this.setState({ joinButtonPressed: false });
+    });
   };
   componentDidMount() {
     this._isMounted = true;
