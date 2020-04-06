@@ -156,7 +156,13 @@ class App extends Component {
               <Route
                 path="/seders"
                 exact
-                render={props => <SedersPage user={this.state.user} />}
+                render={props => (
+                  <SedersPage
+                    user={this.state.user}
+                    setConfirmedRoomCode={this.setConfirmedRoomCode}
+                    setChosenPath={this.setChosenPath}
+                  />
+                )}
               ></Route>
               <Route
                 path="/explain"

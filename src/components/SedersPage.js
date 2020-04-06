@@ -8,9 +8,12 @@ import { Button } from '@material-ui/core';
 import MenuAppBar from './MenuAppBar';
 import { Configs } from '../Configs';
 import { Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-function SedersPage({ user }) {
+function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
   const [seders, setSeders] = useState([]);
+  const [selectedRoomCode, setSelectedRoomCode] = useState();
+  const [selectedSeder, setSelectedSeder] = useState();
   useEffect(() => {
     if (!user || !user.sub) return;
     const sedersUrl = new URL(`/seders?user=${user.sub}`, Configs.apiUrl());
@@ -21,7 +24,7 @@ function SedersPage({ user }) {
         return r.json();
       })
       .then(s => {
-        if (s.Items) {
+        if (s.Items && Array.isArray(s.Items)) {
           setSeders(s.Items);
         }
       })
@@ -33,7 +36,18 @@ function SedersPage({ user }) {
     <Table>
       <TableBody>
         {seders.map(s => (
-          <TableRow key={`seder-row-${s.room_code}`}>
+          <TableRow key={s.room_code}>
+            <TableCell>
+              <Radio
+                id={`radio-${s.room_code}`}
+                madliberationid={`radio-${s.room_code}`}
+                checked={selectedRoomCode === s.room_code}
+                value={s.room_code}
+                onChange={event => {
+                  setSelectedRoomCode(event.target.value);
+                }}
+              ></Radio>
+            </TableCell>
             <TableCell>{s.room_code}</TableCell>
           </TableRow>
         ))}
@@ -59,7 +73,34 @@ function SedersPage({ user }) {
           You are or were in seders with these Room Codes:
         </Typography>
       </div>
-      {seders.length ? sederTable : <div></div>}
+      {seders.length ? (
+        <>
+          <div>{sederTable}</div>
+          <div>
+            <br />
+            <Button
+              id="resume-this-seder-button"
+              madliberationid="resume-this-seder-button"
+              variant="contained"
+              component={Link}
+              onClick={e => {
+                setConfirmedRoomCode(selectedRoomCode);
+                const seder = seders.filter(
+                  s => s.room_code === selectedRoomCode
+                );
+                if (seder.length > 0 && seder[0].path) {
+                  setChosenPath(seder[0].path);
+                }
+              }}
+              to="/your-room-code"
+            >
+              Resume seder
+            </Button>
+          </div>
+        </>
+      ) : (
+        <div></div>
+      )}
     </>
   );
 }
