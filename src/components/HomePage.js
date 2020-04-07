@@ -44,8 +44,6 @@ class HomePage extends Component {
     return (
       <div className={classes.homePageBackground}>
         <div>
-          <br />
-          <br />
           <div>
             <img
               alt="Mad Liberation: Let My People LOL"
@@ -53,7 +51,6 @@ class HomePage extends Component {
               className={classes.madliberationLogo}
             />
           </div>
-          <br />
           <div>
             <Button
               madliberationid="join-a-seder-button"
@@ -105,13 +102,7 @@ class HomePage extends Component {
             </div>
           )}
           <br />
-          <br />
-          <br />
-          <img
-            alt="Very Awesome Passover"
-            src={VeryAwesomePassoverLogo}
-            className={classes.veryAwesomePassoverLogo}
-          />
+
           {user && (
             <>
               <div
@@ -157,6 +148,14 @@ class HomePage extends Component {
               </div>
             </>
           )}
+          <br />
+          <br />
+          <img
+            alt="Very Awesome Passover"
+            src={VeryAwesomePassoverLogo}
+            className={classes.veryAwesomePassoverLogo}
+          />
+          <br />
         </div>
       </div>
     );

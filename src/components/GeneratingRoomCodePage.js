@@ -82,6 +82,12 @@ class GeneratingRoomCodePage extends Component {
               <br />
               <div>
                 <Typography variant="h5">
+                  If you're logged in, try going to the <Link to="/">Home</Link>{' '}
+                  page, then logging out and in again.
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="h5">
                   If this keeps happening, try a different browser or device.
                 </Typography>
               </div>
