@@ -131,10 +131,10 @@ class HomePage extends Component {
                       <Button
                         component={Link}
                         to="/seders"
-                        title="resume-seder-button"
-                        madliberationid="resume-seder-button"
+                        title="see-your-seders-button"
+                        madliberationid="see-your-seders-button"
                       >
-                        Resume a seder (that you were leading)
+                        See your seders
                       </Button>
                     </Typography>
                   </div>

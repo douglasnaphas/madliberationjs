@@ -11,9 +11,8 @@ import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
-  const [seders, setSeders] = useState([]);
+  const [sedersIStarted, setSedersIStarted] = useState([]);
   const [selectedRoomCode, setSelectedRoomCode] = useState();
-  const [selectedSeder, setSelectedSeder] = useState();
   useEffect(() => {
     if (!user || !user.sub) return;
     const sedersUrl = new URL(`/seders?user=${user.sub}`, Configs.apiUrl());
@@ -25,7 +24,7 @@ function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
       })
       .then(s => {
         if (s.Items && Array.isArray(s.Items)) {
-          setSeders(s.Items);
+          setSedersIStarted(s.Items);
         }
       })
       .catch(err => {
@@ -35,7 +34,7 @@ function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
   const sederTable = (
     <Table>
       <TableBody>
-        {seders.map(s => (
+        {sedersIStarted.map(s => (
           <TableRow key={s.room_code}>
             <TableCell>
               <Radio
@@ -73,7 +72,7 @@ function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
           You are or were in seders with these Room Codes:
         </Typography>
       </div>
-      {seders.length ? (
+      {sedersIStarted.length ? (
         <>
           <div>{sederTable}</div>
           <div>
@@ -85,7 +84,7 @@ function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
               component={Link}
               onClick={e => {
                 setConfirmedRoomCode(selectedRoomCode);
-                const seder = seders.filter(
+                const seder = sedersIStarted.filter(
                   s => s.room_code === selectedRoomCode
                 );
                 if (seder.length > 0 && seder[0].path) {
