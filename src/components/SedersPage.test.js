@@ -116,15 +116,19 @@ describe('SedersPage', () => {
   });
   describe('Re-join Case 2: user started the seder, non-closed, user named', () => {
     // user has a confirmed game name, but has not yet clicked "that's everyone"
+    // get a game name cookie, restore state, and send them to /roster
   });
   describe('Re-join Case 3: user did not start the seder, non-closed', () => {
     // user must have been named (must have gotten their game name confirmed)
     // if they are in a seder that they did not start
+    // get a game name cookie, restore state, and send them to /you-have-joined
   });
   describe('Re-join Case 4: closed, assignments populated, but not answers', () => {
     // for closed seders it doesn't matter who started it
+    // get a game name cookie, restore state, and send them to /play
   });
   describe('Re-join Case 5: closed, assignments and answers populated', () => {
     // this should allow the user to fetch the script long after the seder
+    // get a game name cookie, restore state, and send them to /read-roster
   });
 });
