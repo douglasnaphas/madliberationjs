@@ -122,7 +122,7 @@ function SedersPage({
       </TableBody>
     </Table>
   );
-
+  // console.log(seders.get(selectedRoomCode));
   return (
     <>
       <MenuAppBar></MenuAppBar>
@@ -153,14 +153,27 @@ function SedersPage({
               component={Link}
               onClick={e => {
                 setConfirmedRoomCode(selectedRoomCode);
-                const seder = sedersIStarted.filter(
-                  s => s.room_code === selectedRoomCode
-                );
-                if (seder.length > 0 && seder[0].path) {
-                  setChosenPath(seder[0].path);
+                const selectedGameName =
+                  selectedRoomCode &&
+                  seders &&
+                  seders.get &&
+                  seders.get(selectedRoomCode) &&
+                  seders.get(selectedRoomCode).game_name;
+                if (selectedGameName) {
+                  setConfirmedGameName(selectedGameName);
+                }
+                const seder = seders.get(selectedRoomCode);
+                if (seder.path) {
+                  setChosenPath(seder.path);
                 }
               }}
-              to="/your-room-code"
+              to={
+                seders &&
+                selectedRoomCode &&
+                seders.get(selectedRoomCode).game_name
+                  ? '/roster'
+                  : '/your-room-code'
+              }
             >
               Resume seder
             </Button>
