@@ -6,6 +6,7 @@ import { act } from 'react-dom/test-utils';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
 import { Link } from 'react-router-dom';
+import { Configs } from '../Configs';
 
 let mount;
 let globalFetch = global.fetch;
@@ -20,6 +21,9 @@ afterEach(() => {
 
 describe('SedersPage', () => {
   const selectSederByRoomCode = (wrapper, roomCode) => {
+    expect(
+      wrapper.findWhere(n => n.is(Radio) && n.is(`#radio-${roomCode}`)).exists()
+    ).toBe(true);
     act(() => {
       wrapper
         .findWhere(n => n.is(Radio) && n.is(`#radio-${roomCode}`))
@@ -40,7 +44,7 @@ describe('SedersPage', () => {
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
 
-      const items = [
+      const sedersStarted = [
         {
           created: 1585970508141,
           lib_id: 'seder',
@@ -66,15 +70,26 @@ describe('SedersPage', () => {
           timestamp: '2020-04-04T01:30:51.309Z'
         }
       ];
+      const sedersJoined = [];
       global.fetch = jest.fn().mockImplementation((url, init) => {
-        // if(url === )
-        return new Promise((resolve, reject) => {
-          resolve({
-            json: jest.fn().mockImplementation(() => {
-              return { Items: items };
-            })
+        if (url.pathname === '/seders' || url.pathname === '/seders-started') {
+          return new Promise((resolve, reject) => {
+            resolve({
+              json: jest.fn().mockImplementation(() => {
+                return { Items: sedersStarted };
+              })
+            });
           });
-        });
+        }
+        if (url.pathname === '/seders-joined') {
+          return new Promise((resolve, reject) => {
+            resolve({
+              json: jest.fn().mockImplementation(() => {
+                return { Items: sedersJoined };
+              })
+            });
+          });
+        }
       });
       let wrapper;
       await act(async () => {
@@ -117,6 +132,152 @@ describe('SedersPage', () => {
   describe('Re-join Case 2: user started the seder, non-closed, user named', () => {
     // user has a confirmed game name, but has not yet clicked "that's everyone"
     // get a game name cookie, restore state, and send them to /roster
+    test('user started some, joined some, 1 overlap', async () => {
+      const userEmail = 'munmunny@gmail.com';
+      const selectedRoomCode = 'MMEMUN';
+      const selectedGameName = 'madame un';
+      const userSub = '222-case2-thisiscase-2-x';
+      const selectedPath = 'xxx-madliberation-scripts/007-Practice_Script';
+      const user = {
+        email: userEmail,
+        nickname: selectedGameName,
+        sub: userSub
+      };
+      const setConfirmedRoomCode = jest.fn();
+      const setChosenPath = jest.fn();
+      const setConfirmedGameName = jest.fn();
+      const sedersStarted = [
+        {
+          created: 1585970508141,
+          lib_id: 'seder',
+          room_code: 'LFEJIK',
+          path: 'madliberation-scripts/002-Practice_Script',
+          user_email: userEmail,
+          timestamp: '2020-04-04T03:21:48.141Z'
+        },
+        {
+          created: 1585973347633,
+          lib_id: 'seder',
+          room_code: 'RLSXQA',
+          path: 'madliberation-scripts/006-Practice_Script',
+          user_email: userEmail,
+          timestamp: '2020-04-04T04:09:07.633Z'
+        },
+        {
+          created: 1585963851309,
+          lib_id: 'seder',
+          room_code: selectedRoomCode,
+          path: selectedPath,
+          user_email: userEmail,
+          timestamp: '2020-04-04T01:30:51.309Z'
+        }
+      ];
+      const sedersJoined = [
+        {
+          lib_id:
+            'participant#thiswillactuallybesomethinglikethefirst64charsofthehashofthegamename',
+          room_code: selectedRoomCode,
+          user_email: userEmail,
+          game_name: selectedGameName
+        },
+        {
+          lib_id:
+            'participant#4ormaybeitsthewholehash34890fjalfds239ftheg4u398poda',
+          room_code: 'FFEMUN',
+          user_email: userEmail,
+          game_name: 'custom name'
+        },
+        {
+          lib_id: 'participant#kf83q90jflakehash34890fjalfds239ftheg4u398poda',
+          room_code: 'NONOVE',
+          user_email: userEmail,
+          game_name: selectedGameName
+        }
+      ];
+      global.fetch = jest.fn().mockImplementation((url, init) => {
+        const postData =
+          init && init.body && init.body.length && JSON.parse(init.body);
+        if (url.pathname === '/seders' || url.pathname === '/seders-started') {
+          return new Promise((resolve, reject) => {
+            resolve({
+              json: jest.fn().mockImplementation(() => {
+                return { Items: sedersStarted };
+              })
+            });
+          });
+        }
+        if (url.pathname === '/seders-joined') {
+          return new Promise((resolve, reject) => {
+            resolve({
+              json: jest.fn().mockImplementation(() => {
+                return { Items: sedersJoined };
+              })
+            });
+          });
+        }
+        if (
+          url.pathname === '/rejoin' &&
+          postData &&
+          postData.roomCode &&
+          postData.roomCode === selectedRoomCode &&
+          postData.gameName &&
+          postData.gameName === selectedGameName
+        ) {
+          return new Promise((resolve, reject) => {
+            resolve({
+              json: jest.fn().mockImplementation(() => {
+                return {
+                  gameName: selectedGameName,
+                  roomCode: selectedRoomCode,
+                  result: 'success'
+                };
+              })
+            });
+          });
+        }
+        return new Promise((resolve, reject) => {
+          reject({ err: 'bad fetch' });
+        });
+      });
+      let wrapper;
+      await act(async () => {
+        wrapper = mount(
+          <MemoryRouter>
+            <SedersPage
+              user={user}
+              setConfirmedRoomCode={setConfirmedRoomCode}
+              setChosenPath={setChosenPath}
+              setConfirmedGameName={setConfirmedGameName}
+            ></SedersPage>
+          </MemoryRouter>
+        );
+      });
+      expect(global.fetch).toHaveBeenCalled();
+      wrapper.update();
+      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      selectSederByRoomCode(wrapper, selectedRoomCode);
+      wrapper.update();
+      expect(
+        wrapper
+          .findWhere(n => n.is(Link) && n.prop('to') === '/roster')
+          .exists()
+      ).toBe(true);
+      act(() => {
+        const button = wrapper.findWhere(
+          n => n.is(Button) && n.is('#resume-this-seder-button')
+        );
+        button.prop('onClick')();
+      });
+      expect(setConfirmedRoomCode).toHaveBeenCalled();
+      expect(setConfirmedRoomCode).toHaveBeenCalledTimes(1);
+      expect(setConfirmedRoomCode).toHaveBeenCalledWith(selectedRoomCode);
+      expect(setChosenPath).toHaveBeenCalled();
+      expect(setChosenPath).toHaveBeenCalledTimes(1);
+      expect(setChosenPath).toHaveBeenCalledWith(selectedPath);
+      expect(setConfirmedGameName).toHaveBeenCalled();
+      expect(setConfirmedGameName).toHaveBeenCalledTimes(1);
+      expect(setConfirmedGameName).toHaveBeenCalledWith(selectedGameName);
+    });
   });
   describe('Re-join Case 3: user did not start the seder, non-closed', () => {
     // user must have been named (must have gotten their game name confirmed)
@@ -130,5 +291,13 @@ describe('SedersPage', () => {
   describe('Re-join Case 5: closed, assignments and answers populated', () => {
     // this should allow the user to fetch the script long after the seder
     // get a game name cookie, restore state, and send them to /read-roster
+    test('multiple game names used for the same seder under one email', () => {
+      // This is allowed. Two people could be on the same device, or sharing a
+      // login so that a person without a login (for some reason) can have their
+      // work saved.
+    });
+  });
+  describe('Failed fetches', () => {
+    test('failed fetch to /seders-started should show an error message', () => {});
   });
 });

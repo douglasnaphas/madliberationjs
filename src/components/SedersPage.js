@@ -10,13 +10,22 @@ import { Configs } from '../Configs';
 import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
+function SedersPage({
+  user,
+  setConfirmedRoomCode,
+  setChosenPath,
+  setConfirmedGameName
+}) {
   const [sedersIStarted, setSedersIStarted] = useState([]);
+  const [sedersIJoined, setSedersIJoined] = useState([]);
   const [selectedRoomCode, setSelectedRoomCode] = useState();
   useEffect(() => {
     if (!user || !user.sub) return;
-    const sedersUrl = new URL(`/seders?user=${user.sub}`, Configs.apiUrl());
-    fetch(sedersUrl, {
+    const sedersStartedUrl = new URL(
+      `/seders?user=${user.sub}`,
+      Configs.apiUrl()
+    );
+    fetch(sedersStartedUrl, {
       credentials: 'include'
     })
       .then(r => {
@@ -30,26 +39,86 @@ function SedersPage({ user, setConfirmedRoomCode, setChosenPath }) {
       .catch(err => {
         console.log(err);
       });
+    const sedersJoinedUrl = new URL(
+      `/seders-joined?user=${user.sub}`,
+      Configs.apiUrl()
+    );
+    fetch(sedersJoinedUrl, {
+      credentials: 'include'
+    })
+      .then(r => {
+        return r.json();
+      })
+      .then(s => {
+        if (s.Items && Array.isArray(s.Items)) {
+          setSedersIJoined(s.Items);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, [user]);
+  const seders = new Map();
+  sedersIStarted.forEach(seder => {
+    const {
+      room_code,
+      created,
+      lib_id,
+      path,
+      user_email,
+      timestamp,
+      closed
+    } = seder;
+    if (room_code) {
+      seders.set(seder.room_code, {
+        created,
+        lib_id,
+        path,
+        user_email,
+        timestamp
+      });
+    }
+  });
+  sedersIJoined.forEach(seder => {
+    const {
+      lib_id,
+      room_code,
+      user_email,
+      game_name,
+      assignments,
+      answers
+    } = seder;
+    if (room_code) {
+      seders.set(room_code, {
+        ...seders.get(room_code),
+        game_name,
+        assignments,
+        answers
+      });
+    }
+  });
   const sederTable = (
     <Table>
       <TableBody>
-        {sedersIStarted.map(s => (
-          <TableRow key={s.room_code}>
-            <TableCell>
-              <Radio
-                id={`radio-${s.room_code}`}
-                madliberationid={`radio-${s.room_code}`}
-                checked={selectedRoomCode === s.room_code}
-                value={s.room_code}
-                onChange={event => {
-                  setSelectedRoomCode(event.target.value);
-                }}
-              ></Radio>
-            </TableCell>
-            <TableCell>{s.room_code}</TableCell>
-          </TableRow>
-        ))}
+        {Array.from(seders).map(s => {
+          const roomCode = s[0];
+          return (
+            <TableRow key={roomCode}>
+              <TableCell>
+                <Radio
+                  id={`radio-${roomCode}`}
+                  madliberationid={`radio-${roomCode}`}
+                  checked={selectedRoomCode === roomCode}
+                  value={roomCode}
+                  onChange={event => {
+                    setSelectedRoomCode(event.target.value);
+                  }}
+                ></Radio>
+              </TableCell>
+              <TableCell>{roomCode}</TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );
