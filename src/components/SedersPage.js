@@ -184,7 +184,13 @@ function SedersPage({
                   })
                 };
                 await fetch(new URL('/rejoin', Configs.apiUrl()), fetchInit);
-                buttonTarget = '/roster';
+                if (seder.path) {
+                  // this is the seder leader
+                  buttonTarget = '/roster';
+                  history.push(buttonTarget);
+                  return;
+                }
+                buttonTarget = '/you-have-joined';
                 history.push(buttonTarget);
               }}
             >
