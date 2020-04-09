@@ -232,6 +232,7 @@ describe('SedersPage', () => {
           postData.gameName &&
           postData.gameName === selectedGameName
         ) {
+          console.log('fetch to rejoin');
           return new Promise((resolve, reject) => {
             resolve({
               json: jest.fn().mockImplementation(() => {
@@ -244,6 +245,7 @@ describe('SedersPage', () => {
             });
           });
         }
+        console.log('rejecting fetch');
         return new Promise((resolve, reject) => {
           reject({ err: 'bad fetch' });
         });
@@ -268,12 +270,13 @@ describe('SedersPage', () => {
       expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
-      act(() => {
+      await act(async () => {
         const button = wrapper.findWhere(
           n => n.is(Button) && n.is('#resume-this-seder-button')
         );
-        button.prop('onClick')();
+        await button.prop('onClick')();
       });
+      wrapper.update();
       expect(setConfirmedRoomCode).toHaveBeenCalled();
       expect(setConfirmedRoomCode).toHaveBeenCalledTimes(1);
       expect(setConfirmedRoomCode).toHaveBeenCalledWith(selectedRoomCode);
@@ -285,6 +288,7 @@ describe('SedersPage', () => {
       expect(setConfirmedGameName).toHaveBeenCalledWith(selectedGameName);
       expect(history.push).toHaveBeenCalled();
       expect(history.push).toHaveBeenCalledWith('/roster');
+      expect(global.fetch).toHaveBeenCalledTimes(3);
     });
   });
   describe('Re-join Case 3: user did not start the seder, non-closed', () => {
@@ -307,5 +311,7 @@ describe('SedersPage', () => {
   });
   describe('Failed fetches', () => {
     test('failed fetch to /seders-started should show an error message', () => {});
+    test('failed fetch to /seders-joined should show an error message', () => {});
+    test('failed fetch to /rejoin should show an error message', () => {});
   });
 });

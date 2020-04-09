@@ -155,7 +155,7 @@ function SedersPage({
             {}
             <Button
               {...buttonProps}
-              onClick={e => {
+              onClick={async e => {
                 let buttonTarget = '/your-room-code';
                 setConfirmedRoomCode(selectedRoomCode);
                 const selectedGameName =
@@ -164,17 +164,32 @@ function SedersPage({
                   seders.get &&
                   seders.get(selectedRoomCode) &&
                   seders.get(selectedRoomCode).game_name;
-                if (selectedGameName) {
-                  setConfirmedGameName(selectedGameName);
-                }
                 const seder = seders.get(selectedRoomCode);
                 if (seder.path) {
                   setChosenPath(seder.path);
                 }
-                if (selectedGameName) {
-                  history.push('/roster');
+                if (!selectedGameName) {
+                  history.push(buttonTarget);
+                  return;
                 }
-                history.push(buttonTarget);
+                setConfirmedGameName(selectedGameName);
+                const fetchInit = {
+                  credentials: 'include',
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    gameName: selectedGameName,
+                    roomCode: selectedRoomCode,
+                    user: user.sub
+                  })
+                };
+                await fetch(
+                  new URL('/rejoin', Configs.apiUrl()),
+                  fetchInit
+                ).then(() => {
+                  buttonTarget = '/roster';
+                  history.push(buttonTarget);
+                });
               }}
             >
               Resume seder
