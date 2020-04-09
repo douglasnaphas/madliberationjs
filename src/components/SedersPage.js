@@ -11,6 +11,7 @@ import { Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 function SedersPage({
+  history,
   user,
   setConfirmedRoomCode,
   setChosenPath,
@@ -122,7 +123,12 @@ function SedersPage({
       </TableBody>
     </Table>
   );
-  // console.log(seders.get(selectedRoomCode));
+  const buttonProps = {
+    id: 'resume-this-seder-button',
+    madliberationid: 'resume-this-seder-button',
+    variant: 'contained'
+  };
+
   return (
     <>
       <MenuAppBar></MenuAppBar>
@@ -141,17 +147,16 @@ function SedersPage({
           You are or were in seders with these Room Codes:
         </Typography>
       </div>
-      {sedersIStarted.length ? (
+      {seders.size ? (
         <>
           <div>{sederTable}</div>
           <div>
             <br />
+            {}
             <Button
-              id="resume-this-seder-button"
-              madliberationid="resume-this-seder-button"
-              variant="contained"
-              component={Link}
+              {...buttonProps}
               onClick={e => {
+                let buttonTarget = '/your-room-code';
                 setConfirmedRoomCode(selectedRoomCode);
                 const selectedGameName =
                   selectedRoomCode &&
@@ -166,14 +171,11 @@ function SedersPage({
                 if (seder.path) {
                   setChosenPath(seder.path);
                 }
+                if (selectedGameName) {
+                  history.push('/roster');
+                }
+                history.push(buttonTarget);
               }}
-              to={
-                seders &&
-                selectedRoomCode &&
-                seders.get(selectedRoomCode).game_name
-                  ? '/roster'
-                  : '/your-room-code'
-              }
             >
               Resume seder
             </Button>

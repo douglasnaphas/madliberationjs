@@ -91,11 +91,13 @@ describe('SedersPage', () => {
           });
         }
       });
+      const history = { push: jest.fn() };
       let wrapper;
       await act(async () => {
         wrapper = mount(
           <MemoryRouter>
             <SedersPage
+              history={history}
               user={user}
               setConfirmedRoomCode={setConfirmedRoomCode}
               setChosenPath={setChosenPath}
@@ -108,11 +110,6 @@ describe('SedersPage', () => {
       expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, 'ZLSXQA');
       wrapper.update();
-      expect(
-        wrapper
-          .findWhere(n => n.is(Link) && n.prop('to') === '/your-room-code')
-          .exists()
-      ).toBe(true);
       act(() => {
         const button = wrapper.findWhere(
           n => n.is(Button) && n.is('#resume-this-seder-button')
@@ -127,6 +124,8 @@ describe('SedersPage', () => {
       expect(setChosenPath).toHaveBeenCalledWith(
         'madliberation-scripts/006-Practice_Script'
       );
+      expect(history.push).toHaveBeenCalled();
+      expect(history.push).toHaveBeenCalledWith('/your-room-code');
     });
   });
   describe('Re-join Case 2: user started the seder, non-closed, user named', () => {
@@ -194,6 +193,16 @@ describe('SedersPage', () => {
           game_name: selectedGameName
         }
       ];
+      const expectedRejoinInit = {
+        credentials: 'include',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          gameName: selectedGameName,
+          roomCode: selectedRoomCode,
+          user: userSub
+        })
+      };
       global.fetch = jest.fn().mockImplementation((url, init) => {
         const postData =
           init && init.body && init.body.length && JSON.parse(init.body);
@@ -239,11 +248,13 @@ describe('SedersPage', () => {
           reject({ err: 'bad fetch' });
         });
       });
+      const history = { push: jest.fn() };
       let wrapper;
       await act(async () => {
         wrapper = mount(
           <MemoryRouter>
             <SedersPage
+              history={history}
               user={user}
               setConfirmedRoomCode={setConfirmedRoomCode}
               setChosenPath={setChosenPath}
@@ -257,11 +268,6 @@ describe('SedersPage', () => {
       expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
-      expect(
-        wrapper
-          .findWhere(n => n.is(Link) && n.prop('to') === '/roster')
-          .exists()
-      ).toBe(true);
       act(() => {
         const button = wrapper.findWhere(
           n => n.is(Button) && n.is('#resume-this-seder-button')
@@ -277,6 +283,8 @@ describe('SedersPage', () => {
       expect(setConfirmedGameName).toHaveBeenCalled();
       expect(setConfirmedGameName).toHaveBeenCalledTimes(1);
       expect(setConfirmedGameName).toHaveBeenCalledWith(selectedGameName);
+      expect(history.push).toHaveBeenCalled();
+      expect(history.push).toHaveBeenCalledWith('/roster');
     });
   });
   describe('Re-join Case 3: user did not start the seder, non-closed', () => {

@@ -33,7 +33,7 @@ import LoggingInPageWithRouter from './components/LoggingInPageWithRouter';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import ContactUs from './components/ContactUs';
 import ExplainVideoPage from './components/ExplainVideoPage';
-import SedersPage from './components/SedersPage';
+import SedersPageWithRouter from './components/SedersPageWithRouter';
 
 const theme = createMuiTheme({
   palette: {
@@ -157,7 +157,7 @@ class App extends Component {
                 path="/seders"
                 exact
                 render={props => (
-                  <SedersPage
+                  <SedersPageWithRouter
                     user={this.state.user}
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
                     setChosenPath={this.setChosenPath}
