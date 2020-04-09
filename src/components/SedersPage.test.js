@@ -5,8 +5,6 @@ import { MemoryRouter } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
 import Button from '@material-ui/core/Button';
 import Radio from '@material-ui/core/Radio';
-import { Link } from 'react-router-dom';
-import { Configs } from '../Configs';
 
 let mount;
 let globalFetch = global.fetch;
@@ -22,13 +20,15 @@ afterEach(() => {
 describe('SedersPage', () => {
   const selectSederByRoomCode = (wrapper, roomCode) => {
     expect(
-      wrapper.findWhere(n => n.is(Radio) && n.is(`#radio-${roomCode}`)).exists()
+      wrapper
+        .findWhere((n) => n.is(Radio) && n.is(`#radio-${roomCode}`))
+        .exists()
     ).toBe(true);
     act(() => {
       wrapper
-        .findWhere(n => n.is(Radio) && n.is(`#radio-${roomCode}`))
+        .findWhere((n) => n.is(Radio) && n.is(`#radio-${roomCode}`))
         .prop('onChange')({
-        target: { value: `${roomCode}` }
+        target: { value: `${roomCode}` },
       });
       wrapper.update();
     });
@@ -39,7 +39,7 @@ describe('SedersPage', () => {
       const user = {
         email: 'user1@gmail.com',
         nickname: 'Mister One',
-        sub: '11-aa-m1-gha-one'
+        sub: '11-aa-m1-gha-one',
       };
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
@@ -51,7 +51,7 @@ describe('SedersPage', () => {
           room_code: 'IJYAQX',
           path: 'madliberation-scripts/005-Practice_Script',
           user_email: 'user1@gmail.com',
-          timestamp: '2020-04-04T03:21:48.141Z'
+          timestamp: '2020-04-04T03:21:48.141Z',
         },
         {
           created: 1585973347633,
@@ -59,7 +59,7 @@ describe('SedersPage', () => {
           room_code: 'ZLSXQA',
           path: 'madliberation-scripts/006-Practice_Script',
           user_email: 'user1@gmail.com',
-          timestamp: '2020-04-04T04:09:07.633Z'
+          timestamp: '2020-04-04T04:09:07.633Z',
         },
         {
           created: 1585963851309,
@@ -67,8 +67,8 @@ describe('SedersPage', () => {
           room_code: 'GMKMNB',
           path: 'madliberation-scripts/007-Practice_Script',
           user_email: 'user1@gmail.com',
-          timestamp: '2020-04-04T01:30:51.309Z'
-        }
+          timestamp: '2020-04-04T01:30:51.309Z',
+        },
       ];
       const sedersJoined = [];
       global.fetch = jest.fn().mockImplementation((url, init) => {
@@ -77,7 +77,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersStarted };
-              })
+              }),
             });
           });
         }
@@ -86,7 +86,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersJoined };
-              })
+              }),
             });
           });
         }
@@ -107,12 +107,12 @@ describe('SedersPage', () => {
       });
       expect(global.fetch).toHaveBeenCalled();
       wrapper.update();
-      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, 'ZLSXQA');
       wrapper.update();
       act(() => {
         const button = wrapper.findWhere(
-          n => n.is(Button) && n.is('#resume-this-seder-button')
+          (n) => n.is(Button) && n.is('#resume-this-seder-button')
         );
         button.prop('onClick')();
       });
@@ -140,7 +140,7 @@ describe('SedersPage', () => {
       const user = {
         email: userEmail,
         nickname: selectedGameName,
-        sub: userSub
+        sub: userSub,
       };
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
@@ -152,7 +152,7 @@ describe('SedersPage', () => {
           room_code: 'LFEJIK',
           path: 'madliberation-scripts/002-Practice_Script',
           user_email: userEmail,
-          timestamp: '2020-04-04T03:21:48.141Z'
+          timestamp: '2020-04-04T03:21:48.141Z',
         },
         {
           created: 1585973347633,
@@ -160,7 +160,7 @@ describe('SedersPage', () => {
           room_code: 'RLSXQA',
           path: 'madliberation-scripts/006-Practice_Script',
           user_email: userEmail,
-          timestamp: '2020-04-04T04:09:07.633Z'
+          timestamp: '2020-04-04T04:09:07.633Z',
         },
         {
           created: 1585963851309,
@@ -168,8 +168,8 @@ describe('SedersPage', () => {
           room_code: selectedRoomCode,
           path: selectedPath,
           user_email: userEmail,
-          timestamp: '2020-04-04T01:30:51.309Z'
-        }
+          timestamp: '2020-04-04T01:30:51.309Z',
+        },
       ];
       const sedersJoined = [
         {
@@ -177,21 +177,21 @@ describe('SedersPage', () => {
             'participant#thiswillactuallybesomethinglikethefirst64charsofthehashofthegamename',
           room_code: selectedRoomCode,
           user_email: userEmail,
-          game_name: selectedGameName
+          game_name: selectedGameName,
         },
         {
           lib_id:
             'participant#4ormaybeitsthewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'FFEMUN',
           user_email: userEmail,
-          game_name: 'custom name'
+          game_name: 'custom name',
         },
         {
           lib_id: 'participant#kf83q90jflakehash34890fjalfds239ftheg4u398poda',
           room_code: 'NONOVE',
           user_email: userEmail,
-          game_name: selectedGameName
-        }
+          game_name: selectedGameName,
+        },
       ];
       const expectedRejoinInit = {
         credentials: 'include',
@@ -200,8 +200,8 @@ describe('SedersPage', () => {
         body: JSON.stringify({
           gameName: selectedGameName,
           roomCode: selectedRoomCode,
-          user: userSub
-        })
+          user: userSub,
+        }),
       };
       global.fetch = jest.fn().mockImplementation((url, init) => {
         const postData =
@@ -211,7 +211,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersStarted };
-              })
+              }),
             });
           });
         }
@@ -220,7 +220,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersJoined };
-              })
+              }),
             });
           });
         }
@@ -238,9 +238,9 @@ describe('SedersPage', () => {
                 return {
                   gameName: selectedGameName,
                   roomCode: selectedRoomCode,
-                  result: 'success'
+                  result: 'success',
                 };
-              })
+              }),
             });
           });
         }
@@ -265,12 +265,12 @@ describe('SedersPage', () => {
       });
       expect(global.fetch).toHaveBeenCalled();
       wrapper.update();
-      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
       await act(async () => {
         const button = wrapper.findWhere(
-          n => n.is(Button) && n.is('#resume-this-seder-button')
+          (n) => n.is(Button) && n.is('#resume-this-seder-button')
         );
         await button.prop('onClick')();
       });
@@ -305,7 +305,7 @@ describe('SedersPage', () => {
       const user = {
         email: userEmail,
         nickname: selectedGameName,
-        sub: userSub
+        sub: userSub,
       };
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
@@ -317,7 +317,7 @@ describe('SedersPage', () => {
           room_code: 'MXIJIK',
           path: 'madliberation-scripts/002-Practice_Script',
           user_email: userEmail,
-          timestamp: '2020-04-04T03:21:48.141Z'
+          timestamp: '2020-04-04T03:21:48.141Z',
         },
         {
           created: 1585973347633,
@@ -325,7 +325,7 @@ describe('SedersPage', () => {
           room_code: 'TIYXQA',
           path: 'madliberation-scripts/006-Practice_Script',
           user_email: userEmail,
-          timestamp: '2020-04-04T04:09:07.633Z'
+          timestamp: '2020-04-04T04:09:07.633Z',
         },
         {
           created: 1585963851309,
@@ -333,8 +333,8 @@ describe('SedersPage', () => {
           room_code: 'OTHERR',
           path: selectedPath,
           user_email: userEmail,
-          timestamp: '2020-04-04T01:30:51.309Z'
-        }
+          timestamp: '2020-04-04T01:30:51.309Z',
+        },
       ];
       const sedersJoined = [
         {
@@ -342,21 +342,21 @@ describe('SedersPage', () => {
             'participant#84849343tuallybesomethinglikethefirst64charsofthehashofth00',
           room_code: 'MORXLY',
           user_email: userEmail,
-          game_name: selectedGameName
+          game_name: selectedGameName,
         },
         {
           lib_id:
             'participant#uruuururthewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'SYRXUR',
           user_email: userEmail,
-          game_name: 'custom XYR name'
+          game_name: 'custom XYR name',
         },
         {
           lib_id: 'participant#123fweretlakehash34890fjalfds239ftheg4u398poda',
           room_code: selectedRoomCode,
           user_email: userEmail,
-          game_name: selectedGameName
-        }
+          game_name: selectedGameName,
+        },
       ];
       const expectedRejoinInit = {
         credentials: 'include',
@@ -365,8 +365,8 @@ describe('SedersPage', () => {
         body: JSON.stringify({
           gameName: selectedGameName,
           roomCode: selectedRoomCode,
-          user: userSub
-        })
+          user: userSub,
+        }),
       };
       global.fetch = jest.fn().mockImplementation((url, init) => {
         const postData =
@@ -376,7 +376,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersStarted };
-              })
+              }),
             });
           });
         }
@@ -385,7 +385,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersJoined };
-              })
+              }),
             });
           });
         }
@@ -403,9 +403,9 @@ describe('SedersPage', () => {
                 return {
                   gameName: selectedGameName,
                   roomCode: selectedRoomCode,
-                  result: 'success'
+                  result: 'success',
                 };
-              })
+              }),
             });
           });
         }
@@ -430,12 +430,12 @@ describe('SedersPage', () => {
       });
       expect(global.fetch).toHaveBeenCalled();
       wrapper.update();
-      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
       await act(async () => {
         const button = wrapper.findWhere(
-          n => n.is(Button) && n.is('#resume-this-seder-button')
+          (n) => n.is(Button) && n.is('#resume-this-seder-button')
         );
         await button.prop('onClick')();
       });
@@ -465,7 +465,7 @@ describe('SedersPage', () => {
       const user = {
         email: userEmail,
         nickname: selectedGameName,
-        sub: userSub
+        sub: userSub,
       };
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
@@ -478,7 +478,7 @@ describe('SedersPage', () => {
           path: selectedPath,
           user_email: userEmail,
           timestamp: '2020-04-04T03:21:48.141Z',
-          closed: true
+          closed: true,
         },
         {
           created: 1585973347633,
@@ -486,7 +486,7 @@ describe('SedersPage', () => {
           room_code: 'MLLLQA',
           path: 'madliberation-scripts/006-Practice_Script',
           user_email: userEmail,
-          timestamp: '2020-04-04T04:09:07.633Z'
+          timestamp: '2020-04-04T04:09:07.633Z',
         },
         {
           created: 1585963851389,
@@ -494,7 +494,7 @@ describe('SedersPage', () => {
           room_code: 'SSSHER',
           path: selectedPath,
           user_email: userEmail,
-          timestamp: '2020-04-04T01:30:51.389Z'
+          timestamp: '2020-04-04T01:30:51.389Z',
         },
         {
           created: 1585963851309,
@@ -503,8 +503,8 @@ describe('SedersPage', () => {
           path: 'scripts/090-something',
           user_email: userEmail,
           timestamp: '2020-04-04T01:30:51.309Z',
-          closed: true
-        }
+          closed: true,
+        },
       ];
       const sedersJoined = [
         {
@@ -512,33 +512,33 @@ describe('SedersPage', () => {
             'participant#vmfjfurallx43jfldNMFDLKnglikethefirst64charsofthehashofth00',
           room_code: 'OTHGWL',
           user_email: userEmail,
-          game_name: selectedGameName
+          game_name: selectedGameName,
         },
         {
           lib_id:
             'participant#uruuururthewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'TYRXUR',
           user_email: userEmail,
-          game_name: 'custom ABC name'
+          game_name: 'custom ABC name',
         },
         {
           lib_id: 'participant#123fweretlakehash34890fjalfds239ftheg4u398poda',
           room_code: selectedRoomCode,
           user_email: userEmail,
-          game_name: selectedGameName
+          game_name: selectedGameName,
         },
         {
           lib_id: 'participant#Xur333thewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'SYRXUR',
           user_email: userEmail,
-          game_name: 'ABC custom XYR name'
+          game_name: 'ABC custom XYR name',
         },
         {
           lib_id: 'participant#bbbbb23fweretlakehash34890fjalfds239u398podz',
           room_code: 'RNADNA',
           user_email: userEmail,
-          game_name: selectedGameName
-        }
+          game_name: selectedGameName,
+        },
       ];
       const expectedRejoinInit = {
         credentials: 'include',
@@ -547,8 +547,8 @@ describe('SedersPage', () => {
         body: JSON.stringify({
           gameName: selectedGameName,
           roomCode: selectedRoomCode,
-          user: userSub
-        })
+          user: userSub,
+        }),
       };
       global.fetch = jest.fn().mockImplementation((url, init) => {
         const postData =
@@ -558,7 +558,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersStarted };
-              })
+              }),
             });
           });
         }
@@ -567,7 +567,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersJoined };
-              })
+              }),
             });
           });
         }
@@ -585,9 +585,9 @@ describe('SedersPage', () => {
                 return {
                   gameName: selectedGameName,
                   roomCode: selectedRoomCode,
-                  result: 'success'
+                  result: 'success',
                 };
-              })
+              }),
             });
           });
         }
@@ -612,12 +612,12 @@ describe('SedersPage', () => {
       });
       expect(global.fetch).toHaveBeenCalled();
       wrapper.update();
-      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
       await act(async () => {
         const button = wrapper.findWhere(
-          n => n.is(Button) && n.is('#resume-this-seder-button')
+          (n) => n.is(Button) && n.is('#resume-this-seder-button')
         );
         await button.prop('onClick')();
       });
@@ -649,7 +649,7 @@ describe('SedersPage', () => {
       const user = {
         email: userEmail,
         nickname: selectedGameName,
-        sub: userSub
+        sub: userSub,
       };
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
@@ -661,21 +661,21 @@ describe('SedersPage', () => {
             'participant#84849343tuallybesomethinglikethefirst64charsofthehashofth00',
           room_code: 'MORXLY',
           user_email: userEmail,
-          game_name: selectedGameName
+          game_name: selectedGameName,
         },
         {
           lib_id:
             'participant#uruuururthewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'SYRXUR',
           user_email: userEmail,
-          game_name: 'custom XYR name'
+          game_name: 'custom XYR name',
         },
         {
           lib_id: 'participant#123fweretlakehash34890fjalfds239ftheg4u398poda',
           room_code: selectedRoomCode,
           user_email: userEmail,
-          game_name: selectedGameName
-        }
+          game_name: selectedGameName,
+        },
       ];
       const expectedRejoinInit = {
         credentials: 'include',
@@ -684,8 +684,8 @@ describe('SedersPage', () => {
         body: JSON.stringify({
           gameName: selectedGameName,
           roomCode: selectedRoomCode,
-          user: userSub
-        })
+          user: userSub,
+        }),
       };
       global.fetch = jest.fn().mockImplementation((url, init) => {
         const postData =
@@ -695,7 +695,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersStarted };
-              })
+              }),
             });
           });
         }
@@ -704,7 +704,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersJoined };
-              })
+              }),
             });
           });
         }
@@ -722,9 +722,9 @@ describe('SedersPage', () => {
                 return {
                   gameName: selectedGameName,
                   roomCode: selectedRoomCode,
-                  result: 'success'
+                  result: 'success',
                 };
-              })
+              }),
             });
           });
         }
@@ -749,12 +749,12 @@ describe('SedersPage', () => {
       });
       expect(global.fetch).toHaveBeenCalled();
       wrapper.update();
-      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
       await act(async () => {
         const button = wrapper.findWhere(
-          n => n.is(Button) && n.is('#resume-this-seder-button')
+          (n) => n.is(Button) && n.is('#resume-this-seder-button')
         );
         await button.prop('onClick')();
       });
@@ -787,19 +787,19 @@ describe('SedersPage', () => {
           id: 1,
           defaultAnswer: 'hi',
           prompt: 'some prompt',
-          sentence: 'I am __.'
+          sentence: 'I am __.',
         },
         {
           id: 3,
           defaultAnswer: 'hi3',
           prompt: 'some 3 prompt',
-          sentence: 'I am 3__3.'
-        }
+          sentence: 'I am 3__3.',
+        },
       ];
       const user = {
         email: userEmail,
         nickname: selectedGameName,
-        sub: userSub
+        sub: userSub,
       };
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
@@ -811,7 +811,7 @@ describe('SedersPage', () => {
           room_code: 'MLLLQA',
           path: 'madliberation-scripts/006-Practice_Script',
           user_email: userEmail,
-          timestamp: '2020-04-04T04:09:07.633Z'
+          timestamp: '2020-04-04T04:09:07.633Z',
         },
         {
           created: 1585970508141,
@@ -820,7 +820,7 @@ describe('SedersPage', () => {
           path: selectedPath,
           user_email: userEmail,
           timestamp: '2020-04-04T03:21:48.141Z',
-          closed: true
+          closed: true,
         },
         {
           created: 1585963851389,
@@ -828,7 +828,7 @@ describe('SedersPage', () => {
           room_code: 'SSSHER',
           path: selectedPath,
           user_email: userEmail,
-          timestamp: '2020-04-04T01:30:51.389Z'
+          timestamp: '2020-04-04T01:30:51.389Z',
         },
         {
           created: 1585963851309,
@@ -837,8 +837,8 @@ describe('SedersPage', () => {
           path: 'scripts/090-something',
           user_email: userEmail,
           timestamp: '2020-04-04T01:30:51.309Z',
-          closed: true
-        }
+          closed: true,
+        },
       ];
       const sedersJoined = [
         {
@@ -846,34 +846,34 @@ describe('SedersPage', () => {
             'participant#vmfjfurallx43jfldNMFDLKnglikethefirst64charsofthehashofth00',
           room_code: 'OTHGWL',
           user_email: userEmail,
-          game_name: selectedGameName
+          game_name: selectedGameName,
         },
         {
           lib_id:
             'participant#uruuururthewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'TYRXUR',
           user_email: userEmail,
-          game_name: 'custom ABC name'
+          game_name: 'custom ABC name',
         },
         {
           lib_id: 'participant#123fweretlakehash34890fjalfds239ftheg4u398poda',
           room_code: selectedRoomCode,
           user_email: userEmail,
           game_name: selectedGameName,
-          assignments
+          assignments,
         },
         {
           lib_id: 'participant#Xur333thewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'SYRXUR',
           user_email: userEmail,
-          game_name: 'ABC custom XYR name'
+          game_name: 'ABC custom XYR name',
         },
         {
           lib_id: 'participant#bbbbb23fweretlakehash34890fjalfds239u398podz',
           room_code: 'RNADNA',
           user_email: userEmail,
-          game_name: selectedGameName
-        }
+          game_name: selectedGameName,
+        },
       ];
       const expectedRejoinInit = {
         credentials: 'include',
@@ -882,8 +882,8 @@ describe('SedersPage', () => {
         body: JSON.stringify({
           gameName: selectedGameName,
           roomCode: selectedRoomCode,
-          user: userSub
-        })
+          user: userSub,
+        }),
       };
       global.fetch = jest.fn().mockImplementation((url, init) => {
         const postData =
@@ -893,7 +893,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersStarted };
-              })
+              }),
             });
           });
         }
@@ -902,7 +902,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersJoined };
-              })
+              }),
             });
           });
         }
@@ -920,9 +920,9 @@ describe('SedersPage', () => {
                 return {
                   gameName: selectedGameName,
                   roomCode: selectedRoomCode,
-                  result: 'success'
+                  result: 'success',
                 };
-              })
+              }),
             });
           });
         }
@@ -949,12 +949,12 @@ describe('SedersPage', () => {
       });
       expect(global.fetch).toHaveBeenCalled();
       wrapper.update();
-      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
       await act(async () => {
         const button = wrapper.findWhere(
-          n => n.is(Button) && n.is('#resume-this-seder-button')
+          (n) => n.is(Button) && n.is('#resume-this-seder-button')
         );
         await button.prop('onClick')();
       });
@@ -992,23 +992,23 @@ describe('SedersPage', () => {
           id: 1,
           defaultAnswer: 'hi',
           prompt: 'some prompt',
-          sentence: 'I am __.'
+          sentence: 'I am __.',
         },
         {
           id: 3,
           defaultAnswer: 'hi3',
           prompt: 'some 3 prompt',
-          sentence: 'I am 3__3.'
-        }
+          sentence: 'I am 3__3.',
+        },
       ];
       const answers = [
         { answer: 'xx', id: 1 },
-        { answer: 'yy', id: 3 }
+        { answer: 'yy', id: 3 },
       ];
       const user = {
         email: userEmail,
         nickname: selectedGameName,
-        sub: userSub
+        sub: userSub,
       };
       const setConfirmedRoomCode = jest.fn();
       const setChosenPath = jest.fn();
@@ -1020,7 +1020,7 @@ describe('SedersPage', () => {
           room_code: 'MLLLQA',
           path: 'madliberation-scripts/006-Practice_Script',
           user_email: userEmail,
-          timestamp: '2020-04-04T04:09:07.633Z'
+          timestamp: '2020-04-04T04:09:07.633Z',
         },
         {
           created: 1585970508141,
@@ -1029,7 +1029,7 @@ describe('SedersPage', () => {
           path: selectedPath,
           user_email: userEmail,
           timestamp: '2020-04-04T03:21:48.141Z',
-          closed: true
+          closed: true,
         },
         {
           created: 1585963851389,
@@ -1037,7 +1037,7 @@ describe('SedersPage', () => {
           room_code: 'SSSHER',
           path: selectedPath,
           user_email: userEmail,
-          timestamp: '2020-04-04T01:30:51.389Z'
+          timestamp: '2020-04-04T01:30:51.389Z',
         },
         {
           created: 1585963851309,
@@ -1046,8 +1046,8 @@ describe('SedersPage', () => {
           path: 'scripts/090-something',
           user_email: userEmail,
           timestamp: '2020-04-04T01:30:51.309Z',
-          closed: true
-        }
+          closed: true,
+        },
       ];
       const sedersJoined = [
         {
@@ -1055,14 +1055,14 @@ describe('SedersPage', () => {
             'participant#vmfjfurallx43jfldNMFDLKnglikethefirst64charsofthehashofth00',
           room_code: 'OTHGWL',
           user_email: userEmail,
-          game_name: selectedGameName
+          game_name: selectedGameName,
         },
         {
           lib_id:
             'participant#uruuururthewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'TYRXUR',
           user_email: userEmail,
-          game_name: 'custom ABC name'
+          game_name: 'custom ABC name',
         },
         {
           lib_id: 'participant#123fweretlakehash34890fjalfds239ftheg4u398poda',
@@ -1070,20 +1070,20 @@ describe('SedersPage', () => {
           user_email: userEmail,
           game_name: selectedGameName,
           assignments,
-          answers
+          answers,
         },
         {
           lib_id: 'participant#Xur333thewholehash34890fjalfds239ftheg4u398poda',
           room_code: 'SYRXUR',
           user_email: userEmail,
-          game_name: 'ABC custom XYR name'
+          game_name: 'ABC custom XYR name',
         },
         {
           lib_id: 'participant#bbbbb23fweretlakehash34890fjalfds239u398podz',
           room_code: 'RNADNA',
           user_email: userEmail,
-          game_name: selectedGameName
-        }
+          game_name: selectedGameName,
+        },
       ];
       const expectedRejoinInit = {
         credentials: 'include',
@@ -1092,8 +1092,8 @@ describe('SedersPage', () => {
         body: JSON.stringify({
           gameName: selectedGameName,
           roomCode: selectedRoomCode,
-          user: userSub
-        })
+          user: userSub,
+        }),
       };
       global.fetch = jest.fn().mockImplementation((url, init) => {
         const postData =
@@ -1103,7 +1103,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersStarted };
-              })
+              }),
             });
           });
         }
@@ -1112,7 +1112,7 @@ describe('SedersPage', () => {
             resolve({
               json: jest.fn().mockImplementation(() => {
                 return { Items: sedersJoined };
-              })
+              }),
             });
           });
         }
@@ -1130,9 +1130,9 @@ describe('SedersPage', () => {
                 return {
                   gameName: selectedGameName,
                   roomCode: selectedRoomCode,
-                  result: 'success'
+                  result: 'success',
                 };
-              })
+              }),
             });
           });
         }
@@ -1159,12 +1159,12 @@ describe('SedersPage', () => {
       });
       expect(global.fetch).toHaveBeenCalled();
       wrapper.update();
-      expect(wrapper.findWhere(n => n.is(Button)).exists()).toBe(true);
+      expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
       selectSederByRoomCode(wrapper, selectedRoomCode);
       wrapper.update();
       await act(async () => {
         const button = wrapper.findWhere(
-          n => n.is(Button) && n.is('#resume-this-seder-button')
+          (n) => n.is(Button) && n.is('#resume-this-seder-button')
         );
         await button.prop('onClick')();
       });
@@ -1190,6 +1190,118 @@ describe('SedersPage', () => {
       // login so that a person without a login (for some reason) can have their
       // work saved.
     });
+  });
+  test('Re-join button should be disabled until a selection is made', async () => {
+    const user = {
+      email: 'user1@gmail.com',
+      nickname: 'Mister One',
+      sub: '11-aa-m1-gha-one',
+    };
+    const setConfirmedRoomCode = jest.fn();
+    const setChosenPath = jest.fn();
+
+    const sedersStarted = [
+      {
+        created: 1585970508141,
+        lib_id: 'seder',
+        room_code: 'IJYAQX',
+        path: 'madliberation-scripts/005-Practice_Script',
+        user_email: 'user1@gmail.com',
+        timestamp: '2020-04-04T03:21:48.141Z',
+      },
+      {
+        created: 1585973347633,
+        lib_id: 'seder',
+        room_code: 'ZLSXQA',
+        path: 'madliberation-scripts/006-Practice_Script',
+        user_email: 'user1@gmail.com',
+        timestamp: '2020-04-04T04:09:07.633Z',
+      },
+      {
+        created: 1585963851309,
+        lib_id: 'seder',
+        room_code: 'GMKMNB',
+        path: 'madliberation-scripts/007-Practice_Script',
+        user_email: 'user1@gmail.com',
+        timestamp: '2020-04-04T01:30:51.309Z',
+      },
+    ];
+    const sedersJoined = [];
+    global.fetch = jest.fn().mockImplementation((url, init) => {
+      if (url.pathname === '/seders' || url.pathname === '/seders-started') {
+        return new Promise((resolve, reject) => {
+          resolve({
+            json: jest.fn().mockImplementation(() => {
+              return { Items: sedersStarted };
+            }),
+          });
+        });
+      }
+      if (url.pathname === '/seders-joined') {
+        return new Promise((resolve, reject) => {
+          resolve({
+            json: jest.fn().mockImplementation(() => {
+              return { Items: sedersJoined };
+            }),
+          });
+        });
+      }
+    });
+    const history = { push: jest.fn() };
+    let wrapper;
+    await act(async () => {
+      wrapper = mount(
+        <MemoryRouter>
+          <SedersPage
+            history={history}
+            user={user}
+            setConfirmedRoomCode={setConfirmedRoomCode}
+            setChosenPath={setChosenPath}
+          ></SedersPage>
+        </MemoryRouter>
+      );
+    });
+    expect(global.fetch).toHaveBeenCalled();
+    wrapper.update();
+    expect(wrapper.findWhere((n) => n.is(Button)).exists()).toBe(true);
+    expect(
+      wrapper
+        .findWhere(
+          (n) =>
+            n.is(Button) &&
+            n.prop('disabled') &&
+            n.is('#resume-this-seder-button')
+        )
+        .exists()
+    ).toBe(true);
+    selectSederByRoomCode(wrapper, 'ZLSXQA');
+    wrapper.update();
+    expect(
+      wrapper
+        .findWhere(
+          (n) =>
+            n.is(Button) &&
+            !n.prop('disabled') &&
+            n.is('#resume-this-seder-button')
+        )
+        .exists()
+    ).toBe(true);
+    act(() => {
+      const button = wrapper.findWhere(
+        (n) => n.is(Button) && n.is('#resume-this-seder-button')
+      );
+      button.prop('onClick')();
+    });
+    expect(setConfirmedRoomCode).toHaveBeenCalled();
+    expect(setConfirmedRoomCode).toHaveBeenCalledTimes(1);
+    expect(setConfirmedRoomCode).toHaveBeenCalledWith('ZLSXQA');
+    expect(setChosenPath).toHaveBeenCalled();
+    expect(setChosenPath).toHaveBeenCalledTimes(1);
+    expect(setChosenPath).toHaveBeenCalledWith(
+      'madliberation-scripts/006-Practice_Script'
+    );
+    expect(history.push).toHaveBeenCalled();
+    expect(history.push).toHaveBeenCalledWith('/your-room-code');
   });
   describe('Failed fetches', () => {
     test('failed fetch to /seders-started should show an error message', () => {});
