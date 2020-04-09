@@ -4,7 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Radio from '@material-ui/core/Radio';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import MenuAppBar from './MenuAppBar';
 import { Configs } from '../Configs';
 import { Typography } from '@material-ui/core';
@@ -134,6 +134,8 @@ function SedersPage({
     disabled: !selectionMade || buttonClicked,
   };
 
+  // if (!seders || !seders.size) return <CircularProgress></CircularProgress>;
+
   return (
     <>
       <MenuAppBar></MenuAppBar>
@@ -225,7 +227,9 @@ function SedersPage({
           </div>
         </>
       ) : (
-        <div></div>
+        <div>
+          <CircularProgress />
+        </div>
       )}
     </>
   );
