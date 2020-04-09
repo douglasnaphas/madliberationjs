@@ -76,7 +76,8 @@ function SedersPage({
         lib_id,
         path,
         user_email,
-        timestamp
+        timestamp,
+        closed
       });
     }
   });
@@ -168,7 +169,7 @@ function SedersPage({
                 if (seder.path) {
                   setChosenPath(seder.path);
                 }
-                if (!selectedGameName) {
+                if (!selectedGameName && !seder.closed) {
                   history.push(buttonTarget);
                   return;
                 }
@@ -184,9 +185,14 @@ function SedersPage({
                   })
                 };
                 await fetch(new URL('/rejoin', Configs.apiUrl()), fetchInit);
-                if (seder.path) {
+                if (seder.path && !seder.closed) {
                   // this is the seder leader
                   buttonTarget = '/roster';
+                  history.push(buttonTarget);
+                  return;
+                }
+                if (seder.path) {
+                  buttonTarget = '/let-them-press-buttons';
                   history.push(buttonTarget);
                   return;
                 }
