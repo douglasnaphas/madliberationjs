@@ -473,6 +473,9 @@ describe('SedersPage', () => {
     // /play is ok since the libs are ready...probably best to go with
     // /you-have-joined, in case there are instructions on there that they
     // need to see)
+    // well, ... probably this should go right to /play in all cases, otherwise
+    // from /you-have-joined or /let-them-press-buttons, /assignments will be
+    // called again
   });
   describe('Re-join Case 5: closed, assignments and answers populated', () => {
     // this should allow the user to fetch the script long after the seder
