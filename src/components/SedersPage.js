@@ -138,9 +138,8 @@ function SedersPage({
       <br></br>
       <div>
         <Typography component="p" color="secondary" gutterBottom>
-          This <b>resume-seder</b> feature is under furious active development
-          for Passover 2020. Some parts of this page may not work as expected
-          until Wednesday, April 8th, 2020.
+          This <b>resume-seder</b> feature is experimental and new for Passover
+          2020. Some parts of this page may not work as expected.
         </Typography>
       </div>
       <div>
@@ -207,9 +206,13 @@ function SedersPage({
                   history.push(buttonTarget);
                   return;
                 }
-                buttonTarget = '/play';
+                if (seder.assignments && !seder.answers) {
+                  buttonTarget = '/play';
+                  history.push(buttonTarget);
+                  return;
+                }
+                buttonTarget = '/submitted';
                 history.push(buttonTarget);
-                return;
               }}
             >
               Resume seder
