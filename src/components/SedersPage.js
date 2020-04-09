@@ -183,13 +183,9 @@ function SedersPage({
                     user: user.sub
                   })
                 };
-                await fetch(
-                  new URL('/rejoin', Configs.apiUrl()),
-                  fetchInit
-                ).then(() => {
-                  buttonTarget = '/roster';
-                  history.push(buttonTarget);
-                });
+                await fetch(new URL('/rejoin', Configs.apiUrl()), fetchInit);
+                buttonTarget = '/roster';
+                history.push(buttonTarget);
               }}
             >
               Resume seder

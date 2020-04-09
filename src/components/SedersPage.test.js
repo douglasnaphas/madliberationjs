@@ -232,7 +232,6 @@ describe('SedersPage', () => {
           postData.gameName &&
           postData.gameName === selectedGameName
         ) {
-          console.log('fetch to rejoin');
           return new Promise((resolve, reject) => {
             resolve({
               json: jest.fn().mockImplementation(() => {
@@ -245,7 +244,6 @@ describe('SedersPage', () => {
             });
           });
         }
-        console.log('rejecting fetch');
         return new Promise((resolve, reject) => {
           reject({ err: 'bad fetch' });
         });
@@ -289,12 +287,21 @@ describe('SedersPage', () => {
       expect(history.push).toHaveBeenCalled();
       expect(history.push).toHaveBeenCalledWith('/roster');
       expect(global.fetch).toHaveBeenCalledTimes(3);
+      expect(global.fetch.mock.calls[2][0].pathname).toEqual('/rejoin');
+      expect(global.fetch.mock.calls[2][1]).toEqual(expectedRejoinInit);
     });
   });
   describe('Re-join Case 3: user did not start the seder, non-closed', () => {
     // user must have been named (must have gotten their game name confirmed)
     // if they are in a seder that they did not start
     // get a game name cookie, restore state, and send them to /you-have-joined
+  });
+  describe('Possible re-join case 3.5: seder closed, assignments not populated', () => {
+    // this may suggest routing to /you-have-joined or /let-them-press-buttons,
+    // or maybe it can be handled in one of the other cases
+    // it may depend on how much /close-seder does
+    // we might be ok, since I think the "click button" action just grabs
+    // libs that were assigned by /close-seder and doesn't change any state
   });
   describe('Re-join Case 4: closed, assignments populated, but not answers', () => {
     // for closed seders it doesn't matter who started it
