@@ -162,6 +162,7 @@ class App extends Component {
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
                     setChosenPath={this.setChosenPath}
                     setConfirmedGameName={this.setConfirmedGameName}
+                    setAssignmentsData={this.setAssignmentsData}
                   />
                 )}
               ></Route>

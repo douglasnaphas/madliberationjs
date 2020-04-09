@@ -15,7 +15,8 @@ function SedersPage({
   user,
   setConfirmedRoomCode,
   setChosenPath,
-  setConfirmedGameName
+  setConfirmedGameName,
+  setAssignmentsData
 }) {
   const [sedersIStarted, setSedersIStarted] = useState([]);
   const [sedersIJoined, setSedersIJoined] = useState([]);
@@ -169,6 +170,9 @@ function SedersPage({
                 if (seder.path) {
                   setChosenPath(seder.path);
                 }
+                if (seder.assignments) {
+                  setAssignmentsData(seder.assignments);
+                }
                 if (!selectedGameName && !seder.closed) {
                   history.push(buttonTarget);
                   return;
@@ -191,13 +195,21 @@ function SedersPage({
                   history.push(buttonTarget);
                   return;
                 }
-                if (seder.path) {
+                if (seder.path && seder.closed && !seder.assignments) {
+                  // leader
                   buttonTarget = '/let-them-press-buttons';
                   history.push(buttonTarget);
                   return;
                 }
-                buttonTarget = '/you-have-joined';
+                if (!seder.path && !seder.assignments) {
+                  // follower
+                  buttonTarget = '/you-have-joined';
+                  history.push(buttonTarget);
+                  return;
+                }
+                buttonTarget = '/play';
                 history.push(buttonTarget);
+                return;
               }}
             >
               Resume seder
