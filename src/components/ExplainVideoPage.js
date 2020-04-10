@@ -13,8 +13,8 @@ const styles = () => {
       paddingRight: '20px',
       paddingLeft: '20px',
       paddingTop: '10px',
-      paddingBottom: '10px'
-    }
+      paddingBottom: '10px',
+    },
   };
 };
 
@@ -137,11 +137,14 @@ class ExplainVideoPage extends Component {
               in gamma mode, which means it's still being tested out and
               improved. Keep this in mind: Once you've joined the seder, don't
               close the tab or go to any other web sites in the tab in which you
-              have the game open. Right now, the only person who can re-join
-              seders is Elijah.
+              have the game open. If you click Log In on the Home Page before
+              you join our seder, and you accidentally close your tab, you can
+              probably re-join by logging in again and clicking{' '}
+              <b>See your seders</b>, but that feature is experimental.
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Pause for comedic effect.</StageDirection>
+              If you encounter any problems, try using a different browser or
+              device.
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>Say</StageDirection>: If everyone is ready to
