@@ -22,7 +22,7 @@ class ExplainVideoPage extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div madliberationid="explain-page">
+      <div madliberationid="explain-video-page">
         <MenuAppBar />
         <div>
           <br />
