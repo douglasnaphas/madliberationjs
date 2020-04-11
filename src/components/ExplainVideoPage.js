@@ -31,31 +31,28 @@ class ExplainVideoPage extends Component {
               Order! Order! Order!
             </Typography>
             <Typography component="p" paragraph>
-              Dear leader (of this virtual seder), follow these instructions to
+              Dear Leader (of this virtual seder), follow these instructions to
               bring order to your remote seder.
             </Typography>
 
             <Typography variant="h2" component="h2" gutterBottom>
-              Prepare to put the virtual room in order
+              The host with the most
             </Typography>
             <Typography component="p" paragraph>
-              Find a means to create an ordered list that will be used to
-              determine who reads and when. This can be by pen/paper, a google
-              doc, a henna design on your chest, etc. To make things easier,
-              list the name of each participant before you move on to the next
-              step.
+              As the host, you are the seder leader. You will be determining the
+              order of who will read when. Please try to make it fair and make
+              sure everyone gets a turn!
             </Typography>
 
             <Typography variant="h2" component="h2" gutterBottom>
-              Call the virtual room to attention so you can explain what is
-              about to happen.
+              Get everyone's attention and explain the first step
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Say</StageDirection>: Happy Passover! We are about
-              to play a game called Mad Liberation, which is like a seder but
-              fun, so I am going to explain how to play. Before I proceed, make
-              sure you have access to either your smartphone or a web browser on
-              your computer if you do not have a phone. Please let me know if
+              <StageDirection>Read aloud</StageDirection>: Happy Passover! We
+              are about to play a game called Mad Liberation, so I am going to
+              explain how to play. Before I proceed, make sure you have access
+              to either your smartphone or a web browser on your computer. The
+              computer works just as well as the phone. Please let me know if
               you do NOT have a device ready at this time.
             </Typography>
             <Typography component="p" paragraph>
@@ -67,62 +64,50 @@ class ExplainVideoPage extends Component {
               Explain the concept
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Say</StageDirection>: Together, we’re going to
-              create a fill-in-the-blank Haggadah by answering prompts on our
+              <StageDirection>Read aloud</StageDirection>: Together, we’re going
+              to create a fill-in-the-blank Haggadah by answering prompts on our
               phones or computers with words or phrases. We’ll then take turns
-              reading our one-of-a-kind creation from our very own screens based
-              on the order I am about to jot down. When I say go, we are going
-              to number off. For whomever the breeze tickles first, you will
-              say, “1.” The next person so motivated will say, “2,” then, “3,”
-              and so on until we all have said a single number. I will write
-              down the order but you should know who goes before you and who
-              goes after. If multiple people try to claim the same number, I
-              will judge who deserves it most. Any questions?
+              reading our one-of-a-kind creation. I will let you know when it’s
+              your turn to read.
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>
                 Pause for questions. Once all are answered, move on.
               </StageDirection>
             </Typography>
-            <Typography>
-              <StageDirection>Say</StageDirection>: Ok, go.
-            </Typography>
             <Typography variant="h2" component="h2" gutterBottom>
-              Generate the order of readers
+              Figure out the order of readers
             </Typography>
             <Typography component="p" paragraph>
-              As your virtual party numbers off, note the order in your list.
-              Once the numbering has been complete, read the ordered list to the
-              group.
+              Somehow. Just figure out what order people will read the script in
+              and make note of it. The app still works if people read out of
+              order.
             </Typography>
             <Typography variant="h2" component="h2" gutterBottom>
               Provide further instructions
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Say</StageDirection>: On your phone or computer,
-              type <span style={madLiberationStyles.blue}>passover.lol</span> in
-              a web browser. When you’re there, click “Join a Seder.” If you
+              <StageDirection>Read aloud</StageDirection>: On your phone or
+              computer, type{' '}
+              <span style={madLiberationStyles.blue}>passover.lol</span> in a
+              web browser. When you’re there, click <b>Join a Seder</b>. If you
               aren't able to join the seder on your device, try using a
               different browser. Go ahead, I’ll wait.
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>
-                Pause and confirm that everyone has complied in whatever way you
-                like.
+                Pause and confirm that everyone has complied.
               </StageDirection>
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Say</StageDirection>: I’ll give you the Room Code
-              to enter the seder in a few moments. For now, keep listening to me
-              talk. When you get your prompts, pay attention to how you phrase
-              your answers. There will be examples to guide you, so our Haggadah
-              doesn't wind up with something like, "Moses woke up the next day
-              feeling extremely happiness." Make sure you fill in and click
+              <StageDirection>Read aloud</StageDirection>: I’ll give you the
+              Room Code to enter the seder in a few moments. For now, keep
+              listening to me talk. When you get your prompts, pay attention to
+              how you phrase your answers. Make sure you fill in and click
               through all of your prompts, then hit "Submit” when you’re done.
               After we've all submitted, click "Yes, I want the script.” Then,
-              we read our collective creation in the order we just set! The app
-              will tell us when it’s time to “pass” to the next reader. Any
-              questions?
+              we read our collective creation! The app will tell us when it’s
+              time to “pass” to the next reader. Any questions?
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>
@@ -130,26 +115,30 @@ class ExplainVideoPage extends Component {
               </StageDirection>
             </Typography>
             <Typography variant="h2" component="h2" gutterBottom>
-              Provide additional clarity
+              Provide additional clarity...and don't close your tabs!
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Say</StageDirection>: One more thing: this app is
-              in gamma mode, which means it's still being tested out and
-              improved. Keep this in mind: Once you've joined the seder, don't
-              close the tab or go to any other web sites in the tab in which you
-              have the game open. If you click Log In on the Home Page before
-              you join our seder, and you accidentally close your tab, you can
-              probably re-join by logging in again and clicking{' '}
-              <b>See your seders</b>, but that feature is experimental.
+              <StageDirection>Read aloud</StageDirection>: One more thing: this
+              app is in beta mode, which means it's still being tested out and
+              improved. Keep this in mind:{' '}
+              <b>
+                Once you've joined the seder, don't close the tab or go to any
+                other web sites in the tab in which you have the game open.
+              </b>{' '}
+              If you click Log In on the Home Page before you join our seder,
+              and you accidentally close your tab, you can probably re-join by
+              logging in again and clicking <b>See your seders</b>, but that
+              feature is experimental. Logging in also lets you retrieve the
+              completed script later.
             </Typography>
             <Typography component="p" paragraph>
               If you encounter any problems, try using a different browser or
               device.
             </Typography>
             <Typography component="p" paragraph>
-              <StageDirection>Say</StageDirection>: If everyone is ready to
-              celebrate Passover, I'm going to click "Proceed" to generate our
-              Room Code and let the Mad Liberation begin!
+              If everyone is ready to celebrate Passover, I'm going to click
+              "Proceed" to generate our Room Code and let the Mad Liberation
+              begin!
             </Typography>
           </div>
           <div>
