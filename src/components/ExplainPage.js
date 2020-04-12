@@ -59,8 +59,9 @@ class ExplainPage extends Component {
             <Typography component="p" paragraph>
               First, I need all of you to get out your phones and type{' '}
               <span style={madLiberationStyles.blue}>passover.lol</span> in a
-              web browser. When you’re there, click “Join a Seder.” Go ahead,
-              I’ll wait.
+              web browser. When you’re there, click <b>Log in</b>, then{' '}
+              <b>Join a Seder</b>. Logging in isn't mandatory, but it will let
+              you re-join the seder if anything goes wrong. Go ahead, I’ll wait.
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>

@@ -90,9 +90,11 @@ class ExplainVideoPage extends Component {
               <StageDirection>Read aloud</StageDirection>: On your phone or
               computer, type{' '}
               <span style={madLiberationStyles.blue}>passover.lol</span> in a
-              web browser. When you’re there, click <b>Join a Seder</b>. If you
-              aren't able to join the seder on your device, try using a
-              different browser. Go ahead, I’ll wait.
+              web browser. When you’re there, click <b>Log in</b>, then{' '}
+              <b>Join a Seder</b>. Logging in isn't mandatory, but it will let
+              you re-join the seder if anything goes wrong. If you aren't able
+              to join the seder on your device, try using a different browser.
+              Go ahead, I’ll wait.
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>
