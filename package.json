@@ -5,9 +5,9 @@
   "private": true,
   "homepage": ".",
   "devDependencies": {
-    "enzyme": "^3.10.0",
+    "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "react-test-renderer": "^16.9.0",
+    "react-test-renderer": "^17.0.1",
     "unit.js": "^2.1.0"
   },
   "scripts": {
