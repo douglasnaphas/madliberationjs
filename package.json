@@ -7,7 +7,7 @@
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.3.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-adapter-react-16": "^1.15.5",
     "react-test-renderer": "^17.0.1",
     "unit.js": "^2.1.0"
   },
@@ -17,18 +17,18 @@
     "build": "react-scripts build"
   },
   "dependencies": {
-    "@material-ui/core": "^4.4.2",
-    "@material-ui/icons": "^4.4.1",
-    "acorn": "^7.1.1",
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "acorn": "^7.4.1",
     "babel-preset-react-app": "^9.1.2",
-    "browserslist": "^4.7.0",
+    "browserslist": "^4.16.0",
     "commander": "^2.20.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",
-    "typescript": "^3.6.2"
+    "typescript": "^3.9.7"
   },
   "browserslist": {
     "production": [
