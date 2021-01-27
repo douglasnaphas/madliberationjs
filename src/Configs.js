@@ -7,7 +7,7 @@ class Configs {
       }
       // if test env, return test env value
     }
-    return 'https://api.passover.lol/get-cookies';
+    return 'https://api.passover.lol/get-cookies'; // maybe use the current origin
   }
 
   // https://madliberationfederated.auth.us-east-1.amazoncognito.com/login?client_id=25h54vd0cundt7iaeon1rn8a02&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http://localhost:3000/index.html
