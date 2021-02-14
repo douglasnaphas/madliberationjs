@@ -1,17 +1,6 @@
 class Configs {
-  static redirectUri() {
-    if (process && process.env && process.env.NODE_ENV) {
-      if (process.env.NODE_ENV === "development") {
-        const url = new URL("/get-cookies", Configs.apiUrl());
-        return url;
-      }
-      // if test env, return test env value
-    }
-    return "https://api.passover.lol/get-cookies";
-  }
-
   static loginUrl() {
-    return process.env.REACT_APP_COGNITO_LINK || "/#/";
+    return "/prod/login";
   }
 
   static apiUrl() {
