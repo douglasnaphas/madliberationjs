@@ -11,7 +11,7 @@ class Configs {
   }
 
   static loginUrl() {
-    return "https://2e1a8eed76dd22adb05b403958634573.auth.us-west-1.amazoncognito.com/login?response_type=code&client_id=lmres6t4lqjdc1tre55t7qte0&redirect_uri=https://d3t14pxg52jdxt.cloudfront.net/prod/get-cookies";
+    return process.env.REACT_APP_COGNITO_LINK || "/#/";
   }
 
   static apiUrl() {
