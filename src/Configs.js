@@ -11,10 +11,7 @@ class Configs {
   }
 
   static loginUrl() {
-    return (
-      "https://madliberationfederated.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=25h54vd0cundt7iaeon1rn8a02&redirect_uri=" +
-      Configs.redirectUri()
-    );
+    return "https://2e1a8eed76dd22adb05b403958634573.auth.us-west-1.amazoncognito.com/login?response_type=code&client_id=lmres6t4lqjdc1tre55t7qte0&redirect_uri=https://d3t14pxg52jdxt.cloudfront.net/prod/get-cookies";
   }
 
   static apiUrl() {
