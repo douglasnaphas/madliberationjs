@@ -13,7 +13,8 @@
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "ci-build": "bash ./ci-build.sh"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
