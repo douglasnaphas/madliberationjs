@@ -1,20 +1,18 @@
 class Configs {
   static redirectUri() {
     if (process && process.env && process.env.NODE_ENV) {
-      if (process.env.NODE_ENV === 'development') {
-        const url = new URL('/get-cookies', Configs.apiUrl());
+      if (process.env.NODE_ENV === "development") {
+        const url = new URL("/get-cookies", Configs.apiUrl());
         return url;
       }
       // if test env, return test env value
     }
-    return 'https://api.passover.lol/get-cookies';
+    return "https://api.passover.lol/get-cookies";
   }
-
-  // https://madliberationfederated.auth.us-east-1.amazoncognito.com/login?client_id=25h54vd0cundt7iaeon1rn8a02&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http://localhost:3000/index.html
 
   static loginUrl() {
     return (
-      'https://madliberationfederated.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=25h54vd0cundt7iaeon1rn8a02&redirect_uri=' +
+      "https://madliberationfederated.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=25h54vd0cundt7iaeon1rn8a02&redirect_uri=" +
       Configs.redirectUri()
     );
   }
@@ -23,7 +21,7 @@ class Configs {
     if (process && process.env && process.env.REACT_APP_MLJSAPI_URL) {
       return process.env.REACT_APP_MLJSAPI_URL;
     }
-    return 'https://api.passover.lol/';
+    return "https://api.passover.lol/";
   }
 
   static roomCodeRegex() {
@@ -42,7 +40,7 @@ class Configs {
    * The API's generic error message
    */
   static generic400ErrorMessage() {
-    return 'bad request';
+    return "bad request";
   }
 
   /**
