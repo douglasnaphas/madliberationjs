@@ -7,7 +7,7 @@ class Configs {
     if (process && process.env && process.env.REACT_APP_MLJSAPI_URL) {
       return process.env.REACT_APP_MLJSAPI_URL;
     }
-    return "https://" + window.location.hostname + "/";
+    return "https://" + window.location.hostname + "/prod/";
   }
 
   static roomCodeRegex() {
