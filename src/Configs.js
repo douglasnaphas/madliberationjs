@@ -7,7 +7,7 @@ class Configs {
     if (process && process.env && process.env.REACT_APP_MLJSAPI_URL) {
       return process.env.REACT_APP_MLJSAPI_URL;
     }
-    return "https://api.passover.lol/";
+    return "https://" + window.location.hostname + "/";
   }
 
   static roomCodeRegex() {
