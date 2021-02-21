@@ -15,7 +15,7 @@ const styles = (theme) => ({
 
 function LoggingInPage({ history, setUser, browserWindow, storage }) {
   useEffect(() => {
-    const idUrl = new URL("/id", Configs.apiUrl());
+    const idUrl = new URL("./id", Configs.apiUrl());
     fetch(idUrl, {
       method: "GET",
       credentials: "include",
