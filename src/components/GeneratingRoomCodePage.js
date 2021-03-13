@@ -1,49 +1,49 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Configs } from '../Configs';
-import MenuAppBar from './MenuAppBar';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { Configs } from "../Configs";
+import MenuAppBar from "./MenuAppBar";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
-const styles = theme => ({});
+const styles = (theme) => ({});
 
 class GeneratingRoomCodePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      failedToGetRoomCode: false
+      failedToGetRoomCode: false,
     };
   }
   componentDidMount() {
     let { chosenPath } = this.props;
     const { history, setChosenPath, setConfirmedRoomCode, user } = this.props;
-    if (!chosenPath && localStorage.getItem('chosenPath')) {
-      chosenPath = localStorage.getItem('chosenPath');
+    if (!chosenPath && localStorage.getItem("chosenPath")) {
+      chosenPath = localStorage.getItem("chosenPath");
       setChosenPath(chosenPath);
     }
-    const roomCodeUrl = new URL('/room-code', Configs.apiUrl());
+    const roomCodeUrl = new URL("./room-code", Configs.apiUrl());
     const body = { path: chosenPath };
     if (this.props.user) body.user = user.sub;
     const fetchInit = {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     };
-    if (this.props.user) fetchInit.credentials = 'include';
+    if (this.props.user) fetchInit.credentials = "include";
     fetch(roomCodeUrl, fetchInit)
-      .then(r => {
+      .then((r) => {
         if (!r.ok) {
           throw r.status;
         }
         return r.json();
       })
-      .then(j => {
+      .then((j) => {
         setConfirmedRoomCode(j.roomCode);
-        history.push('/your-room-code');
+        history.push("/your-room-code");
       })
-      .catch(s => {
+      .catch((s) => {
         this.setState({ failedToGetRoomCode: true });
       });
   }
@@ -60,7 +60,7 @@ class GeneratingRoomCodePage extends Component {
             <br />
             <div>
               <CircularProgress />
-            </div>{' '}
+            </div>{" "}
           </>
         )}
         {this.state.failedToGetRoomCode && (
@@ -69,7 +69,7 @@ class GeneratingRoomCodePage extends Component {
               <div>
                 <Typography variant="h5">
                   So sorry, but a Room Code could not be generated. Please start
-                  over by clicking{' '}
+                  over by clicking{" "}
                   <Link
                     madliberationid="room-code-error-pick-script-link"
                     to="/pick-script"
@@ -82,7 +82,7 @@ class GeneratingRoomCodePage extends Component {
               <br />
               <div>
                 <Typography variant="h5">
-                  If you're logged in, try going to the <Link to="/">Home</Link>{' '}
+                  If you're logged in, try going to the <Link to="/">Home</Link>{" "}
                   page, then logging out and in again.
                 </Typography>
               </div>
@@ -107,8 +107,8 @@ GeneratingRoomCodePage.propTypes = {
   user: PropTypes.shape({
     nickname: PropTypes.string,
     email: PropTypes.string,
-    sub: PropTypes.string
-  })
+    sub: PropTypes.string,
+  }),
 };
 
 export default withStyles(styles)(GeneratingRoomCodePage);

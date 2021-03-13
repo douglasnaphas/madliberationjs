@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import Radio from '@material-ui/core/Radio';
-import { Button, CircularProgress } from '@material-ui/core';
-import MenuAppBar from './MenuAppBar';
-import { Configs } from '../Configs';
-import { Typography } from '@material-ui/core';
+import React, { useState, useEffect } from "react";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import Radio from "@material-ui/core/Radio";
+import { Button, CircularProgress } from "@material-ui/core";
+import MenuAppBar from "./MenuAppBar";
+import { Configs } from "../Configs";
+import { Typography } from "@material-ui/core";
 
 function SedersPage({
   history,
@@ -25,11 +25,11 @@ function SedersPage({
   useEffect(() => {
     if (!user || !user.sub) return;
     const sedersStartedUrl = new URL(
-      `/seders?user=${user.sub}`,
+      `./seders?user=${user.sub}`,
       Configs.apiUrl()
     );
     fetch(sedersStartedUrl, {
-      credentials: 'include',
+      credentials: "include",
     })
       .then((r) => {
         return r.json();
@@ -43,11 +43,11 @@ function SedersPage({
         console.log(err);
       });
     const sedersJoinedUrl = new URL(
-      `/seders-joined?user=${user.sub}`,
+      `./seders-joined?user=${user.sub}`,
       Configs.apiUrl()
     );
     fetch(sedersJoinedUrl, {
-      credentials: 'include',
+      credentials: "include",
     })
       .then((r) => {
         return r.json();
@@ -128,9 +128,9 @@ function SedersPage({
     </Table>
   );
   const buttonProps = {
-    id: 'resume-this-seder-button',
-    madliberationid: 'resume-this-seder-button',
-    variant: 'contained',
+    id: "resume-this-seder-button",
+    madliberationid: "resume-this-seder-button",
+    variant: "contained",
     disabled: !selectionMade || buttonClicked,
   };
 
@@ -163,7 +163,7 @@ function SedersPage({
               {...buttonProps}
               onClick={async (e) => {
                 setButtonClicked(true);
-                let buttonTarget = '/your-room-code';
+                let buttonTarget = "/your-room-code";
                 setConfirmedRoomCode(selectedRoomCode);
                 const selectedGameName =
                   selectedRoomCode &&
@@ -184,40 +184,40 @@ function SedersPage({
                 }
                 setConfirmedGameName(selectedGameName);
                 const fetchInit = {
-                  credentials: 'include',
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
+                  credentials: "include",
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
                     gameName: selectedGameName,
                     roomCode: selectedRoomCode,
                     user: user.sub,
                   }),
                 };
-                await fetch(new URL('/rejoin', Configs.apiUrl()), fetchInit);
+                await fetch(new URL("./rejoin", Configs.apiUrl()), fetchInit);
                 if (seder.path && !seder.closed) {
                   // this is the seder leader
-                  buttonTarget = '/roster';
+                  buttonTarget = "/roster";
                   history.push(buttonTarget);
                   return;
                 }
                 if (seder.path && seder.closed && !seder.assignments) {
                   // leader
-                  buttonTarget = '/let-them-press-buttons';
+                  buttonTarget = "/let-them-press-buttons";
                   history.push(buttonTarget);
                   return;
                 }
                 if (!seder.path && !seder.assignments) {
                   // follower
-                  buttonTarget = '/you-have-joined';
+                  buttonTarget = "/you-have-joined";
                   history.push(buttonTarget);
                   return;
                 }
                 if (seder.assignments && !seder.answers) {
-                  buttonTarget = '/play';
+                  buttonTarget = "/play";
                   history.push(buttonTarget);
                   return;
                 }
-                buttonTarget = '/submitted';
+                buttonTarget = "/submitted";
                 history.push(buttonTarget);
                 setButtonClicked(false);
               }}
