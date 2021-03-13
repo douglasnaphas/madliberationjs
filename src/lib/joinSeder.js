@@ -1,4 +1,4 @@
-import { Configs } from '../Configs';
+import { Configs } from "../Configs";
 
 /**
  * @return {Object} An object with:
@@ -12,28 +12,28 @@ import { Configs } from '../Configs';
  *   '...', uer-nickname: '...', user-sub: '...'}
  */
 async function joinSeder(roomCode, gameName, user) {
-  const joinSederUrl = new URL('/join-seder', Configs.apiUrl());
+  const joinSederUrl = new URL("./join-seder", Configs.apiUrl());
 
   const postData = {
     roomCode,
-    gameName
+    gameName,
   };
-  if (user && user['sub']) {
-    postData.user = user['sub'];
+  if (user && user["sub"]) {
+    postData.user = user["sub"];
   }
   const response = await fetch(joinSederUrl, {
-    method: 'POST',
-    credentials: 'include',
+    method: "POST",
+    credentials: "include",
     body: JSON.stringify(postData),
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   });
   const data = await response.json();
   const status = response.status;
   return {
     data: data,
-    status: status
+    status: status,
   };
 }
 

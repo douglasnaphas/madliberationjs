@@ -1,4 +1,4 @@
-import { Configs } from '../Configs';
+import { Configs } from "../Configs";
 
 /**
  * @return {Object} An object with:
@@ -9,21 +9,25 @@ import { Configs } from '../Configs';
  * @param {String} path The path of the selected script
  */
 async function closeSeder(roomCode, gameName, path) {
-  const closeSederUrl = new URL(`/close-seder`, Configs.apiUrl());
+  const closeSederUrl = new URL(`./close-seder`, Configs.apiUrl());
   if (!roomCode || !gameName) return {};
   const response = await fetch(closeSederUrl, {
-    method: 'POST',
-    credentials: 'include',
+    method: "POST",
+    credentials: "include",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ roomCode: roomCode, gameName: gameName, path: path })
+    body: JSON.stringify({
+      roomCode: roomCode,
+      gameName: gameName,
+      path: path,
+    }),
   });
   const data = await response.json();
   const status = response.status;
   return {
     data: data,
-    status: status
+    status: status,
   };
 }
 

@@ -1,4 +1,4 @@
-import { Configs } from '../Configs';
+import { Configs } from "../Configs";
 
 /**
  * @return {Object} An object with:
@@ -10,22 +10,22 @@ import { Configs } from '../Configs';
  */
 async function assignments(roomCode, gameName) {
   const assignmentsUrl = new URL(
-    `/assignments?roomcode=${roomCode}&gamename=${encodeURI(gameName)}`,
+    `./assignments?roomcode=${roomCode}&gamename=${encodeURI(gameName)}`,
     Configs.apiUrl()
   );
   if (!roomCode || !gameName) return {};
   const response = await fetch(assignmentsUrl, {
-    method: 'GET',
-    credentials: 'include',
+    method: "GET",
+    credentials: "include",
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   });
   const data = await response.json();
   const status = response.status;
   return {
     data: data,
-    status: status
+    status: status,
   };
 }
 

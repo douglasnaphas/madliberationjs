@@ -1,4 +1,4 @@
-import { Configs } from '../Configs';
+import { Configs } from "../Configs";
 
 /**
  * @return {Object} An object with:
@@ -14,22 +14,22 @@ import { Configs } from '../Configs';
  */
 async function readRoster(roomCode, gameName) {
   const rosterUrl = new URL(
-    `/read-roster?roomcode=${roomCode}&gamename=${encodeURI(gameName)}`,
+    `./read-roster?roomcode=${roomCode}&gamename=${encodeURI(gameName)}`,
     Configs.apiUrl()
   );
   if (!roomCode) return {};
   const response = await fetch(rosterUrl, {
-    method: 'GET',
-    credentials: 'include',
+    method: "GET",
+    credentials: "include",
     headers: {
-      'Content-Type': 'application/json'
-    }
+      "Content-Type": "application/json",
+    },
   });
   const data = await response.json();
   const status = response.status;
   return {
     data: data,
-    status: status
+    status: status,
   };
 }
 

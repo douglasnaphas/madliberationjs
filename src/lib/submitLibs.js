@@ -1,4 +1,4 @@
-import { Configs } from '../Configs';
+import { Configs } from "../Configs";
 
 /**
  * @return {Object} An object with:
@@ -10,25 +10,25 @@ import { Configs } from '../Configs';
  * answer property optional
  */
 async function submitLibs(roomCode, gameName, answers) {
-  const submitLibsUrl = new URL(`/submit-libs`, Configs.apiUrl());
+  const submitLibsUrl = new URL(`./submit-libs`, Configs.apiUrl());
   if (!roomCode || !gameName) return {};
   const response = await fetch(submitLibsUrl, {
-    method: 'POST',
-    credentials: 'include',
+    method: "POST",
+    credentials: "include",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       roomCode: roomCode,
       gameName: gameName,
-      answers: answers
-    })
+      answers: answers,
+    }),
   });
   const data = await response.json();
   const status = response.status;
   return {
     data: data,
-    status: status
+    status: status,
   };
 }
 
