@@ -144,6 +144,12 @@ class HomePage extends Component {
             className={classes.veryAwesomePassoverLogo}
           />
           <br />
+          <br />
+          <div>
+            <Typography component="p">
+              <a href="#/about">About</a>
+            </Typography>
+          </div>
         </div>
       </div>
     );
