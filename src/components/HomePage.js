@@ -1,39 +1,39 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import RedSeaImage from '../background-red-sea.jpg';
-import MadLiberationLogo from '../mad-liberation-logo.png';
-import VeryAwesomePassoverLogo from '../VAPLogo-white.png';
-import { Configs } from '../Configs';
-import { madLiberationStyles } from '../madLiberationStyles';
-import Paper from '@material-ui/core/Paper';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { Button, Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import RedSeaImage from "../background-red-sea.jpg";
+import MadLiberationLogo from "../mad-liberation-logo.png";
+import VeryAwesomePassoverLogo from "../VAPLogo-white.png";
+import { Configs } from "../Configs";
+import { madLiberationStyles } from "../madLiberationStyles";
+import Paper from "@material-ui/core/Paper";
+import PropTypes from "prop-types";
 
 const styles = () => {
   return {
     ...madLiberationStyles,
     homePageBackground: {
       backgroundImage: `url(${RedSeaImage})`,
-      minHeight: '100%',
-      width: '100%',
-      height: 'auto',
-      position: 'fixed',
+      minHeight: "100%",
+      width: "100%",
+      height: "auto",
+      position: "fixed",
       top: 0,
       left: 0,
-      backgroundPosition: 'center',
-      backgroundSize: 'cover'
+      backgroundPosition: "center",
+      backgroundSize: "cover",
     },
     madliberationLogo: {
-      height: '200px'
+      height: "200px",
     },
     veryAwesomePassoverLogo: {
-      height: '70px'
+      height: "70px",
     },
     loginLink: {
-      textDecoration: 'none',
-      color: 'black'
-    }
+      textDecoration: "none",
+      color: "black",
+    },
   };
 };
 
@@ -61,18 +61,6 @@ class HomePage extends Component {
               to="/enter-room-code"
             >
               Join a seder
-            </Button>
-          </div>
-          <div>
-            <br />
-            <Button
-              madliberationid="lead-a-seder-button"
-              title="Lead a seder - in person"
-              variant="contained"
-              component={Link}
-              to="/explain"
-            >
-              Lead a seder - in person
             </Button>
           </div>
           <div>
@@ -107,13 +95,13 @@ class HomePage extends Component {
             <>
               <div
                 style={{
-                  display: 'flex',
-                  justifyContent: 'center'
+                  display: "flex",
+                  justifyContent: "center",
                 }}
                 id="logout-container"
               >
                 <br />
-                <Paper style={{ padding: '8px' }}>
+                <Paper style={{ padding: "8px" }}>
                   <Typography component="p">
                     Logged in as {user.nickname}
                   </Typography>
@@ -134,9 +122,9 @@ class HomePage extends Component {
                       <Button
                         onClick={() => {
                           setUser(false);
-                          storage.removeItem('user-nickname');
-                          storage.removeItem('user-email');
-                          storage.removeItem('user-sub');
+                          storage.removeItem("user-nickname");
+                          storage.removeItem("user-email");
+                          storage.removeItem("user-sub");
                         }}
                         madliberationid="logout-button"
                       >
@@ -163,7 +151,7 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  storage: PropTypes.shape({ removeItem: PropTypes.func }).isRequired
+  storage: PropTypes.shape({ removeItem: PropTypes.func }).isRequired,
 };
 
 export default withStyles(styles)(HomePage);

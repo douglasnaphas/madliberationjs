@@ -1,23 +1,13 @@
-import { Button } from '@material-ui/core';
-import { createMount } from '@material-ui/core/test-utils';
-import { Link } from 'react-router-dom';
-import { MemoryRouter } from 'react-router-dom';
-import React from 'react';
-import { Configs } from '../Configs';
-import HomePage from './HomePage';
+import { Button } from "@material-ui/core";
+import { createMount } from "@material-ui/core/test-utils";
+import { Link } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
+import React from "react";
+import { Configs } from "../Configs";
+import HomePage from "./HomePage";
 
-describe('<HomePage />', () => {
+describe("<HomePage />", () => {
   let mount;
-  const leadSederInPersonButton = (
-    <Button
-      title="Lead a seder - in person"
-      variant="contained"
-      component={Link}
-      to="/explain"
-    >
-      Lead a seder - in person
-    </Button>
-  );
   const leadSederByVideoButton = (
     <Button
       title="Lead a seder - by video"
@@ -52,7 +42,7 @@ describe('<HomePage />', () => {
     mount.cleanUp();
   });
 
-  test('Should render a HomePage', () => {
+  test("Should render a HomePage", () => {
     const storage = { removeItem: jest.fn() };
     const wrapper = mount(
       <MemoryRouter>
@@ -61,18 +51,17 @@ describe('<HomePage />', () => {
     );
     expect(wrapper.containsMatchingElement(<HomePage />)).toBe(true);
   });
-  test('Should render buttons with the right links', () => {
+  test("Should render buttons with the right links", () => {
     const storage = { removeItem: jest.fn() };
     const wrapper = mount(
       <MemoryRouter>
         <HomePage storage={storage} />
       </MemoryRouter>
     );
-    expect(wrapper.containsMatchingElement(leadSederInPersonButton)).toBe(true);
     expect(wrapper.containsMatchingElement(leadSederByVideoButton)).toBe(true);
     expect(wrapper.containsMatchingElement(joinSederButton)).toBe(true);
   });
-  test('The Log In button should have an href to the login page', () => {
+  test("The Log In button should have an href to the login page", () => {
     const storage = { removeItem: jest.fn() };
     const wrapper = mount(
       <MemoryRouter>
@@ -89,12 +78,12 @@ describe('<HomePage />', () => {
     expect(wrapper.containsMatchingElement(loginButton)).toBe(true);
     expect(wrapper.containsMatchingElement(logoutButton)).toBe(false);
   });
-  test('There should be no Log Out button with an undefined user', () => {});
+  test("There should be no Log Out button with an undefined user", () => {});
   test(
-    'When a user is passed in as a prop, the Log Out panel should show' +
-      ', instead of the Log In button',
+    "When a user is passed in as a prop, the Log Out panel should show" +
+      ", instead of the Log In button",
     () => {
-      const user = { nickname: 'My Nick Name', email: 'myemail@mail.com' };
+      const user = { nickname: "My Nick Name", email: "myemail@mail.com" };
       const storage = { removeItem: jest.fn() };
       const wrapper = mount(
         <MemoryRouter>
@@ -102,19 +91,19 @@ describe('<HomePage />', () => {
         </MemoryRouter>
       );
       expect(wrapper.containsMatchingElement(loginButton)).toBe(false);
-      expect(wrapper.findWhere(n => n.text() === 'Log out').exists()).toBe(
+      expect(wrapper.findWhere((n) => n.text() === "Log out").exists()).toBe(
         true
       );
       expect(
         wrapper
-          .findWhere(n => n.text() === 'Logged in as My Nick Name')
+          .findWhere((n) => n.text() === "Logged in as My Nick Name")
           .exists()
       ).toBe(true);
       expect(wrapper.containsMatchingElement(logoutButton)).toBe(true);
     }
   );
-  test('Clicking Log Out should unset the user, clear storage', () => {
-    const user = { nickname: 'My Other Nick Name', email: 'other@gmail.com' };
+  test("Clicking Log Out should unset the user, clear storage", () => {
+    const user = { nickname: "My Other Nick Name", email: "other@gmail.com" };
     const setUser = jest.fn();
     const storage = { removeItem: jest.fn() };
     const wrapper = mount(
@@ -123,15 +112,15 @@ describe('<HomePage />', () => {
       </MemoryRouter>
     );
     const clickLogout = wrapper
-      .findWhere(n => n.matchesElement(logoutButton))
-      .prop('onClick');
+      .findWhere((n) => n.matchesElement(logoutButton))
+      .prop("onClick");
     clickLogout();
     expect(setUser).toHaveBeenCalled();
     expect(setUser).toHaveBeenCalledWith(false);
     expect(storage.removeItem).toHaveBeenCalled();
-    expect(storage.removeItem).toHaveBeenCalledWith('user-nickname');
-    expect(storage.removeItem).toHaveBeenCalledWith('user-email');
-    expect(storage.removeItem).toHaveBeenCalledWith('user-sub');
+    expect(storage.removeItem).toHaveBeenCalledWith("user-nickname");
+    expect(storage.removeItem).toHaveBeenCalledWith("user-email");
+    expect(storage.removeItem).toHaveBeenCalledWith("user-sub");
     expect(storage.removeItem).toHaveBeenCalledTimes(3);
   });
 });
