@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import MenuAppBar from './MenuAppBar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from "react";
+import MenuAppBar from "./MenuAppBar";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   input: {
-    display: 'none'
-  }
+    display: "none",
+  },
 });
 
 class ContactUs extends Component {
@@ -23,12 +23,17 @@ class ContactUs extends Component {
             Contact Us
           </Typography>
           <Typography component="p" paragraph gutterBottom>
-            Email <a href="mailto:admin@passover.lol">admin@passover.lol</a>{' '}
+            Email <a href="mailto:admin@passover.lol">admin@passover.lol</a>{" "}
             with any concerns.
           </Typography>
           <Typography component="p" paragraph gutterBottom>
             In particular, you can contact us if we sent you an email as part of
             our account verification process, and you did not intend to sign up.
+          </Typography>
+          <Typography component="p" paragraph gutterBottom>
+            If you have logged in with a social media site like Facebook, you
+            can email us to request that any of your data that we have obtained
+            from the social media site about you be deleted from Mad Liberation.
           </Typography>
         </div>
       </div>
