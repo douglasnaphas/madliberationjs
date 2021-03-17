@@ -35,6 +35,10 @@ class ContactUs extends Component {
             can email us to request that any of your data that we have obtained
             from the social media site about you be deleted from Mad Liberation.
           </Typography>
+          <Typography component="p" paragraph gutterBottom>
+            If you have logged in with your email address, you can email us to
+            request that we delete your email address from Mad Liberation.
+          </Typography>
         </div>
       </div>
     );
