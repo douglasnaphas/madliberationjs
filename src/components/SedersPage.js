@@ -142,12 +142,6 @@ function SedersPage({
       <br></br>
       <br></br>
       <div>
-        <Typography component="p" color="secondary" gutterBottom>
-          This <b>resume-seder</b> feature is experimental and new for Passover
-          2020. Some parts of this page may not work as expected.
-        </Typography>
-      </div>
-      <div>
         <br />
         <Typography variant="h4" gutterBottom>
           You are or were in seders with these Room Codes:
