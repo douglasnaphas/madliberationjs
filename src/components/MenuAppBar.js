@@ -1,40 +1,40 @@
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import { Link } from 'react-router-dom';
-import MenuIcon from '@material-ui/icons/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import { Link } from "react-router-dom";
+import MenuIcon from "@material-ui/icons/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 const styles = {
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 };
 
 class MenuAppBar extends React.Component {
   state = {
     anchorEl: null,
-    leftAnchorEl: null
+    leftAnchorEl: null,
   };
 
-  handleMenu = event => {
+  handleMenu = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleLeftMenu = event => {
+  handleLeftMenu = (event) => {
     this.setState({ leftAnchorEl: event.currentTarget });
   };
 
@@ -89,6 +89,11 @@ class MenuAppBar extends React.Component {
             </Link>
           </MenuItem>
           <MenuItem onClick={this.handleLeftClose}>
+            <Link madliberationid="menu-terms-of-service" to="/terms">
+              Terms of service
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={this.handleLeftClose}>
             <Link madliberationid="menu-contact-us" to="/contact-us">
               Contact us
             </Link>
@@ -115,7 +120,7 @@ class MenuAppBar extends React.Component {
     const userContent /* not used yet, relates to login */ = user && (
       <div>
         <IconButton
-          aria-owns={open ? 'menu-appbar' : undefined}
+          aria-owns={open ? "menu-appbar" : undefined}
           aria-haspopup="true"
           onClick={this.handleMenu}
           color="inherit"
@@ -127,12 +132,12 @@ class MenuAppBar extends React.Component {
           id="menu-appbar"
           anchorEl={anchorEl}
           anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
+            vertical: "top",
+            horizontal: "right",
           }}
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right'
+            vertical: "top",
+            horizontal: "right",
           }}
           open={open}
           onClose={this.handleClose}
@@ -161,7 +166,7 @@ class MenuAppBar extends React.Component {
 }
 
 MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(MenuAppBar);

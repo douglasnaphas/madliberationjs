@@ -1,45 +1,46 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
-import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
-import { HashRouter as Router } from 'react-router-dom';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 
-import About from './components/About';
-import './App.css';
-import { closeSeder } from './lib/closeSeder';
-import DoneNotReadingPage from './components/DoneNotReadingPage';
-import { getScriptsFromApi } from './lib/getScriptsFromApi';
-import HowToPlay from './components/HowToPlay';
-import LetThemPressButtonPage from './components/LetThemPressButtonPage';
-import HomePage from './components/HomePage';
-import { joinSeder } from './lib/joinSeder';
-import PickScriptPage from './components/PickScriptPage';
-import YourRoomCodePage from './components/YourRoomCodePage';
-import RosterPage from './components/RosterPage';
-import { roster } from './lib/roster';
-import PlayPage from './components/PlayPage';
-import { assignments } from './lib/assignments';
-import SubmittedPage from './components/SubmittedPage';
-import { submitLibs } from './lib/submitLibs';
-import ReadPage from './components/ReadPage';
-import { readRoster } from './lib/readRoster';
-import { script } from './lib/script';
-import GeneratingRoomCodePageWithRouter from './components/GeneratingRoomCodePageWithRouter';
-import EnterRoomCodePageWithRouter from './components/EnterRoomCodePageWithRouter';
-import YouHaveJoinedPage from './components/YouHaveJoinedPage';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import FetchingPromptsPageWithRouter from './components/FetchingPromptsPageWithRouter';
-import ExplainPage from './components/ExplainPage';
-import LoggingInPageWithRouter from './components/LoggingInPageWithRouter';
-import PrivacyPolicy from './components/PrivacyPolicy';
-import ContactUs from './components/ContactUs';
-import ExplainVideoPage from './components/ExplainVideoPage';
-import SedersPageWithRouter from './components/SedersPageWithRouter';
+import About from "./components/About";
+import "./App.css";
+import { closeSeder } from "./lib/closeSeder";
+import DoneNotReadingPage from "./components/DoneNotReadingPage";
+import { getScriptsFromApi } from "./lib/getScriptsFromApi";
+import HowToPlay from "./components/HowToPlay";
+import LetThemPressButtonPage from "./components/LetThemPressButtonPage";
+import HomePage from "./components/HomePage";
+import { joinSeder } from "./lib/joinSeder";
+import PickScriptPage from "./components/PickScriptPage";
+import YourRoomCodePage from "./components/YourRoomCodePage";
+import RosterPage from "./components/RosterPage";
+import { roster } from "./lib/roster";
+import PlayPage from "./components/PlayPage";
+import { assignments } from "./lib/assignments";
+import SubmittedPage from "./components/SubmittedPage";
+import { submitLibs } from "./lib/submitLibs";
+import ReadPage from "./components/ReadPage";
+import { readRoster } from "./lib/readRoster";
+import { script } from "./lib/script";
+import GeneratingRoomCodePageWithRouter from "./components/GeneratingRoomCodePageWithRouter";
+import EnterRoomCodePageWithRouter from "./components/EnterRoomCodePageWithRouter";
+import YouHaveJoinedPage from "./components/YouHaveJoinedPage";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import FetchingPromptsPageWithRouter from "./components/FetchingPromptsPageWithRouter";
+import ExplainPage from "./components/ExplainPage";
+import LoggingInPageWithRouter from "./components/LoggingInPageWithRouter";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import TermsOfService from "./components/TermsOfService";
+import ContactUs from "./components/ContactUs";
+import ExplainVideoPage from "./components/ExplainVideoPage";
+import SedersPageWithRouter from "./components/SedersPageWithRouter";
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#81181f' }
+    primary: { main: "#81181f" },
   },
-  typography: { useNextVariants: true }
+  typography: { useNextVariants: true },
 });
 
 class App extends Component {
@@ -49,13 +50,13 @@ class App extends Component {
       user:
         localStorage &&
         localStorage.getItem &&
-        localStorage.getItem('user-email') &&
-        localStorage.getItem('user-nickname') &&
-        localStorage.getItem('user-sub')
+        localStorage.getItem("user-email") &&
+        localStorage.getItem("user-nickname") &&
+        localStorage.getItem("user-sub")
           ? {
-              email: localStorage.getItem('user-email'),
-              nickname: localStorage.getItem('user-nickname'),
-              sub: localStorage.getItem('user-sub')
+              email: localStorage.getItem("user-email"),
+              nickname: localStorage.getItem("user-nickname"),
+              sub: localStorage.getItem("user-sub"),
             }
           : false,
       isSigningIn: true,
@@ -63,23 +64,23 @@ class App extends Component {
       confirmedGameName: false,
       isRingleader: false,
       chosenPath: false,
-      assignmentsData: false
+      assignmentsData: false,
     };
   }
   _isMounted = false;
   persistState = () => {
     if (this.state.confirmedRoomCode) {
-      localStorage.setItem('roomCode', this.state.confirmedRoomCode);
+      localStorage.setItem("roomCode", this.state.confirmedRoomCode);
     }
     if (this.state.confirmedGameName) {
-      localStorage.setItem('gameName', this.state.confirmedGameName);
+      localStorage.setItem("gameName", this.state.confirmedGameName);
     }
     if (this.state.chosenPath) {
-      localStorage.setItem('chosenPath', this.state.chosenPath);
+      localStorage.setItem("chosenPath", this.state.chosenPath);
     }
     if (this.state.assignmentsData) {
       localStorage.setItem(
-        'assignmentsData',
+        "assignmentsData",
         JSON.stringify(this.state.assignmentsData)
       );
     }
@@ -91,30 +92,30 @@ class App extends Component {
   };
   componentDidMount() {
     this._isMounted = true;
-    window.addEventListener('visibilitychange', this.handleVisibilityChange);
-    window.addEventListener('pagehide', this.persistState);
+    window.addEventListener("visibilitychange", this.handleVisibilityChange);
+    window.addEventListener("pagehide", this.persistState);
   }
   componentWillUnmount() {
-    window.removeEventListener('visibilitychange', this.handleVisibilityChange);
-    window.removeEventListener('pagehide', this.persistState);
+    window.removeEventListener("visibilitychange", this.handleVisibilityChange);
+    window.removeEventListener("pagehide", this.persistState);
     this._isMounted = false;
   }
-  setConfirmedRoomCode = roomCode => {
+  setConfirmedRoomCode = (roomCode) => {
     this.setState({ confirmedRoomCode: roomCode });
   };
-  setConfirmedGameName = gameName => {
+  setConfirmedGameName = (gameName) => {
     this.setState({ confirmedGameName: gameName });
   };
-  setChosenPath = path => {
+  setChosenPath = (path) => {
     this.setState({ chosenPath: path });
   };
-  setAssignmentsData = assignmentsData => {
+  setAssignmentsData = (assignmentsData) => {
     this.setState({ assignmentsData: assignmentsData });
   };
-  goToYourRoomCodePage = history => {
-    history.push('/your-room-code');
+  goToYourRoomCodePage = (history) => {
+    history.push("/your-room-code");
   };
-  setUser = user => {
+  setUser = (user) => {
     this.setState({ user });
   };
   render() {
@@ -129,11 +130,12 @@ class App extends Component {
                 exact
                 render={() => <PrivacyPolicy />}
               />
+              <Route path="/terms" exact render={() => <TermsOfService />} />
               <Route path="/contact-us" exact render={() => <ContactUs />} />
               <Route
                 path="(/|/index.html)"
                 exact
-                render={props => (
+                render={(props) => (
                   <HomePage
                     {...props}
                     user={this.state.user}
@@ -145,7 +147,7 @@ class App extends Component {
               <Route
                 path="/logging-in"
                 exact
-                render={props => (
+                render={(props) => (
                   <LoggingInPageWithRouter
                     setUser={this.setUser}
                     browserWindow={window}
@@ -156,7 +158,7 @@ class App extends Component {
               <Route
                 path="/seders"
                 exact
-                render={props => (
+                render={(props) => (
                   <SedersPageWithRouter
                     user={this.state.user}
                     setConfirmedRoomCode={this.setConfirmedRoomCode}
@@ -169,17 +171,17 @@ class App extends Component {
               <Route
                 path="/explain"
                 exact
-                render={props => <ExplainPage {...props} />}
+                render={(props) => <ExplainPage {...props} />}
               />
               <Route
                 path="/explain-video"
                 exact
-                render={props => <ExplainVideoPage {...props} />}
+                render={(props) => <ExplainVideoPage {...props} />}
               />
               <Route
                 path="/pick-script"
                 exact
-                render={props => (
+                render={(props) => (
                   <PickScriptPage
                     {...props}
                     getScripts={getScriptsFromApi}
@@ -190,7 +192,7 @@ class App extends Component {
               <Route
                 path="/generating-room-code"
                 exact
-                render={props => (
+                render={(props) => (
                   <GeneratingRoomCodePageWithRouter
                     {...props}
                     goToYourRoomCodePage={this.goToYourRoomCodePage}
@@ -204,17 +206,17 @@ class App extends Component {
               <Route
                 path="/about"
                 exact
-                render={props => <About {...props} />}
+                render={(props) => <About {...props} />}
               />
               <Route
                 path="/how-to-play"
                 exact
-                render={props => <HowToPlay {...props} />}
+                render={(props) => <HowToPlay {...props} />}
               />
               <Route
                 path="/enter-room-code"
                 exact
-                render={props => (
+                render={(props) => (
                   <EnterRoomCodePageWithRouter
                     {...props}
                     joinSeder={joinSeder}
@@ -227,7 +229,7 @@ class App extends Component {
               <Route
                 path="/you-have-joined"
                 exact
-                render={props => (
+                render={(props) => (
                   <YouHaveJoinedPage
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
@@ -240,7 +242,7 @@ class App extends Component {
               <Route
                 path="/your-room-code"
                 exact
-                render={props => (
+                render={(props) => (
                   <YourRoomCodePage
                     {...props}
                     joinSeder={joinSeder}
@@ -254,7 +256,7 @@ class App extends Component {
               <Route
                 path="/roster"
                 exact
-                render={props => (
+                render={(props) => (
                   <RosterPage
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
@@ -271,7 +273,7 @@ class App extends Component {
               <Route
                 path="/let-them-press-button"
                 exact
-                render={props => (
+                render={(props) => (
                   <LetThemPressButtonPage
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
@@ -284,7 +286,7 @@ class App extends Component {
               <Route
                 path="/fetching-prompts"
                 exact
-                render={props => (
+                render={(props) => (
                   <FetchingPromptsPageWithRouter
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
@@ -299,7 +301,7 @@ class App extends Component {
               <Route
                 path="/play"
                 exact
-                render={props => (
+                render={(props) => (
                   <PlayPage
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
@@ -315,7 +317,7 @@ class App extends Component {
               <Route
                 path="/submitted"
                 exact
-                render={props => (
+                render={(props) => (
                   <SubmittedPage
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
@@ -328,7 +330,7 @@ class App extends Component {
               <Route
                 path="/done-not-reading"
                 exact
-                render={props => (
+                render={(props) => (
                   <DoneNotReadingPage
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
@@ -341,7 +343,7 @@ class App extends Component {
               <Route
                 path="/read"
                 exact
-                render={props => (
+                render={(props) => (
                   <ReadPage
                     {...props}
                     confirmedRoomCode={this.state.confirmedRoomCode}
