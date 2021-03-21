@@ -5,7 +5,7 @@
   "private": true,
   "homepage": ".",
   "devDependencies": {
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.3.2",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
     "enzyme": "^3.11.0",
     "react-test-renderer": "^17.0.1",
     "unit.js": "^2.1.0"
