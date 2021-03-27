@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import MenuAppBar from './MenuAppBar';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from "react";
+import MenuAppBar from "./MenuAppBar";
+import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   input: {
-    display: 'none'
-  }
+    display: "none",
+  },
 });
 
 class About extends Component {
@@ -31,14 +31,14 @@ class About extends Component {
           </Typography>
           <Typography id="about-text" component="p" paragraph gutterBottom>
             Try it out and let us know what you think. Feel free to raise an
-            issue on{' '}
+            issue on{" "}
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/douglasnaphas/madliberation-issues/issues"
+              href="https://github.com/douglasnaphas/madliberation/issues"
             >
               GitHub
-            </a>{' '}
+            </a>{" "}
             (opens in a new tab) for any bugs encountered or features desired.
           </Typography>
         </div>
