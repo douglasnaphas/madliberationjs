@@ -1,17 +1,17 @@
-import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-import MenuAppBar from './MenuAppBar';
-import React, { Component } from 'react';
-import { Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
+import MenuAppBar from "./MenuAppBar";
+import React, { Component } from "react";
+import { Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   input: {
-    display: 'none'
-  }
+    display: "none",
+  },
 });
 
 class SubmittedPage extends Component {
@@ -23,16 +23,16 @@ class SubmittedPage extends Component {
       confirmedRoomCode,
       confirmedGameName,
       setConfirmedGameName,
-      setConfirmedRoomCode
+      setConfirmedRoomCode,
     } = this.props;
     if (
       !confirmedRoomCode &&
       !confirmedGameName &&
-      localStorage.getItem('roomCode') &&
-      localStorage.getItem('gameName')
+      localStorage.getItem("roomCode") &&
+      localStorage.getItem("gameName")
     ) {
-      setConfirmedRoomCode(localStorage.getItem('roomCode'));
-      setConfirmedGameName(localStorage.getItem('gameName'));
+      setConfirmedRoomCode(localStorage.getItem("roomCode"));
+      setConfirmedGameName(localStorage.getItem("gameName"));
     }
   }
   componentWillUnmount() {
@@ -66,9 +66,8 @@ class SubmittedPage extends Component {
         </div>
         <div>
           <Typography component="p" paragraph gutterBottom>
-            It's usually best for just one person to receive the script on their
-            device, and to pass it around for all to read. The script says when
-            to pass the device to the next person.
+            It's usually best to click "Yes" and get the script on your device,
+            so you can follow along.
           </Typography>
         </div>
         <div>
@@ -79,7 +78,7 @@ class SubmittedPage extends Component {
             to="/read"
           >
             Yes, I want the script
-          </Button>{' '}
+          </Button>{" "}
         </div>
         <br />
         <div>
