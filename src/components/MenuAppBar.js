@@ -98,6 +98,11 @@ class MenuAppBar extends React.Component {
               Contact us
             </Link>
           </MenuItem>
+          <MenuItem onClick={this.handleLeftClose}>
+            <Link madliberationid="menu-help" to="/contact-us">
+              Help
+            </Link>
+          </MenuItem>
         </Menu>
       </div>
     );

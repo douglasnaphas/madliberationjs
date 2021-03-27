@@ -39,6 +39,16 @@ class ContactUs extends Component {
             If you have logged in with your email address, you can email us to
             request that we delete your email address from Mad Liberation.
           </Typography>
+          <Typography variant="h3" gutterBottom>
+            Problems with the site during your seder
+          </Typography>
+          <Typography component="p" paragraph gutterBottom>
+            <b>
+              If you're mid-seder and having a problem with this site, do not
+              hesitate to text the maintainer, Doug, at 814-880-0875 for prompt
+              assistance.
+            </b>
+          </Typography>
         </div>
       </div>
     );
