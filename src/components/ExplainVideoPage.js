@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import MenuAppBar from './MenuAppBar';
-import { Button } from '@material-ui/core';
-import { madLiberationStyles } from '../madLiberationStyles';
-import { Typography } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import StageDirection from './StageDirection';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import MenuAppBar from "./MenuAppBar";
+import { Button } from "@material-ui/core";
+import { madLiberationStyles } from "../madLiberationStyles";
+import { Typography } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import StageDirection from "./StageDirection";
 
 const styles = () => {
   return {
     bordered: {
-      paddingRight: '20px',
-      paddingLeft: '20px',
-      paddingTop: '10px',
-      paddingBottom: '10px',
+      paddingRight: "20px",
+      paddingLeft: "20px",
+      paddingTop: "10px",
+      paddingBottom: "10px",
     },
   };
 };
@@ -88,9 +88,9 @@ class ExplainVideoPage extends Component {
             </Typography>
             <Typography component="p" paragraph>
               <StageDirection>Read aloud</StageDirection>: On your phone or
-              computer, type{' '}
+              computer, type{" "}
               <span style={madLiberationStyles.blue}>passover.lol</span> in a
-              web browser. When you’re there, click <b>Log in</b>, then{' '}
+              web browser. When you’re there, click <b>Log in</b>, then{" "}
               <b>Join a Seder</b>. Logging in isn't mandatory, but it will let
               you re-join the seder if anything goes wrong. If you aren't able
               to join the seder on your device, try using a different browser.
@@ -122,11 +122,11 @@ class ExplainVideoPage extends Component {
             <Typography component="p" paragraph>
               <StageDirection>Read aloud</StageDirection>: One more thing: this
               app is in beta mode, which means it's still being tested out and
-              improved. Keep this in mind:{' '}
+              improved. Keep this in mind:{" "}
               <b>
                 Once you've joined the seder, don't close the tab or go to any
                 other web sites in the tab in which you have the game open.
-              </b>{' '}
+              </b>{" "}
               If you click Log In on the Home Page before you join our seder,
               and you accidentally close your tab, you can probably re-join by
               logging in again and clicking <b>See your seders</b>, but that
